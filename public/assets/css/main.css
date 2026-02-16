@@ -12,29 +12,41 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Montserrat",  sans-serif;
-  --nav-font: "Inter",  sans-serif;
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Montserrat", sans-serif;
+  --nav-font: "Inter", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
-  --background-color: #070708; /* Background color for the entire website, including individual sections */
-  --default-color: rgba(0, 0, 0, 0.8); /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #ffffff; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #008870; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+:root {
+  --background-color: #070708;
+  /* Background color for the entire website, including individual sections */
+  --default-color: rgba(0, 0, 0, 0.8);
+  /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #ffffff;
+  /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #008870;
+  /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --surface-color: #ffffff;
+  /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+  --contrast-color: #ffffff;
+  /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: rgba(255, 255, 255, 0.8);  /* The default color of the main navmenu links */
-  --nav-hover-color: #008870; /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: #1f1f23; /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: #1f1f23; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: rgba(255, 255, 255, 0.8); /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #008870; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-color: rgba(255, 255, 255, 0.8);
+  /* The default color of the main navmenu links */
+  --nav-hover-color: #008870;
+  /* Applied to main navmenu links when they are hovered over or active */
+  --nav-mobile-background-color: #1f1f23;
+  /* Used as the background color for mobile navigation menu */
+  --nav-dropdown-background-color: #1f1f23;
+  /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: rgba(255, 255, 255, 0.8);
+  /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #008870;
+  /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -156,7 +168,7 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 36px;
+  max-height: 45px;
   margin-right: 8px;
 }
 
@@ -232,7 +244,10 @@ h6 {
 
   .navmenu li {
     position: relative;
-  }.navmenu li a{/*قمت لالتعديل هنا لجعل الخط عريض */
+  }
+
+  .navmenu li a {
+    /*قمت لالتعديل هنا لجعل الخط عريض */
     position: relative;
     font-weight: bold;
   }
@@ -253,7 +268,8 @@ h6 {
 
   .navmenu a i,
   .navmenu a:focus i {
-    display: none; /*قمت بالتعديل هنا اخفاء ايقونة التنزيل من العرض على شاشة الكمبيوتر*/
+    display: none;
+    /*قمت بالتعديل هنا اخفاء ايقونة التنزيل من العرض على شاشة الكمبيوتر*/
     font-size: 12px;
     line-height: 0;
     margin-left: 5px;
@@ -296,7 +312,7 @@ h6 {
     font-size: 15px;
     text-transform: none;
     color: var(--nav-dropdown-color);
-  
+
   }
 
   .navmenu .dropdown ul a i {
@@ -332,6 +348,15 @@ h6 {
 
 /* Navmenu - Mobile */
 @media (max-width: 1199px) {
+  .header .logo img {
+    max-height: 30px;
+    margin-right: 4px;
+  }
+
+  .header .logo h1 {
+    font-size: 25px;
+  }
+
   .mobile-nav-toggle {
     color: var(--nav-color);
     font-size: 28px;
@@ -377,7 +402,7 @@ h6 {
 
   .navmenu a i,
   .navmenu a:focus i {
-    
+
     font-size: 12px;
     line-height: 0;
     margin-left: 5px;
@@ -640,7 +665,7 @@ h6 {
 section,
 .section {
   color: var(--default-color);
-  
+
   background-color: rgb(255, 255, 255);
   padding: 60px 0;
   scroll-margin-top: 90px;
@@ -704,10 +729,10 @@ section,
     font-size: 38px;
   }
 } */
- 
+
 .section-title h3 {
   font-weight: 700;
-    letter-spacing: 2px;
+  letter-spacing: 2px;
   font-size: 35px;
   position: relative;
   padding-bottom: 15px;
@@ -727,14 +752,15 @@ section,
 }
 
 .orange-text {
-   
-      color: var(--accent-color);
+
+  color: var(--accent-color);
 }
 
 
 .section-title {
   margin-bottom: 20px;
 }
+
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
@@ -798,18 +824,20 @@ section,
   .hero .hero-content h1 {
     font-size: 3rem;
   }
-    .section-title h3 {
-      font-size: 30px;
-    }
+
+  .section-title h3 {
+    font-size: 30px;
+  }
 }
 
 @media (max-width: 768px) {
   .hero .hero-content h1 {
     font-size: 2.5rem;
   }
-    .section-title h3 {
-      font-size: 25px;
-    }
+
+  .section-title h3 {
+    font-size: 25px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -2219,7 +2247,7 @@ section,
 }
 
 .faq .faq-item.faq-active .faq-header .faq-icon {
-  
+
   background: var(--accent-color);
   color: var(--contrast-color);
 }

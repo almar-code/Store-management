@@ -9,8 +9,8 @@
     <meta name="keywords" content="">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="assets/img/ligth-mode-logo.gif" rel="icon">
+    <link href="assets/img/ligth-mode-logo.gif" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -38,7 +38,7 @@
 
             <a href="#" class="logo d-flex align-items-center me-auto me-xl-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="assets/img/logo.webp" alt=""> -->
+                 <img src="assets/img/ligth-mode-logo.gif" alt=""> 
                 <h1 class="sitename">Nice</h1>
             </a>
 
