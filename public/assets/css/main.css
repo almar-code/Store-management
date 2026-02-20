@@ -356,6 +356,18 @@ h6 {
   .header .logo h1 {
     font-size: 25px;
   }
+  .contact .form-container h3 {
+  font-size: 18px;
+  margin-bottom: 7px;
+}
+
+.contact .form-container p {
+  display: none;
+  font-size: 10px;
+}
+.contact .form-container .form-floating .form-control {
+  height: calc(2rem );
+}
 
   .mobile-nav-toggle {
     color: var(--nav-color);

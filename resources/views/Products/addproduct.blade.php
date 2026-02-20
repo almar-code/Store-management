@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-floating mb-3">
                         <textarea class="form-control" id="productDescription" name="productDescription" rows="3"
-                            placeholder="productColor" style="height: 150px;" required=""></textarea>
+                            placeholder="productColor"  required=""></textarea>
                         <label for="productDescription">وصف المنتج</label>
                     </div>
                     <div class="form-floating mb-3">
