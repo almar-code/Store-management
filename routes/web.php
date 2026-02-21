@@ -9,3 +9,5 @@ Route::get('addproduct', [ProductController::class, 'AddProduct']);
 
 Route::get('addsection', [ProductController::class, 'AddSection']);
 
+Route::get('products', [ProductController::class, 'Products']);
+
