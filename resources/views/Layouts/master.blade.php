@@ -39,7 +39,7 @@
             <a href="#" class="logo d-flex align-items-center me-auto me-xl-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                  <img src="assets/img/ligth-mode-logo.gif" alt=""> 
-                <h1 class="sitename">Nice</h1>
+                <h1 class="sitename">Nic<h1 style="color:#008870">e</h1></h1>
             </a>
 
             <nav id="navmenu" class="navmenu" >
@@ -64,7 +64,7 @@
                     <li class="dropdown"><a href="#"><span>الاقسام</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addproduct">إضافة قسم</a></li>
+                            <li></i><a href="/addsection">إضافة قسم</a></li>
                             <li><a href="#">قائمة الاقسام</a></li>
 
                         </ul>
@@ -105,9 +105,9 @@
 
 
     @yield('content')
+    @yield('section')
 
-
-
+    
 
     <footer id="footer" class="footer light-background">
 
