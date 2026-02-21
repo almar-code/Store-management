@@ -6,3 +6,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('addproduct', [ProductController::class, 'AddProduct']);
+
+Route::get('addsection', [ProductController::class, 'AddSection']);
+
