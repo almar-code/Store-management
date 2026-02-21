@@ -200,6 +200,8 @@ h6 {
 }
 
 @media (max-width: 1200px) {
+
+ 
   .header .logo {
     order: 1;
   }
@@ -347,7 +349,7 @@ h6 {
 }
 
 /* Navmenu - Mobile */
-@media (max-width: 1199px) {
+/* @media (max-width: 1199px) {
   .header .logo img {
     max-height: 30px;
     margin-right: 4px;
@@ -488,6 +490,161 @@ h6 {
     overflow: hidden;
     inset: 0;
     background: rgba(33, 37, 41, 0.8);
+    transition: 0.3s;
+  }
+
+  .mobile-nav-active .navmenu>ul {
+    display: block;
+  }
+} */
+
+@media (max-width: 1199px) {
+  
+  .header .logo img {
+    max-height: 30px;
+    margin-right: 4px;
+  }
+  .header .logo h1 {
+    font-size: 25px;
+  }
+  .mobile-nav-toggle {
+    color: var(--nav-color);
+    font-size: 28px;
+    line-height: 0;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 10000; /* لضمان ظهوره فوق التعتيم */
+  }
+
+  .navmenu {
+    padding: 0;
+    z-index: 9997;
+  }
+
+  .navmenu ul {
+    display: none;
+    list-style: none;
+    position: fixed; /* تغيير من absolute إلى fixed لثبات القائمة الجانبية */
+    inset: 0 0 0 auto; /* هذا يجعلها تلتصق بالجهة اليمنى وبالطول الكامل */
+    width: 70%; /* العرض الذي تغطيه القائمة من الشاشة (يمكنك تغييره لـ 50% أو حسب رغبتك) */
+    padding: 60px 0 10px 0;
+    margin: 0;
+    border-radius: 0; /* إزالة الحواف الدائرية لتناسب شكل القائمة الجانبية */
+    background-color: var(--nav-mobile-background-color);
+    overflow-y: auto;
+    transition: 0.3s;
+    z-index: 9998;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+   
+  }
+  .mobile-nav-active .navmenu::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px; /* نفس عرض القائمة */
+    height: 60px; /* مساحة زر الإغلاق */
+    background: var(--nav-mobile-background-color); /* نفس لون خلفية القائمة */
+    z-index: 9999; /* فوق الـ ul وتحت زر الإغلاق */
+    border-radius: 0;
+    pointer-events: none; /* لكي لا يمنع الضغط */
+    display: none; /* يظهر فقط عند تفعيل المنيو */
+  }
+
+  .mobile-nav-active .navmenu::before {
+    display: block;
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: var(--nav-dropdown-color);
+    padding: 10px 20px;
+    font-family: var(--nav-font);
+    font-size: 17px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+
+  .navmenu a i,
+  .navmenu a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.3s;
+    background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+  }
+
+  .navmenu a i:hover,
+  .navmenu a:focus i:hover {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+  }
+
+  .navmenu a:hover,
+  .navmenu .active,
+  .navmenu .active:focus {
+    color: var(--nav-dropdown-hover-color);
+  }
+
+  .navmenu .active i,
+  .navmenu .active:focus i {
+    /* display: none; */
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    transform: rotate(180deg);
+  }
+
+  .navmenu .dropdown ul {
+    position: static;
+    display: none;
+    z-index: 99;
+    padding: 10px 0;
+    margin: 10px 20px;
+    background-color: var(--nav-dropdown-background-color);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    box-shadow: none;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .navmenu .dropdown ul ul {
+    background-color: rgba(33, 37, 41, 0.1);
+  }
+
+  .navmenu .dropdown>.dropdown-active {
+    display: block;
+    background-color: rgba(33, 37, 41, 0.03);
+  }
+
+  .mobile-nav-active {
+    overflow: hidden;
+  }
+
+  .mobile-nav-active .mobile-nav-toggle {
+    color: #fff;
+    position: fixed; /* التثبيت عند التمرير */
+    font-size: 32px;
+    top: 15px;
+    right: 230px;
+    margin-right: 0;
+    z-index: 9999;
+  }
+
+  .mobile-nav-active .navmenu {
+    position: fixed;
+    overflow: hidden;
+    inset: 0;
+    background: rgba(33, 37, 41, 0.5); /* تقليل التعتيم قليلاً للجمالية */
     transition: 0.3s;
   }
 
@@ -830,6 +987,15 @@ section,
   line-height: 1.1;
   color: var(--heading-color);
   letter-spacing: -0.02em;
+}
+
+.form-container {
+    background-color: #ffffff; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 12px;       
+    padding: 30px;             
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* ظل ناعم جداً غير مزعج */
+    transition: transform 0.3s ease;
 }
 
 @media (max-width: 992px) {
