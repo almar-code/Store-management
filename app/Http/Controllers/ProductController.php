@@ -9,8 +9,4 @@ class ProductController extends Controller
     public function AddProduct(){
         return view('Products.addproduct', []);
     }
-
-    public function AddSection(){
-        return view('Sections.addsection', []);
-    }
 }
