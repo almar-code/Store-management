@@ -56,8 +56,8 @@
                     <li class="dropdown"><a href="#"><span>الفئات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addproduct">إضافة فئة</a></li>
-                            <li><a href="#">قائمة الفئات</a></li>
+                            <li></i><a href="/addcategorie">إضافة فئة</a></li>
+                            <li><a href="/categorieManagement">قائمة الفئات</a></li>
 
                         </ul>
                     </li>
@@ -106,6 +106,8 @@
 
     @yield('content')
     @yield('section')
+    @yield('categorie')
+    @yield('categorieManagement')
 
     
 
