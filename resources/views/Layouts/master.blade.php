@@ -67,7 +67,7 @@
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li></i><a href="/addsection">إضافة قسم</a></li>
-                            <li><a href="#">قائمة الاقسام</a></li>
+                            <li><a href="/sections">قائمة الاقسام</a></li>
 
                         </ul>
                     </li>
@@ -103,16 +103,9 @@
 
         </div>
     </header>
-
-
-
-    @yield('content')
-    @yield('section')
-    @yield('categorie')
-    @yield('categorieManagement')
-
-    
-
+<main>
+@yield('content')
+</main>
    <footer class="footer mt-auto py-3 bg-dark border-top border-secondary text-white-50">
     <div class="container-fluid px-4">
         <div class="row align-items-center justify-content-between flex-column flex-md-row text-center text-md-end">
