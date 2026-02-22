@@ -106,8 +106,6 @@
 <main>
 @yield('content')
 </main>
-
-
    <footer class="footer mt-auto py-3 bg-dark border-top border-secondary text-white-50">
     <div class="container-fluid px-4">
         <div class="row align-items-center justify-content-between flex-column flex-md-row text-center text-md-end">
