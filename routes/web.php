@@ -13,3 +13,5 @@ Route::get('addsection', [SectionController::class, 'AddSection']);
 Route::get('addcategorie', [CategorieController::class, 'AddCategorie']);
 Route::get('categorieManagement', [CategorieController::class, 'CategorieManagement']);
 
+Route::get('products', [ProductController::class, 'Products']);
+
