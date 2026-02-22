@@ -21,7 +21,7 @@
                 </a>
             </div>
 
-            <div class="row g-3">
+            <div class="row g-3 px-2">
                 @php
                     $categories = [
                         (object) [
