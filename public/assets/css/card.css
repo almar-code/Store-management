@@ -1,20 +1,27 @@
 .text-turquoise {
-color: #088276 !important; /* لون أخضر فيروزي */
+    color: #088276 !important;
+    /* لون أخضر فيروزي */
 }
+
 .dropdown-item:hover .text-turquoise {
-color: #30c2b3 !important; /* درجة أغمق قليلاً عند التمرير */
+    color: #30c2b3 !important;
+    /* درجة أغمق قليلاً عند التمرير */
 }
+
 .dropdown-menu {
-z-index: 1060 !important;
+    z-index: 1060 !important;
 }
+
 /* تنسيق الكارد بدون overflow hidden */
 .product-card {
-border-radius: 15px;
-background-color: #212529; /* لون Dark متناسق */
+    border-radius: 15px;
+    background-color: #212529;
+    /* لون Dark متناسق */
 }
 
 .search-wrapper {
-    direction: rtl; /* لضمان اتجاه الأيقونة والنص من اليمين */
+    direction: rtl;
+    /* لضمان اتجاه الأيقونة والنص من اليمين */
     margin: 0px 10px 0px 10px;
 }
 
@@ -29,8 +36,8 @@ background-color: #212529; /* لون Dark متناسق */
     width: 100%;
     padding: 6px 45px 6px 20px;
     background-color: transparent;
-    border: 1px solid #ffffff; 
-    border-radius: 10px;
+    border: 1px solid #ffffff;
+    border-radius: 7px;
     color: white;
     font-size: 16px;
     outline: none;
@@ -41,7 +48,7 @@ background-color: #212529; /* لون Dark متناسق */
 .search-icon {
     position: absolute;
     right: 15px;
-    top: 55%;
+    top: 45%;
     transform: translateY(-50%);
     color: #aaa;
     font-size: 20px;
@@ -51,11 +58,10 @@ background-color: #212529; /* لون Dark متناسق */
 .search-input:hover {
     border-color: transparent;
     /* إنشاء التدرج اللوني للإطار باستخدام background-image */
-    background-image: linear-gradient(#212529, #212529), 
-                        linear-gradient(to right, #088276, #ffffff);
+    background-image: linear-gradient(#212529, #212529),
+        linear-gradient(to right, #088276, #ffffff);
     background-origin: border-box;
     background-clip: padding-box, border-box;
-    border: 2px solid transparent;
     box-shadow: 0 0 10px rgba(64, 224, 208, 0.2);
 }
 
@@ -63,17 +69,79 @@ background-color: #212529; /* لون Dark متناسق */
     color: #888;
     text-align: right;
 }
+
+/* تنسيق الحاوية لتكون مرنة (Flex) */
+.controls-container {
+    padding: 15px;
+    border: rgb(136, 136, 136) solid 1px;
+     border-radius: 7px;
+    /* border-bottom: none; */
+    display: flex;
+    gap: 10px;
+    /* المسافة بين الحقل والزر */
+    direction: rtl;
+    margin: 20px auto;
+}
+
+/* تنسيق زر إضافة منتج */
+.btn-add-product {
+    width: 100px;
+    height: 38px;
+    background-color: #088276;
+    /* اللون الذي طلبته */
+    color: white;
+    border: white solid 1px;
+    border-radius: 7px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    /* يمنع النص من الانقسام لسطرين */
+    transition: opacity 0.3s;
+    text-decoration: none;
+    font-size: small;
+    font-weight: bold;
+}
+
+.btn-add-product:hover {
+    color: white;
+    opacity: 0.9;
+}
+
+.section-ar {
+    display: flex;
+
+    width: 100%;
+    /* يأخذ كامل المساحة */
+    direction: rtl;
+}
+
 @media (max-width: 1199px) {
     .search-input {
 
-    padding: 3px 45px 3px 20px;
-    
-}
-.search-icon {
-    right: 10px;
-    font-size: 15px;
-}
-.search-input::placeholder {
-    font-size: 15px;
-}
+        padding: 3px 45px 3px 20px;
+
+    }
+
+    .search-icon {
+        right: 10px;
+        font-size: 15px;
+    }
+
+    .search-input::placeholder {
+        font-size: 15px;
+    }
+
+    .btn-add-product {
+        height: 32px;
+    }
+
+    .section-ar {
+        display: none;
+    }
+    .controls-container {
+         padding: 0px;
+        border: none;
+
+    }
 }

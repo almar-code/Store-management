@@ -1,30 +1,26 @@
 @extends('layouts.master')
-@section('categorieManagement')
+@section('content')
 
-<div class="main-content-wrapper py-5" style="background-color: #f8f9fa; min-height: 100vh; direction: rtl;">
+<div class="main-content-wrapper" style="min-height: 100vh; direction: rtl;">
     <div class="container">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-bold text-dark mb-0">إدارة الفئات</h3>
-            <a href="/addcategorie" class="btn btn-custom-green d-flex align-items-center text-white px-4 py-2 shadow-sm">
-                <i class="bi bi-plus-lg ms-2"></i> إضافة فئة جديدة
-            </a>
-        </div>
+        <div class="controls-container">
+                <div class="section-ar">
 
-        <div class="row mb-4 g-2">
-            <div class="col-md-6">
-                <div class="input-group shadow-sm">
-                    <span class="input-group-text bg-white border-start-0 text-muted"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control border-end-0 py-2 text-end" placeholder="ابحث عن فئة...">
+                    <div class="section-title" style="margin-bottom: 0px;">
+                        <h3 style="color: white ;font-size: 20px">قائمة <span class="orange-text">المنتجات</span></h3>
+                    </div>
                 </div>
+                <div class="search-input-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search">
+                </div>
+
+                <a href="#" class="btn-add-product shadow-sm">
+                    إضافة منتج
+                    <i class="bi bi-plus-lg ms-2"></i>
+                </a>
             </div>
-            <div class="col-md-3">
-                <select class="form-select shadow-sm py-2 text-end">
-                    <option>ترتيب حسب: الاسم (أ-ي)</option>
-                    <option>ترتيب حسب: الاسم (ي-أ)</option>
-                </select>
-            </div>
-        </div>
 
         <div class="row g-3">
             @php
