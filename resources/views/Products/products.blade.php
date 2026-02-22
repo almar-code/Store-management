@@ -1,8 +1,6 @@
 @extends('layouts.master')
 @section('content')
     <div class="container my-4  px-2 px-md-2" dir="rtl">
-
-
         <div class="container">
 
             <div class="controls-container">
@@ -87,4 +85,5 @@
             @endfor
         </div>
     </div>
+
 @endsection
