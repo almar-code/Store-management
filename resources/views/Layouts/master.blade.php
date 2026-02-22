@@ -67,7 +67,7 @@
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li></i><a href="/addsection">إضافة قسم</a></li>
-                            <li><a href="#">قائمة الاقسام</a></li>
+                            <li><a href="/sections">قائمة الاقسام</a></li>
 
                         </ul>
                     </li>

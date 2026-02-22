@@ -9,4 +9,8 @@ class SectionController extends Controller
     public function AddSection(){
         return view('Sections.addsection', []);
     }
+      public function Sections(){
+        return view('Sections.sections', []);
+    }
+
 }
