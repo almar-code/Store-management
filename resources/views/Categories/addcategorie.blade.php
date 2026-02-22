@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('categorie')
+@section('content')
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">
