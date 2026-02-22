@@ -103,15 +103,11 @@
 
         </div>
     </header>
-
-
-
-    @yield('content')
-    @yield('section')
-    @yield('categorie')
-    @yield('categorieManagement')
-
+<main>
+@yield('content')
+</main>
     
+
 
    <footer class="footer mt-auto py-3 bg-dark border-top border-secondary text-white-50">
     <div class="container-fluid px-4">

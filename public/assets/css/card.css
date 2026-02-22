@@ -1,3 +1,18 @@
+:root {
+  --background-color: #ffffff;
+  /* Background color for the entire website, including individual sections */
+  --default-color: rgba(0, 0, 0, 0.8);
+  /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #ffffff;
+  /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #008870;
+  /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --surface-color: #ffffff;
+  /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+  --contrast-color: #ffffff;
+  /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+}
+
 .text-turquoise {
     color: #088276 !important;
     /* لون أخضر فيروزي */
@@ -14,11 +29,15 @@
 
 /* تنسيق الكارد بدون overflow hidden */
 .product-card {
-    border-radius: 15px;
-    background-color: #212529;
+        background-color: var( --background-color) !important; /* خلفية بيضاء */
+        border: 1px solid var(--default-color) !important; /* حدود فاتحة */
+        border-radius: 15px;
+        transition: transform 0.2s ease;
     /* لون Dark متناسق */
 }
-
+ .product-card:hover {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
 .search-wrapper {
     direction: rtl;
     /* لضمان اتجاه الأيقونة والنص من اليمين */
@@ -36,7 +55,7 @@
     width: 100%;
     padding: 6px 45px 6px 20px;
     background-color: transparent;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--default-color);
     border-radius: 7px;
     color: white;
     font-size: 16px;
