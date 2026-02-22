@@ -33,7 +33,7 @@
         border: 1px solid var(--default-color) !important; /* حدود فاتحة */
         border-radius: 15px;
         transition: transform 0.2s ease;
-    /* لون Dark متناسق */
+  /* لون Dark متناسق */
 }
  .product-card:hover {
         box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
