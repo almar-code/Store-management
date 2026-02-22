@@ -58,8 +58,8 @@
                     <li class="dropdown"><a href="#"><span>الفئات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addproduct">إضافة فئة</a></li>
-                            <li><a href="#">قائمة الفئات</a></li>
+                            <li></i><a href="/addcategorie">إضافة فئة</a></li>
+                            <li><a href="/categorieManagement">قائمة الفئات</a></li>
 
                         </ul>
                     </li>
@@ -106,8 +106,7 @@
 <main>
 @yield('content')
 </main>
-    
-    
+
 
    <footer class="footer mt-auto py-3 bg-dark border-top border-secondary text-white-50">
     <div class="container-fluid px-4">

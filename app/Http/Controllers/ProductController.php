@@ -13,7 +13,4 @@ class ProductController extends Controller
     {
           return view('Products.Products', []);
     }
-    public function AddSection(){
-        return view('Sections.addsection', []);
-    }
 }
