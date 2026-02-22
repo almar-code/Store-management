@@ -103,12 +103,10 @@
 
         </div>
     </header>
-
-
-
-    @yield('content')
-    @yield('section')
-
+<main>
+@yield('content')
+</main>
+    
     
 
     <footer id="footer" class="footer light-background">
