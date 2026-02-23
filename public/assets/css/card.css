@@ -22,9 +22,13 @@
     color: #30c2b3 !important;
     /* درجة أغمق قليلاً عند التمرير */
 }
+.dropdown-item:hover .text-danger {
+    color: #f70000 !important;
+    /* درجة أغمق قليلاً عند التمرير */
+}
 
 .dropdown-menu {
-    z-index: 1060 !important;
+    z-index: 990 !important;
 }
 
 /* تنسيق الكارد بدون overflow hidden */

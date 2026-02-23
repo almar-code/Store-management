@@ -18,6 +18,7 @@
                 <a href="#" class="btn-add-product shadow-sm">
                     إضافة منتج
                     <i class="bi bi-plus-lg ms-2"></i>
+                    
                 </a>
             </div>
         </div>
@@ -50,29 +51,42 @@
                         data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical fs-4"></i>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-start shadow border-light">
+                    <ul class="dropdown-menu dropdown-menu-start shadow  border border-dark ">
                         <li>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                            <a class="dropdown-item d-flex  justify-content-between py-2 px-4 "
                                 href="#">
                                 <span class="ms-2">تعديل</span>
-                                <i class="bi bi-pencil-square text-turquoise"></i>
+                                <i class="fa-solid fa-pen text-turquoise"></i>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4 text-end"
                                 href="#">
                                 <span class="ms-2">اضافة مقاس</span>
-                                <i class="bi bi-plus-circle text-turquoise"></i>
+                                <i class="fa-solid fa-ruler text-turquoise"></i>
                             </a>
                         </li>
                         <li>
-                            <hr class="dropdown-divider">
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4 text-end"
+                                href="#">
+                                <span class="ms-2">اضافة لون</span>
+                                <i class="fa-solid fa-palette text-turquoise"></i>
+                            </a>
                         </li>
+                         <li>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4 text-end"
+                                href="#">
+                                <span class="ms-2">اضافة خصم</span>
+                                <i class="fa-solid fa-money-bill text-turquoise"></i>
+
+                            </a>
+                        </li>
+                        
                         <li>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-danger font-weight-bold text-end"
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4  font-weight-bold text-end"
                                 href="#">
                                 <span class="ms-2">حذف المنتج</span>
-                                <i class="bi bi-trash"></i>
+                                <i class="bi bi-trash text-danger"></i>
                             </a>
                         </li>
                     </ul>
@@ -84,6 +98,7 @@
 </div>
             @endfor
         </div>
-    </div>
 
 @endsection
+
+
