@@ -1,0 +1,406 @@
+/* ================== BASE ================== */
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 40px;
+}
+
+.panel {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    padding: 25px;
+}
+
+.heading {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.meta-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #595d64;
+}
+
+.meta-value {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.description {
+    font-size: 12px;
+    font-weight: bold;
+    color: #595d64;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.metric-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.metric-number {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.metric-change {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.green {
+    color: #22c55e;
+}
+
+.gray {
+    color: #7b8a97;
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* ================== TOP GRID ================== */
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1.6fr 1.4fr;
+    gap: 25px;
+    direction: rtl;
+}
+
+.meta-row {
+    display: flex;
+    gap: 35px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.chart-lg {
+    height: 260px;
+    margin-top: 25px;
+}
+
+.panel-split {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.half {
+    flex: 1;
+    background: #f8f9fc;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.chart-sm {
+    height: 90px;
+    margin-top: 10px;
+}
+
+/* ================== BOTTOM GRID ================== */
+
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.acq-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.acq-box {
+    width: 55px;
+    height: 55px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blue {
+    background: #3b82f6;
+}
+
+.purple {
+    background: #6c5ce7;
+}
+
+.session-circles {
+    display: flex;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.circle-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.circle-box canvas {
+    width: 80px !important;
+    height: 80px !important;
+}
+
+.channel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+.donut-wrap {
+    height: 250px;
+}
+
+.channel-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.bar {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.bar span {
+    display: block;
+    height: 100%;
+    border-radius: 6px;
+}
+
+/* ================== HEADER ================== */
+
+.top-header {
+    background: #fbfbfb;
+    padding: 20px 30px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.left-title h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+    color: #2d3436;
+}
+
+.left-title p {
+    margin: 6px 0 0;
+    font-size: 18px;
+    color: #636e72;
+}
+
+.right-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 11px;
+    color: #95a5a6;
+    letter-spacing: 1px;
+}
+
+.value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3436;
+}
+
+.divider {
+    width: 1px;
+    height: 35px;
+    background: #dfe6e9;
+}
+
+.export-btn {
+    background: #6c5ce7;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.header-bottom {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    padding: 15px 0;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.tabs {
+    display: flex;
+    gap: 25px;
+}
+
+.tab {
+    text-decoration: none;
+    font-size: 14px;
+    color: #2d3436;
+    cursor: pointer;
+}
+
+.tab.active {
+    color: #6c5ce7;
+    font-weight: 600;
+}
+
+.actions {
+    display: flex;
+    gap: 25px;
+    font-size: 14px;
+    color: #636e72;
+}
+
+.actions a {
+    text-decoration: none;
+    color: #636e72;
+    cursor: pointer;
+}
+
+/* ================== RESPONSIVE ================== */
+
+@media (max-width: 992px) {
+
+    .grid-layout,
+    .bottom-grid,
+    .channel-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .donut-wrap {
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .header-top,
+    .header-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .actions {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 600px) {
+    .wrapper {
+        padding: 0 20px;
+    }
+
+    .donut-wrap {
+        height: 170px;
+    }
+}
+
+/* ================== MOBILE FIX ================== */
+
+@media (max-width: 768px) {
+
+    /* الصف الأول */
+    .header-top {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .left-title {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .right-info {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    /* نصغر المسافات */
+    .divider {
+        display: none;
+    }
+
+    .info-box {
+        font-size: 12px;
+    }
+
+    .value {
+        font-size: 13px;
+    }
+
+    .export-btn {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    /* الصف الثاني */
+    .header-bottom {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 15px;
+        font-size: 13px;
+    }
+
+    .actions {
+        display: flex;
+        gap: 15px;
+        font-size: 13px;
+    }
+
+}
