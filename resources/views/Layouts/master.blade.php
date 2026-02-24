@@ -30,7 +30,7 @@
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
     <link href="assets/css/card.css" rel="stylesheet">
-
+    @yield('link')
 </head>
 
 <body class="index-page">
@@ -41,13 +41,13 @@
             <a href="#" class="logo d-flex align-items-center me-auto me-xl-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                  <img src="assets/img/ligth-mode-logo.gif" alt=""> 
-                <h1 class="sitename">Nic<h1 style="color:#008870">e</h1></h1>
+                <h1 class="sitename" style="color:#008870">N<h1 >ice</h1></h1>
             </a>
 
             <nav id="navmenu" class="navmenu" >
                 <ul >
                     <li><a href="/" class="active">الرئيسية</a></li>
-                    <li class="dropdown"><a href="#"><span>المنتجات</span> <i
+                    <li class="dropdown"><a href="#"><span class="toggle-dropdown">المنتجات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li></i><a href="/addproduct">إضافة منتج</a></li>
@@ -55,7 +55,7 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span>الفئات</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">الفئات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li></i><a href="/addcategorie">إضافة فئة</a></li>
@@ -63,7 +63,7 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span>الاقسام</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">الاقسام</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li></i><a href="/addsection">إضافة قسم</a></li>
@@ -71,7 +71,7 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span>المقاسات</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">المقاسات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li></i><a href="/addproduct">إضافة مقاس</a></li>
@@ -79,15 +79,24 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span>الالوان</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">الالوان</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addproduct">إضافة لون</a></li>
+                            <li></i><a href="/addproduct"  class="toggle-dropdown">إضافة لون</a></li>
                             <li><a href="#">قائمة الالوان</a></li>
 
                         </ul>
                     </li>
-                    <li><a href="#team">الإعلانات</a></li>
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">الإعلانات</span> <i
+                                class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li></i><a href="/addproduct"  class="toggle-dropdown">إضافة إعلان</a></li>
+                            <li><a href="#">قائمة الإعلانات</a></li>
+
+                        </ul>
+                    </li>
+                     <li><a href="/">الطلبات</a></li>
+                   
 
 
                 </ul>
@@ -171,8 +180,9 @@
     <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
-    <!-- Main JS File -->
+    @yield('jsfile')
     <script src="assets/js/main.js"></script>
+
 
 </body>
 
