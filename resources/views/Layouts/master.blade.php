@@ -32,12 +32,13 @@
     <link href="assets/css/card.css" rel="stylesheet">
 
     @yield('link')
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
 <body class="index-page">
-
+@unless(request()->is('login'))
     <header id="header" class="header d-flex align-items-center sticky-top">
         <div class="container position-relative d-flex align-items-center justify-content-between">
 
@@ -99,6 +100,7 @@
                         </ul>
                     </li>
                      <li><a href="/">الطلبات</a></li>
+                     <li><a href="/login">المستخدمين</a></li>
                    
 
 
@@ -115,9 +117,13 @@
 
         </div>
     </header>
+    @endunless
+
 <main>
 @yield('content')
 </main>
+
+@unless(request()->is('login'))
    <footer class="footer mt-auto py-3 bg-dark border-top border-secondary text-white-50">
     <div class="container-fluid px-4">
         <div class="row align-items-center justify-content-between flex-column flex-md-row text-center text-md-end">
@@ -152,7 +158,7 @@
         </div>
     </div>
 </footer>
-
+ @endunless
 <script>
     function updateTime() {
         const now = new Date();
