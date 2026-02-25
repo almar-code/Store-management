@@ -17,4 +17,5 @@ Route::get('categorieManagement', [CategorieController::class, 'CategorieManagem
 
 Route::get('products', [ProductController::class, 'Products']);
 Route::get('orders', [OrdersController::class, 'Orders']);
+Route::get('orderDetails', [OrdersController::class, 'OrderDetails']);
 

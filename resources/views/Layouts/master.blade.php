@@ -38,7 +38,7 @@
     <header id="header" class="header d-flex align-items-center sticky-top">
         <div class="container position-relative d-flex align-items-center justify-content-between">
 
-            <a href="#" class="logo d-flex align-items-center me-auto me-xl-0">
+            <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                  {{-- <img src="assets/img/ligth-mode-logo.gif" alt="">  --}}
                  <img src="assets/img/logo.png" alt=""> 
@@ -47,56 +47,56 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul >
-                    <li><a href="/" class="active">الرئيسية</a></li>
-                    <li class="dropdown"><a href="#"><span class="toggle-dropdown">المنتجات</span> <i
+                    <li><a href="/"class="{{ request()->is('/') ? 'active' : '' }}">الرئيسية</a></li>
+                    <li class="dropdown"><a href="#" ><span class="toggle-dropdown {{ request()->is('addproduct') || request()->is('products') ? 'active' : '' }}">المنتجات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addproduct">إضافة منتج</a></li>
-                            <li><a href="/products">قائمة المنتجات</a></li>
+                            <li></i><a href="/addproduct" class="{{ request()->is('addproduct') ? 'active' : '' }}">إضافة منتج</a></li>
+                            <li><a href="/products" class="{{ request()->is('products') ? 'active' : '' }}">قائمة المنتجات</a></li>
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">الفئات</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addcategorie') || request()->is('categorieManagement') ? 'active' : '' }}">الفئات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addcategorie">إضافة فئة</a></li>
-                            <li><a href="/categorieManagement">قائمة الفئات</a></li>
+                            <li></i><a href="/addcategorie" class="{{ request()->is('addcategorie') ? 'active' : '' }}">إضافة فئة</a></li>
+                            <li><a href="/categorieManagement" class="{{ request()->is('categorieManagement') ? 'active' : '' }}">قائمة الفئات</a></li>
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">الاقسام</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addsection">إضافة قسم</a></li>
-                            <li><a href="/sections">قائمة الاقسام</a></li>
+                            <li></i><a href="/addsection" class="{{ request()->is('addsection') ? 'active' : '' }}">إضافة قسم</a></li>
+                            <li><a href="/sections" class="{{ request()->is('sections') ? 'active' : '' }}">قائمة الاقسام</a></li>
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">المقاسات</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">المقاسات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addproduct">إضافة مقاس</a></li>
-                            <li><a href="#">قائمة المقاسات</a></li>
+                            <li></i><a href="/addproduct" class="{{ request()->is('') ? 'active' : '' }}">إضافة مقاس</a></li>
+                            <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة المقاسات</a></li>
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">الالوان</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}" >الالوان</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addproduct"  class="toggle-dropdown">إضافة لون</a></li>
-                            <li><a href="#">قائمة الالوان</a></li>
+                            <li></i><a href="/" >إضافة لون</a></li>
+                            <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة الالوان</a></li>
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown">الإعلانات</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">الإعلانات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addproduct"  class="toggle-dropdown">إضافة إعلان</a></li>
-                            <li><a href="#">قائمة الإعلانات</a></li>
+                            <li></i><a href="/" class="{{ request()->is('') ? 'active' : '' }}">إضافة إعلان</a></li>
+                            <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة الإعلانات</a></li>
 
                         </ul>
                     </li>
-                     <li><a href="/orders">الطلبات</a></li>
+                     <li><a href="/orders" class="{{ request()->is('orders') ? 'active' : '' }}">الطلبات</a></li>
                    
 
 

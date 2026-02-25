@@ -501,11 +501,11 @@ footer{
   }
 
   .mobile-nav-active .mobile-nav-toggle {
-    color:#ffffff;
+    color:#000000;
     position: fixed; /* التثبيت عند التمرير */
     font-size: 32px;
     top: 15px;
-    right:320px;
+    right:245px;
     margin-right: 0;
     z-index: 9999;
   }

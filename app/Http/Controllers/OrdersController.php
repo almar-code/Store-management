@@ -9,4 +9,7 @@ class OrdersController extends Controller
      public function Orders(){
         return view('Orders.orders', []);
     }
+     public function OrderDetails(){
+        return view('Orders.OrderDetails', []);
+    }
 }
