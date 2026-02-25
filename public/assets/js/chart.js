@@ -59,7 +59,7 @@
         new Chart(chartSessions, {
             type: 'bar', data: {
                 labels: Array(8).fill(""), datasets: [
-                    { data: [2, 3, 6, 10, 18, 16, 14, 9], backgroundColor: '#6417df' },
+                    { data: [2, 3, 6, 10, 18, 16, 14, 9], backgroundColor: '#6c5ce7' },
                     { data: [3, 4, 8, 15, 20, 18, 15, 12], backgroundColor: '#9b92aa' }
                 ]
             }, options: { plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } }, responsive: true, maintainAspectRatio: false }

@@ -18,38 +18,43 @@
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root {
-  --background-color: #070708;
-  /* Background color for the entire website, including individual sections */
+/* :root {
+
+  --header-background-color: #070708;
+  --background-color: #ffffff;
+
   --default-color: rgba(0, 0, 0, 0.8);
-  /* Default color used for the majority of the text content across the entire website */
   --heading-color: #ffffff;
-  /* Color for headings, subheadings and title throughout the website */
   --accent-color: #008870;
-  /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff;
-  /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff;
-  /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
 
-/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
   --nav-color: rgba(255, 255, 255, 0.8);
-  /* The default color of the main navmenu links */
   --nav-hover-color: #008870;
-  /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #1f1f23;
-  /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #1f1f23;
-  /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: rgba(255, 255, 255, 0.8);
-  /* Used for navigation links of the dropdown items in the navigation menu. */
   --nav-dropdown-hover-color: #008870;
-  /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+} */
+:root {
+  --header-background-color: #ffffff;
+  --background-color: #ffffff;
+  --default-color: rgba(0, 0, 0, 0.8);
+  --heading-color: #000000;
+  --accent-color: #008870;
+  --surface-color: #000000;
+  --contrast-color: #000000;
 }
-
-/* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
+:root {
+  --nav-hover-color: #008870;
+  --nav-mobile-background-color: #ffffff;
+--nav-dropdown-background-color: #ffffff;
+--nav-dropdown-color: #000000;
+--nav-color: #000000;
+  --nav-dropdown-hover-color: #008870;
+}
 
 .light-background {
   --background-color: #1d1d1e;
@@ -58,10 +63,10 @@
 
 .dark-background {
   --background-color: #060606;
-  --default-color: #ffffff;
-  --heading-color: #ffffff;
+  --default-color: #000000;
+  --heading-color: #000000;
   --surface-color: #252525;
-  --contrast-color: #ffffff;
+  --contrast-color: #000000;
 }
 
 /* Smooth scroll */
@@ -76,17 +81,19 @@ body {
   color: var(--default-color);
   background-color: var(--background-color);
   font-family: var(--default-font);
-  
-   
+   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main{
+  flex: 1;
 }
 
 a {
   color: var(--accent-color);
   text-decoration: none;
   transition: 0.3s;
-}
- overflow-y: scroll;      /* يبقي التمرير شغال */
-    scrollbar-width: none;   /* Firefox */
+}/* Firefox */
 a:hover {
   color: color-mix(in srgb, var(--accent-color), transparent 25%);
   text-decoration: none;
@@ -158,14 +165,13 @@ h6 {
 # Global Header
 --------------------------------------------------------------*/
 .header {
-  --background-color: #070708;
+    --background-color: var(--header-background-color);
   color: var(--default-color);
   background-color: var(--background-color);
   padding: 15px 0;
   transition: all 0.5s;
   z-index: 997;
 }
-
 .header .logo {
   line-height: 1;
 }
@@ -221,15 +227,20 @@ h6 {
 .scrolled .header {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
 /* Global Header on Scroll
 ------------------------------*/
 .scrolled .header {
-  --background-color: rgba(7, 7, 8, 0.8);
+  --background-color: var(--header-background-color);
 }
-
+footer{
+  --background-color: var(--header-background-color);
+}
+.align-items-center{
+   color: var(--default-color);
+}
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
@@ -292,6 +303,7 @@ h6 {
   }
 
   .navmenu .dropdown ul {
+    direction: rtl;
     margin: 0;
     padding: 10px 0;
     background: var(--nav-dropdown-background-color);
@@ -376,6 +388,7 @@ h6 {
   margin-bottom: 7px;
 }
   .navmenu {
+    direction: rtl;
     padding: 0;
     z-index: 9997;
   }
@@ -469,19 +482,19 @@ h6 {
     z-index: 99;
     padding: 10px 0;
     margin: 10px 20px;
-    background-color: var(--nav-dropdown-background-color);
-    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    /* background-color: var(--nav-dropdown-background-color);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); */
     box-shadow: none;
     transition: all 0.5s ease-in-out;
   }
 
   .navmenu .dropdown ul ul {
-    background-color: rgba(33, 37, 41, 0.1);
+    /* background-color: rgba(33, 37, 41, 0.1); */
   }
 
   .navmenu .dropdown>.dropdown-active {
     display: block;
-    background-color: rgba(33, 37, 41, 0.03);
+    /* background-color: rgba(33, 37, 41, 0.03); */
   }
 
   .mobile-nav-active {
@@ -489,11 +502,11 @@ h6 {
   }
 
   .mobile-nav-active .mobile-nav-toggle {
-    color: #fff;
+    color:#000000;
     position: fixed; /* التثبيت عند التمرير */
     font-size: 32px;
     top: 15px;
-    right: 230px;
+    right:245px;
     margin-right: 0;
     z-index: 9999;
   }
@@ -545,13 +558,13 @@ h6 {
 /*--------------------------------------------------------------
 # Global Footer
 --------------------------------------------------------------*/
-.footer {
+/* .footer {
   color: var(--default-color);
   background-color: var(--background-color);
   font-size: 14px;
   padding: 40px 0 0 0;
   position: relative;
-}
+} */
 
 .footer .icon {
   color: var(--accent-color);

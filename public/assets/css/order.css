@@ -1,0 +1,160 @@
+body {
+    font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+}
+
+.table-container {
+    width: 100%;
+    margin: 40px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    text-align: center;
+    padding: 14px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #313131;
+    border-bottom: 2px solid #d5d5d5;
+}
+
+tbody td {
+    text-align: center;
+    padding: 8px 7px;
+    font-size: 15px;
+    color: #1b1b1b;
+    border-bottom: 1px solid #d6dde5;
+}
+
+tbody tr:nth-of-type(odd) {
+    background-color: rgba(186, 212, 237, 0.13);
+}
+
+tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+@media (max-width: 1199px) {
+    .show {
+        display: none;
+    }
+}
+.order-box {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.order-grid {
+    display: grid;
+   grid-template-columns: repeat(6, 1fr); /* عدد العناصر */
+        gap: 25px;
+         padding: 0 100px 0 0;
+}
+
+.order-item label {
+    font-size: 13px;
+    color: #777;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.order-item span {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+}
+
+.order-status {
+    display: flex;
+}
+
+.status-badge {
+    color: #000000;
+    padding: 1px 14px 0px 0px;
+    border-radius: 2px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.status-dropdown {
+    position: relative;
+}
+
+.status-dropdown button {
+    background: transparent;
+    padding: 0px 5px 10px 0px;
+    border: none;
+    font-size: 18px;
+    color: #008870;
+}
+
+.status-menu {
+    position: absolute;
+    right: 0;
+    top: 35px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 160px;
+    display: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+}
+
+.status-menu a {
+    display: block;
+    padding: 10px;
+    font-size: 14px;
+    color: #111;
+    text-decoration: none;
+}
+
+.status-menu a:hover {
+    background: #f3f3f3;
+    color: #008870;
+}
+
+.status-dropdown.active .status-menu {
+    display: block;
+}
+
+
+.order-totals {
+    display: flex;
+    justify-content: flex-end;
+    gap: 50px;
+    font-size: 16px;
+}
+
+.order-totals label {
+    color: #555;
+    margin-left: 8px;
+}
+
+.total-price {
+    color: #008870;
+    font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
+
+    .order-grid {
+        grid-template-columns: 1fr 1fr;
+          padding: 0 10px 0 0;
+    }
+
+    .order-totals {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
+
+}
