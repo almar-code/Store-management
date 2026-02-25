@@ -1,56 +1,6 @@
 @extends('layouts.master')
 @section('link')
-    <style>
-        body {
-            font-family: "Arial Narrow", Arial, Helvetica, sans-serif;
-            background-color: #ffffff;
-        }
-
-        .table-container {
-            width: 100%;
-            margin: 40px auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead th {
-            text-align: center;
-            padding: 14px;
-            font-size: 13px;
-            letter-spacing: 1px;
-            color: #313131;
-            border-bottom: 2px solid #d5d5d5;
-        }
-
-        tbody td {
-            text-align: center;
-            padding: 8px 7px;
-            font-size: 15px;
-            color: #1b1b1b;
-            border-bottom: 1px solid #d6dde5;
-        }
-
-        tbody tr:nth-of-type(odd) {
-            background-color: rgba(186, 212, 237, 0.13);
-        }
-
-    
-
-        tbody tr:nth-child(even) {
-            background-color: #ffffff;
-        }
-        @media (max-width: 1199px) {
-            .show{
-                display: none
-            }
-        }
-    </style>
-
-
-    </style>
+    <link href="assets/css/order.css" rel="stylesheet">
 @endsection
 @section('content')
     <div class="container my-4  px-2 px-md-2" dir="rtl">
@@ -99,7 +49,49 @@
                             <td><span class="badge  text-dark">قيد المعالجة</span></td>
                             <td class="show">2026-02-20</td>
                             <td>
-                                <a href="#" class="text-dark fs-5">
+                                <a href="/orderDetails" class="text-dark fs-5">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>1</td>
+                            <td>سارة محمد</td>
+                            <td class="show">779271679</td>
+                            <td class="show">الرياض</td>
+                            <td>450 ر.س</td>
+                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
+                            <td class="show">2026-02-20</td>
+                            <td>
+                                <a href="/orderDetails" class="text-dark fs-5">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>1</td>
+                            <td>سارة محمد</td>
+                            <td class="show">779271679</td>
+                            <td class="show">الرياض</td>
+                            <td>450 ر.س</td>
+                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
+                            <td class="show">2026-02-20</td>
+                            <td>
+                                <a href="/orderDetails" class="text-dark fs-5">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>1</td>
+                            <td>سارة محمد</td>
+                            <td class="show">779271679</td>
+                            <td class="show">الرياض</td>
+                            <td>450 ر.س</td>
+                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
+                            <td class="show">2026-02-20</td>
+                            <td>
+                                <a href="/orderDetails" class="text-dark fs-5">
                                     <i class="bi bi-eye"></i>
                                 </a>
                             </td>
@@ -127,49 +119,7 @@
                             <td><span class="badge  text-dark">قيد المعالجة</span></td>
                             <td class="show">2026-02-20</td>
                             <td>
-                                <a href="#" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="#" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="#" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="#" class="text-dark fs-5">
+                                <a href="/" class="text-dark fs-5">
                                     <i class="bi bi-eye"></i>
                                 </a>
                             </td>

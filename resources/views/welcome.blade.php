@@ -1,58 +1,69 @@
 @extends('layouts.master')
 @section('link')
     <link href="assets/css/chart.css" rel="stylesheet">
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .mobile-nav-active .mobile-nav-toggle {
+    right:270px;
+  }
+    </style>
 @endsection
 @section('content')
- <div class="wrapper">
+    <div class="wrapper">
         <div class="top-header" dir="rtl">
 
-    <div class="header-top">
+            <div class="header-top">
 
-        <div class="left-title">
-            <h2>لوحة التحكم</h2>
-            <p>تابع اداء موقعك الإلكتروني</p>
-        </div>
+                <div class="left-title">
+                    <div class="section-ar">
 
-        <div class="right-info">
+                    <div class="section-title" style="margin-bottom: 0px;">
+                        <h3 style="font-size: 20px">لوحة <span class="orange-text">التحكم</span></h3>
+                    </div>
+                </div>
+                    
+                    <p>تابع اداء موقعك الإلكتروني</p>
+                </div>
 
-            <div class="info-box">
-                <span class="label">تاريح البدء</span>
-                <span class="value">Oct 10, 2018</span>
+                <div class="right-info">
+
+                    <div class="info-box">
+                        <span class="label">تاريح البدء</span>
+                        <span class="value">Oct 10, 2018</span>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="info-box">
+                        <span class="label">تاريخ الانتهاء</span>
+                        <span class="value">Oct 23, 2018</span>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <button class="export-btn"><i class="bi bi-arrow-clockwise"></i></button>
+
+                </div>
+
             </div>
 
-            <div class="divider"></div>
+            <div class="header-bottom">
 
-            <div class="info-box">
-                <span class="label">تاريخ الانتهاء</span>
-                <span class="value">Oct 23, 2018</span>
+                <div class="tabs">
+                    <a class="tab active">اليوم</a>
+                    <a class="tab">الاسبوع</a>
+                    <a class="tab">الشهر</a>
+                    <a class="tab">السنة</a>
+                </div>
+
+                <div class="actions">
+                    <a>حفظ التقرير</a>
+                    <a>تصدير PDF</a>
+                </div>
+
             </div>
 
-            <div class="divider"></div>
-
-            <button class="export-btn"><i class="bi bi-arrow-clockwise"></i></button>
-
         </div>
-
-    </div>
-
-    <div class="header-bottom">
-
-        <div class="tabs">
-            <a class="tab active">اليوم</a>
-            <a class="tab">الاسبوع</a>
-            <a class="tab">الشهر</a>
-            <a class="tab">السنة</a>
-        </div>
-
-        <div class="actions">
-            <a>حفظ التقرير</a>
-            <a>تصدير  PDF</a>
-        </div>
-
-    </div>
-
-</div>
 
         <!-- ================= TOP SECTION ================= -->
 
@@ -71,7 +82,7 @@
                         <div class="meta-value" style="color: #0984e3;">33.50%</div>
                     </div>
                     <div>
-                        <div class="meta-title" >المبيعات</div>
+                        <div class="meta-title">المبيعات</div>
                         <div class="meta-value" style="color: #9b92aa;">83,123</div>
                     </div>
                     <div>
@@ -228,8 +239,7 @@
         </div>
 
     </div>
-     
 @endsection
 @section('jsfile')
-    <script src="assets/js/chart.js"></script> 
+    <script src="assets/js/chart.js"></script>
 @endsection
