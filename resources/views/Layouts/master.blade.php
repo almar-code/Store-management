@@ -40,11 +40,12 @@
 
             <a href="#" class="logo d-flex align-items-center me-auto me-xl-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
-                 <img src="assets/img/ligth-mode-logo.gif" alt=""> 
-                <h1 class="sitename" style="color:#008870">N<h1 >ice</h1></h1>
+                 {{-- <img src="assets/img/ligth-mode-logo.gif" alt="">  --}}
+                 <img src="assets/img/logo.png" alt=""> 
+                <h1 class="sitename" style="color:#008870">N<h1 style="color: rgb(0, 0, 0)">ice</h1></h1>
             </a>
 
-            <nav id="navmenu" class="navmenu" >
+            <nav id="navmenu" class="navmenu">
                 <ul >
                     <li><a href="/" class="active">الرئيسية</a></li>
                     <li class="dropdown"><a href="#"><span class="toggle-dropdown">المنتجات</span> <i
@@ -95,7 +96,7 @@
 
                         </ul>
                     </li>
-                     <li><a href="/">الطلبات</a></li>
+                     <li><a href="/orders">الطلبات</a></li>
                    
 
 
@@ -115,12 +116,12 @@
 <main>
 @yield('content')
 </main>
-   <footer class="footer mt-auto py-3 bg-dark border-top border-secondary text-white-50">
+   <footer class="footer mt-auto py-3  text-white-50">
     <div class="container-fluid px-4">
-        <div class="row align-items-center justify-content-between flex-column flex-md-row text-center text-md-end">
+        <div class="row align-items-center justify-content-between flex-column flex-md-row text-center text-md-end ">
             
             <div class="col-auto">
-                <div class="small m-0 text-white">
+                <div class="small m-0 ">
                     <i class="bi bi-person-circle text-turquoise me-1"></i>
                     المستخدم الحالي: 
                     <span class="fw-bold text-turquoise">
@@ -130,7 +131,7 @@
             </div>
 
             <div class="col-auto my-2 my-md-0">
-                <div class="small text-white">
+                <div class="small">
                     <i class="bi bi-clock-fill text-turquoise me-1"></i>
                     <span id="current-time">
                         {{ now()->format('Y-m-d | h:i A') }}
@@ -139,7 +140,7 @@
             </div>
 
             <div class="col-auto">
-                <div class="small m-0 text-white">
+                <div class="small m-0 ">
                     إدارة متجر العبايات &copy; {{ date('Y') }} 
                     <span class="text-turquoise mx-1">|</span> 
                     الإصدار 1.0.0

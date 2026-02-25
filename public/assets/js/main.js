@@ -216,5 +216,24 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
+  /**
+ * Close mobile nav when clicking on dark overlay only
+ */
+const navMenu = document.querySelector('#navmenu');
+
+navMenu.addEventListener('click', function(e) {
+
+  // إذا الضغط كان على الخلفية نفسها (وليس داخل القائمة)
+  if (e.target === this) {
+
+    document.body.classList.remove('mobile-nav-active');
+
+    const toggleBtn = document.querySelector('.mobile-nav-toggle');
+    toggleBtn.classList.add('bi-list');
+    toggleBtn.classList.remove('bi-x');
+
+  }
+
+});
 
 })();
