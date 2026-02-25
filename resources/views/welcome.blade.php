@@ -30,7 +30,7 @@
 
             <div class="divider"></div>
 
-            <button class="export-btn">تصدير</button>
+            <button class="export-btn"><i class="bi bi-arrow-clockwise"></i></button>
 
         </div>
 
@@ -76,7 +76,7 @@
                     </div>
                     <div>
                         <div class="meta-title">الارباح</div>
-                        <div class="meta-value" style="color: #6417df;">16,869</div>
+                        <div class="meta-value" style="color: #6c5ce7;">16,869</div>
                     </div>
                 </div>
 

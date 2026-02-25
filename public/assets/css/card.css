@@ -31,7 +31,7 @@
 .product-card {
         background-color: var( --background-color) !important; /* خلفية بيضاء */
         border: 1px solid var(--default-color) !important; /* حدود فاتحة */
-        border-radius: 15px;
+        border-radius: 8px;
         transition: transform 0.2s ease;
   /* لون Dark متناسق */
 }
