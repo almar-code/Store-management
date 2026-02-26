@@ -43,7 +43,56 @@
                                     </div>
                                 </div>
                             </div>
+            <div class="col-7 col-md-8 px-3 text-end">
+                <div class="d-flex flex-column">
+                    <h5 class="card-title mb-1 fw-bold text-truncate">عباية رسمية</h5>
+                    <p class="card-text mb-2 small text-muted text-truncate">عباية رسمية للمقابلات والحفلات الرسمية</p>
+                    <div class="fw-bold" style="font-size: 1rem;">
+                        66.00 <span class="small text-turquoise" style="font-size: 0.8rem;">ر.س</span>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-1 text-start align-self-start">
+                <div class="dropdown">
+                    <button class="btn text-dark p-0 border-0 shadow-none" type="button"
+                        data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical fs-4"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-start shadow  border border-dark ">
+                        <li>
+                            <a class="dropdown-item d-flex  justify-content-between py-2 px-4 "
+                                href="#">
+                                <span class="ms-2">تعديل</span>
+                                <i class="fa-solid fa-pen text-turquoise"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4 text-end"
+                                href="#">
+                                <span class="ms-2">اضافة مقاس</span>
+                                <i class="fa-solid fa-ruler text-turquoise"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4 text-end"
+                                href="#">
+                                <span class="ms-2">قائمه المقاسات </span>
+                                <i class="fa-solid fa-ruler text-turquoise"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4 text-end"
+                                href="#">
+                                <span class="ms-2">اضافة لون</span>
+                                <i class="fa-solid fa-palette text-turquoise"></i>
+                            </a>
+                        </li>
+                         <li>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4 text-end"
+                                href="#">
+                                <span class="ms-2">اضافة خصم</span>
+                                <i class="fa-solid fa-money-bill text-turquoise"></i>
                             <div class="col-1 text-start align-self-start">
                                 <div class="dropdown">
                                     <button class="btn text-dark p-0 border-0 shadow-none" type="button"
