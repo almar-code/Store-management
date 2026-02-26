@@ -38,7 +38,6 @@
 </head>
 
 <body class="index-page">
-@unless(request()->is('login'))
     <header id="header" class="header d-flex align-items-center sticky-top">
         <div class="container position-relative d-flex align-items-center justify-content-between">
 
@@ -100,8 +99,16 @@
 
                         </ul>
                     </li>
-                     <li><a href="/">الطلبات</a></li>
-                     <li><a href="/login">المستخدمين</a></li>
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addUser') || request()->is('users')  || request()->is('permission') ? 'active' : '' }}">المستخدمين</span> <i
+                                class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li></i><a href="/addUser" class="{{ request()->is('addUser') ? 'active' : '' }}">إضافة مستخدم</a></li>
+                            <li><a href="/users" class="{{ request()->is('users') ? 'active' : '' }}">قائمة المستخدمين</a></li>
+                            <li><a href="/permission" class="{{ request()->is('permission') ? 'active' : '' }}">قائمة الصلاحيات</a></li>
+
+                        </ul>
+                    </li>
+                     <li><a href="/login">Login</a></li>
 
                      <li><a href="/orders" class="{{ request()->is('orders') ? 'active' : '' }}">الطلبات</a></li>
  
@@ -120,13 +127,11 @@
 
         </div>
     </header>
-    @endunless
 
 <main>
 @yield('content')
 </main>
 
-@unless(request()->is('login'))
   
    <footer class="footer mt-auto py-3  text-white-50">
     <div class="container-fluid px-4">
@@ -162,7 +167,6 @@
         </div>
     </div>
 </footer>
- @endunless
 <script>
     function updateTime() {
         const now = new Date();
