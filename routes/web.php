@@ -6,6 +6,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\SizeController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,4 +21,5 @@ Route::get('products', [ProductController::class, 'Products']);
 Route::get('login', [loginController::class, 'Login']);
 Route::get('orders', [OrdersController::class, 'Orders']);
 Route::get('orderDetails', [OrdersController::class, 'OrderDetails']);
+Route::get('addsize', [SizeController::class, 'Addsize']);
 
