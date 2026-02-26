@@ -69,6 +69,13 @@
                         <li>
                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4 text-end"
                                 href="#">
+                                <span class="ms-2">قائمه المقاسات </span>
+                                <i class="fa-solid fa-ruler text-turquoise"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 px-4 text-end"
+                                href="#">
                                 <span class="ms-2">اضافة لون</span>
                                 <i class="fa-solid fa-palette text-turquoise"></i>
                             </a>
@@ -100,5 +107,3 @@
         </div>
 
 @endsection
-
-
