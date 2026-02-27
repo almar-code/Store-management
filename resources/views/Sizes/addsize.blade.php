@@ -16,22 +16,22 @@
             <div class="col-14 col-md-10 col-lg-8">
                 
                 <div class="form-container">
-                    <h3>نموذج إضافة المقاسات</h3>
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                            <h3>نموذج إضافة المقاسات</h3>
+                       <a href="/products"> <i class="fas fa-arrow-left"></i></a>
+                    </div>
+
                     <form action="forms/contact.php" method="post">
                         
                         <div class="form-floating mb-3">
-                            <select class="form-control" id="productSubcategory" name="productSubcategory" required="">
-                                <option value="" selected disabled>اختر المنتج ...</option>
-                                <option>عبايه دارينو </option>
-                                <option>عبايه رغد  </option>
-                                <option>عبايه العنقاء  </option>
-                            </select>
-                            <label for="productSubcategory">فئة المنتج</label>
+                            <input type="text" class="form-control" id="productPrice" name="productPrice"  placeholder="Full Name" required=""
+                            value="حمد عبدو" readonly>
+                            <label for="productName">المنتج   </label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="productName" name="productName" placeholder="Full Name" required="">
-                            <label for="productName">المقاس  </label>
+                            <input type="text" class="form-control" id="SizeName" name="SizeName" placeholder="Full Name" required="">
+                            <label for="SizeName">المقاس  </label>
                         </div>
                         
                        
