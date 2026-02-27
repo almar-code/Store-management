@@ -53,7 +53,7 @@
                                     <ul class="dropdown-menu dropdown-menu-start shadow border-light">
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="#">
+                                                href="/addsize">
                                                 <span class="ms-2">تعديل</span>
                                                 <i class="bi bi-pencil-square text-turquoise"></i>
                                             </a>
