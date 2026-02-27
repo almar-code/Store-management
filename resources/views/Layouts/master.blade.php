@@ -67,14 +67,14 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span> <i
+                    {{-- <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li></i><a href="/addsection" class="{{ request()->is('addsection') ? 'active' : '' }}">إضافة قسم</a></li>
                             <li><a href="/sections" class="{{ request()->is('sections') ? 'active' : '' }}">قائمة الاقسام</a></li>
 
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">المقاسات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
