@@ -32,5 +32,4 @@ Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
 Route::get('addsize', [SizeController::class, 'Addsize']);
 Route::get('addColor', [ColorsController::class, 'AddColor']);
 Route::get('colors', [ColorsController::class, 'Colors']);
-
-
+Route::get('sizeManagement', [SizeController::class, 'SizeManagement']);
