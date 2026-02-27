@@ -9,6 +9,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\AdsController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -30,3 +31,4 @@ Route::get('permission', [UserController::class, 'Permission']);
 Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
 Route::get('addsize', [SizeController::class, 'Addsize']);
 Route::get('sizeManagement', [SizeController::class, 'SizeManagement']);
+Route::get('addads', [AdsController::class, 'AddAds']);
