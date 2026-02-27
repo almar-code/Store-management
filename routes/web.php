@@ -22,4 +22,4 @@ Route::get('login', [loginController::class, 'Login']);
 Route::get('orders', [OrdersController::class, 'Orders']);
 Route::get('orderDetails', [OrdersController::class, 'OrderDetails']);
 Route::get('addsize', [SizeController::class, 'Addsize']);
-
+Route::get('sizeManagement', [SizeController::class, 'SizeManagement']);
