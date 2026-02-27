@@ -29,4 +29,4 @@ Route::get('addPermission', [UserController::class, 'AddPermission']);
 Route::get('permission', [UserController::class, 'Permission']);
 Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
 Route::get('addsize', [SizeController::class, 'Addsize']);
-
+Route::get('sizeManagement', [SizeController::class, 'SizeManagement']);
