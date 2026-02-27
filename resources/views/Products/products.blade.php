@@ -59,9 +59,14 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/addsize">
+                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end" href="/addsize">
                                                 <span class="ms-2">اضافة مقاس</span>
+                                                <i class="bi bi-plus-circle text-turquoise"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end" href="/addsize">
+                                                <span class="ms-2">مقاسات المنتج</span>
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
                                         </li>
