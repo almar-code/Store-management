@@ -57,7 +57,8 @@
                         <div class="input-group">
                             <div class="input-wrapper">
                                 <i class="fas fa-user"></i>
-                                <input type="text" placeholder="Username" required>
+                                <input type="text" required>
+                                <label for="username">Username</label>
                             </div>
                         </div>
 
@@ -65,7 +66,8 @@
                         <div class="input-group">
                             <div class="input-wrapper">
                                 <i class="fas fa-lock"></i>
-                                <input type="password" placeholder="Password" required>
+                                <input type="password"  required>
+                                <label for="Password">Password</label>
                             </div>
                         </div>
 
@@ -80,29 +82,6 @@
 
     </div>
 </div>
-</script>
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Preloader -->
-    <div id="preloader"></div>
-
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-
-    @yield('jsfile')
-    <script src="assets/js/main.js"></script>
+@endsection
 
 
-
-</body>
-
-</html>
