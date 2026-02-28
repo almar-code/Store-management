@@ -46,9 +46,9 @@ tbody tr:nth-child(even) {
 .order-box {
     background: #ffffff;
     border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     border-radius: 10px;
     padding: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .order-grid {

@@ -38,6 +38,7 @@
 </head>
 
 <body class="index-page">
+@unless(request()->is('login'))
     <header id="header" class="header d-flex align-items-center sticky-top">
         <div class="container position-relative d-flex align-items-center justify-content-between">
 
@@ -67,27 +68,11 @@
 
                         </ul>
                     </li>
-                    {{-- <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span> <i
+                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li></i><a href="/addsection" class="{{ request()->is('addsection') ? 'active' : '' }}">إضافة قسم</a></li>
                             <li><a href="/sections" class="{{ request()->is('sections') ? 'active' : '' }}">قائمة الاقسام</a></li>
-
-                        </ul>
-                    </li> --}}
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">المقاسات</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li></i><a href="/addproduct" class="{{ request()->is('') ? 'active' : '' }}">إضافة مقاس</a></li>
-                            <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة المقاسات</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}" >الالوان</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li></i><a href="/" >إضافة لون</a></li>
-                            <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة الالوان</a></li>
 
                         </ul>
                     </li>
@@ -99,10 +84,10 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addUser') || request()->is('users')  || request()->is('permission') ? 'active' : '' }}">المستخدمين</span> <i
+                     <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addUser') || request()->is('users') || request()->is('permission') ? 'active' : '' }}">المستخدمين</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/addUser" class="{{ request()->is('addUser') ? 'active' : '' }}">إضافة مستخدم</a></li>
+                            <li></i><a href="/addUser" class="{{ request()->is('addUser') ? 'active' : '' }}">إضافة مستحدم</a></li>
                             <li><a href="/users" class="{{ request()->is('users') ? 'active' : '' }}">قائمة المستخدمين</a></li>
                             <li><a href="/permission" class="{{ request()->is('permission') ? 'active' : '' }}">قائمة الصلاحيات</a></li>
 
@@ -127,11 +112,13 @@
 
         </div>
     </header>
+    @endunless
 
 <main>
 @yield('content')
 </main>
 
+@unless(request()->is('login'))
   
    <footer class="footer mt-auto py-3  text-white-50">
     <div class="container-fluid px-4">
@@ -167,6 +154,7 @@
         </div>
     </div>
 </footer>
+ @endunless
 <script>
     function updateTime() {
         const now = new Date();
