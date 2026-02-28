@@ -27,7 +27,8 @@
                         <div class="input-group">
                             <div class="input-wrapper">
                                 <i class="fas fa-user"></i>
-                                <input type="text" placeholder="Username" required>
+                                <input type="text" required>
+                                <label for="username">Username</label>
                             </div>
                         </div>
 
@@ -35,7 +36,8 @@
                         <div class="input-group">
                             <div class="input-wrapper">
                                 <i class="fas fa-lock"></i>
-                                <input type="password" placeholder="Password" required>
+                                <input type="password"  required>
+                                <label for="Password">Password</label>
                             </div>
                         </div>
 
@@ -51,3 +53,4 @@
     </div>
 </div>
 @endsection
+
