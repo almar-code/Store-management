@@ -57,7 +57,8 @@
                         <div class="input-group">
                             <div class="input-wrapper">
                                 <i class="fas fa-user"></i>
-                                <input type="text" placeholder="Username" required>
+                                <input type="text" required>
+                                <label for="username">User name</label>
                             </div>
                         </div>
 
@@ -65,44 +66,42 @@
                         <div class="input-group">
                             <div class="input-wrapper">
                                 <i class="fas fa-lock"></i>
-                                <input type="password" placeholder="Password" required>
+                                <input type="password"  required>
+                                <label for="Password">Password</label>
                             </div>
                         </div>
 
-                        <button class="btn-login">LOGIN</button>
+                        <button class="btn-login" id="loginBtn">LOGIN</button>
                     </form>
-                   <a href="/"> <button  class="exit-btn" onclick="handleExit()">
-                   <i class="fas fa-arrow-left"></i> Exit
-                </button></a>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
-</script>
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+<script>
+        // التعامل مع نموذج الدخول
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Welcome!',
+                    text: 'Logged in successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                btn.innerHTML = 'LOGIN';
+                btn.disabled = false;
+            }, 1000);
+        });
 
-    <!-- Preloader -->
-    <div id="preloader"></div>
-
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-
-    @yield('jsfile')
-    <script src="assets/js/main.js"></script>
-
-
+        
+    </script>
 
 </body>
-
 </html>
