@@ -58,7 +58,7 @@
                             <div class="input-wrapper">
                                 <i class="fas fa-user"></i>
                                 <input type="text" required>
-                                <label for="username">Username</label>
+                                <label for="username">User name</label>
                             </div>
                         </div>
 
@@ -102,6 +102,6 @@
 
         
     </script>
-@endsection
 
-
+</body>
+</html>
