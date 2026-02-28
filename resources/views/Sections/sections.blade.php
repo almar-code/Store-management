@@ -20,11 +20,10 @@
                     <i class="bi bi-plus-lg ms-2"></i>
                 </a>
             </div>
+     <div class="row g-4 px-2">
 
-            <div class="row g-3 px-2" dir="rtl">
                 @php
-                    // تحديث البيانات لتصبح أقسام (Sections) بدلاً من فئات
-                    $sections = [
+                     $sections = [
                         (object) [
                             'id' => 1,
                             'name' => 'الرسمية',
@@ -41,37 +40,58 @@
                 @endphp
 
                 @forelse($sections as $section)
-                    <div class="col-12" style="border: rgb(210, 210, 210) solid 1px; border-radius: 7px;">
-                        <div class="card bg-white text-dark border-0 shadow-sm transition">
-                            <div class="card-body d-flex align-items-center justify-content-between py-3">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white">
 
-                                <div class="text-end">
-                                    <h6 class="mb-0 fw-bold" style="color: #2d3436;">{{ $section->name }}</h6>
+                        <div class="card-body p-2">
+
+                            <div class="d-flex align-items-center justify-content-between">
+
+                                <div class="text-end flex-grow-1 overflow-hidden">
+
+                                    <h6 class="mb-1 fw-bold text-truncate"
+                                        style="font-size:13px; white-space:nowrap; color: #000;">
+                                        {{ $section->name ?? '-' }}
+                                    </h6>
+
+
                                 </div>
+                                <div class="d-flex align-items-center gap-2 ms-lg-3">
 
-                                <div class="d-flex align-items-center">
                                     <a href="#"
-                                        class="btn btn-sm btn-outline-dark px-2 px-md-3 border-secondary-subtle ms-2 shadow-none"
-                                        style="font-size: 0.85rem;">
-                                        <i class="bi bi-pencil-square ms-1"></i>
+                                        class="btn btn-sm btn-lg-lg btn-light border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
+                                        style="color:#008870; font-size:13px;">
+                                        <i class="bi bi-pencil-square"></i>
                                         تعديل
                                     </a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger px-2 px-md-3 shadow-none"
-                                        style="font-size: 0.85rem;">
-                                        <i class="bi bi-trash ms-1"></i>
+
+                                    <a href="#"
+                                        class="btn btn-sm btn-lg-lg btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
+                                        style="font-size:13px;">
+                                        <i class="bi bi-trash"></i>
                                         حذف
                                     </a>
+
                                 </div>
 
+
                             </div>
+
+                        </div>
+
+                        {{-- الخط الجانبي --}}
+                        <div class="position-absolute start-0 top-0 h-100" style="width:4px; background:#008870;"></div>
+
+                    </div>
+
+                @empty
+                    <div class="col-12">
+                        <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-dashed">
+                            <i class="bi bi-inbox text-muted display-4 mb-3"></i>
+                            <p class="text-muted fw-bold">لا توجد اقسام حالياً</p>
                         </div>
                     </div>
-                @empty
-                    <div class="col-12 text-center py-5 bg-white rounded shadow-sm border">
-                        <p class="text-muted mb-0">لا توجد أقسام (Sections) حالياً</p>
-                    </div>
                 @endforelse
-            </div>
+            </div>  
         </div>
     </div>
 @endsection

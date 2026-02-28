@@ -21,67 +21,99 @@
                 </a>
             </div>
 
-            <div class="row g-3 px-2">
+
+
+
+            <div class="row g-4 px-2">
+
                 @php
                     $categories = [
                         (object) [
                             'id' => 101,
                             'name' => 'رسمية',
-                            'section' => (object) ['name' => 'عبايات رسمية'],
+                            'section' => 'عبايات رسمية',
                             'image' => 'assets/img/photos/a3.jpg',
                         ],
                         (object) [
                             'id' => 102,
                             'name' => 'تخرج',
-                            'section' => (object) ['name' => 'عبايات لحفلات تخرج'],
+                            'section' => 'عبايات تخرج',
                             'image' => 'assets/img/photos/a3.jpg',
                         ],
                         (object) [
                             'id' => 103,
                             'name' => 'كاجول',
-                            'section' => (object) ['name' => 'عبايات  كاجول '],
+                            'section' => 'عبايات  كاجول ',
                             'image' => 'assets/img/photos/a3.jpg',
                         ],
                     ];
                 @endphp
 
                 @forelse($categories as $category)
-                    <div class="col-12" style="border: rgb(136, 136, 136) solid 1px; border-radius: 7px;">
-                        <div class="card bg-white text-dark border-0 shadow-sm hover-card transition">
-                            <div class="card-body d-flex align-items-center justify-content-between py-3">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white">
 
-                                <div class="d-flex align-items-center">
-                                    <div class="image-holder ms-3">
-                                        <img src="{{ $category->image }}" class="rounded-circle border" width="60"
-                                            height="60" alt="category" style="object-fit: cover;">
-                                    </div>
-                                    <div class="text-end">
-                                        <h5 class="mb-0 fw-bold" style="color: #2d3436;">{{ $category->name }}</h5>
-                                        <small class="card-text mb-2 small text-muted text-truncate">
-                                            {{ Str::words($category->section->name ?? '-', 2, '...') }}
-                                        </small>
+                        <div class="card-body p-2">
+
+                            <div class="d-flex align-items-center justify-content-between">
+
+                                <div class="image-holder ms-3">
+                                    <div class="p-1 bg-white rounded-circle border shadow-sm">
+                                        <img src="{{ $category->image }}" class="rounded-circle" width="55"
+                                            height="55" style="object-fit: cover;">
                                     </div>
                                 </div>
+                                <div class="text-end flex-grow-1 overflow-hidden">
 
-                                <div class="d-flex flex-column flex-md-row align-items-end align-items-md-center">
+                                    <h6 class="mb-1 fw-bold text-truncate"
+                                        style="font-size:13px; white-space:nowrap; color: #000;">
+                                        {{ $category->name ?? '-' }}
+                                    </h6>
+
+                                    <span class="badge rounded-pill bg-light text-secondary border px-2 py-1 fw-normal"
+                                        style="font-size:10px;">
+                                        {{-- <i class="bi bi-rulers me-1 text-primary"></i> --}}
+                                        {{ $category->section ?? '-' }}
+                                    </span>
+
+                                </div>
+                                <div class="d-flex align-items-center gap-2 ms-lg-3">
+
                                     <a href="#"
-                                        class="btn btn-sm btn-outline-dark px-3 border-secondary-subtle mb-2 mb-md-0 ms-md-2">
-                                        <i class="bi bi-pencil-square ms-1"></i> تعديل
+                                        class="btn btn-sm btn-lg-lg btn-light border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
+                                        style="color:#008870; font-size:13px;">
+                                        <i class="bi bi-pencil-square"></i>
+                                        تعديل
                                     </a>
-                                    <a href="#" class="btn btn-sm btn-outline-danger px-3 ">
-                                        <i class="bi bi-trash ms-1 "> </i> حذف
+
+                                    <a href="#"
+                                        class="btn btn-sm btn-lg-lg btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
+                                        style="font-size:13px;">
+                                        <i class="bi bi-trash"></i>
+                                        حذف
                                     </a>
+
                                 </div>
+
 
                             </div>
+
                         </div>
+
+                        {{-- الخط الجانبي --}}
+                        <div class="position-absolute start-0 top-0 h-100" style="width:4px; background:#008870;"></div>
+
                     </div>
+
                 @empty
-                    <div class="col-12 text-center py-5 bg-white rounded shadow-sm">
-                        <p class="text-muted">لا توجد فئات حالياً</p>
+                    <div class="col-12">
+                        <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-dashed">
+                            <i class="bi bi-inbox text-muted display-4 mb-3"></i>
+                            <p class="text-muted fw-bold">لا توجد فئات حالياً</p>
+                        </div>
                     </div>
                 @endforelse
             </div>
         </div>
+    </div>
     </div>
 @endsection
