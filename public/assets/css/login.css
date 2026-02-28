@@ -99,7 +99,7 @@
     outline: none;
     background: transparent;
     font-size: 1rem;
-    padding: 6px 0;
+    padding: 0px ;
 }
 
 
@@ -111,19 +111,19 @@
     font-size: 1rem;
     color: rgba(0, 0, 0, 0.6);
     pointer-events: none;
-    transition: all 0.25s ease;
+    transition: all 0.40s ease;
 }
 
 .login-page .input-wrapper input:focus + label,
 .login-page .input-wrapper input:valid + label {
-    top: -5px;
-    left: -14px;
-    font-size: 0.75rem;
+    top: -1px;
+    right: 120px;
+    font-size: 0.85rem;
     color: #008870;
 }
 
 .login-page .input-wrapper i {
-    color: #070708;
+    color: rgba(0, 0, 0, 0.6);
     margin-right: 12px;
 }
 
@@ -136,9 +136,10 @@
     font-size: 1rem;
 }
 
-.login-page .input-wrapper input::placeholder {
-    color: rgba(0, 0, 0, 0.8);
+.login-page .input-wrapper:focus-within i {
+    color: #008870;
 }
+
 .login-page .input-wrapper:focus-within {
     border-bottom-color: #008870; /* اللون اللي تبغيه */
 }

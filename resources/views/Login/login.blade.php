@@ -58,7 +58,7 @@
                             <div class="input-wrapper">
                                 <i class="fas fa-user"></i>
                                 <input type="text" required>
-                                <label for="username">Username</label>
+                                <label for="username">User name</label>
                             </div>
                         </div>
 
@@ -71,17 +71,37 @@
                             </div>
                         </div>
 
-                        <button class="btn-login">LOGIN</button>
+                        <button class="btn-login" id="loginBtn">LOGIN</button>
                     </form>
-                   <a href="/"> <button  class="exit-btn" onclick="handleExit()">
-                   <i class="fas fa-arrow-left"></i> Exit
-                </button></a>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
-@endsection
+<script>
+        // التعامل مع نموذج الدخول
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Welcome!',
+                    text: 'Logged in successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                btn.innerHTML = 'LOGIN';
+                btn.disabled = false;
+            }, 1000);
+        });
 
+        
+    </script>
 
+</body>
+</html>
