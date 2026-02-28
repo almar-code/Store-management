@@ -79,7 +79,7 @@
                     <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">الإعلانات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/" class="{{ request()->is('') ? 'active' : '' }}">إضافة إعلان</a></li>
+                            <li></i><a href="/addads" class="{{ request()->is('') ? 'active' : '' }}">إضافة إعلان</a></li>
                             <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة الإعلانات</a></li>
 
                         </ul>

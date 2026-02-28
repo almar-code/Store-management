@@ -9,7 +9,6 @@
                 <h3>Add <span class="orange-text">size</span></h3>
             </div>
         </div>
-       
         <div class="container my-5" style="direction: rtl; text-align: right">
           <div class="row justify-content-center">
             
