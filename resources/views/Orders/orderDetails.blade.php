@@ -7,7 +7,11 @@
 @section('content')
     <div class="container my-4 px-2 px-md-2" dir="rtl">
         <div class="container">
-
+<div class="text-start">
+    <a href="{{ url()->previous() }}">
+        <i class="bi bi-arrow-left fs-4 text-dark"></i>
+    </a>
+</div>
             <!-- 🔹 هذا الجزء كما طلبت بدون أي تعديل -->
             <div class="controls-container">
                 <div class="section-ar" style="width: 80%">
@@ -39,6 +43,7 @@
 
                     </div>
                 </div>
+                
             </div>
 
             <div class="order-box mt-3">
