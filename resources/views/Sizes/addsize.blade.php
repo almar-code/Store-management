@@ -16,8 +16,8 @@
             <div class="col-14 col-md-10 col-lg-8">
                 
                 <div class="form-container">
-                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                            <h3>نموذج إضافة المقاسات</h3>
+                    <div class="d-flex flex-md-row justify-content-between align-items-center mb-3">
+                            <h3 class="mb-2 mb-md-0 fs-5">نموذج إضافة المقاسات</h3>
                        <a href="/products"> <i class="fas fa-arrow-left"></i></a>
                     </div>
 
