@@ -86,10 +86,40 @@
 }
 
 .login-page .input-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     border-bottom: 2px solid rgba(66, 60, 60, 0.5);
-    padding: 10px 0;
+    padding: 12px 0;
+}
+
+.login-page .input-wrapper input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    padding: 6px 0;
+}
+
+
+.login-page .input-wrapper label {
+    position: absolute;
+    right: 110px; /* لو RTL */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    transition: all 0.25s ease;
+}
+
+.login-page .input-wrapper input:focus + label,
+.login-page .input-wrapper input:valid + label {
+    top: -5px;
+    left: -14px;
+    font-size: 0.75rem;
+    color: #008870;
 }
 
 .login-page .input-wrapper i {
@@ -109,6 +139,10 @@
 .login-page .input-wrapper input::placeholder {
     color: rgba(0, 0, 0, 0.8);
 }
+.login-page .input-wrapper:focus-within {
+    border-bottom-color: #008870; /* اللون اللي تبغيه */
+}
+
 
 .login-page .btn-login {
     width: 100%;
