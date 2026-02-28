@@ -76,32 +76,24 @@
 
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">المقاسات</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li></i><a href="/addproduct" class="{{ request()->is('') ? 'active' : '' }}">إضافة مقاس</a></li>
-                            <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة المقاسات</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}" >الالوان</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li></i><a href="/" >إضافة لون</a></li>
-                            <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة الالوان</a></li>
-
-                        </ul>
-                    </li>
                     <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">الإعلانات</span> <i
                                 class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li></i><a href="/" class="{{ request()->is('') ? 'active' : '' }}">إضافة إعلان</a></li>
+                            <li></i><a href="/addads" class="{{ request()->is('') ? 'active' : '' }}">إضافة إعلان</a></li>
                             <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة الإعلانات</a></li>
 
                         </ul>
                     </li>
-                     <li><a href="/">الطلبات</a></li>
-                     <li><a href="/login">المستخدمين</a></li>
+                     <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addUser') || request()->is('users') || request()->is('permission') ? 'active' : '' }}">المستخدمين</span> <i
+                                class="bi bi-chevron-down toggle-dropdown"></i></a>
+                        <ul>
+                            <li></i><a href="/addUser" class="{{ request()->is('addUser') ? 'active' : '' }}">إضافة مستحدم</a></li>
+                            <li><a href="/users" class="{{ request()->is('users') ? 'active' : '' }}">قائمة المستخدمين</a></li>
+                            <li><a href="/permission" class="{{ request()->is('permission') ? 'active' : '' }}">قائمة الصلاحيات</a></li>
+
+                        </ul>
+                    </li>
+                     <li><a href="/login">Login</a></li>
 
                      <li><a href="/orders" class="{{ request()->is('orders') ? 'active' : '' }}">الطلبات</a></li>
  
