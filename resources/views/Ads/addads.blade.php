@@ -18,7 +18,8 @@
                 <div class="form-container">
                     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
                             <h3>نموذج إضافة اعلانات </h3>
-                       <a href="/"> <i class="fas fa-arrow-left"></i></a>
+                       <a href="/"> 
+                     
                     </div>
 
                     <form action="forms/contact.php" method="post">

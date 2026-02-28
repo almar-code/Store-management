@@ -93,10 +93,10 @@
 
                         </ul>
                     </li>
-                     <li><a href="/login">Login</a></li>
-
+                    
                      <li><a href="/orders" class="{{ request()->is('orders') ? 'active' : '' }}">الطلبات</a></li>
  
+ <li><a href="/login">تسجيل خروج</a></li>
 
 
                 </ul>
