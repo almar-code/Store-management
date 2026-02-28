@@ -3,40 +3,25 @@
     <div class="main-content-wrapper py-5" style="min-height: 100vh; direction: rtl; background-color: #f8f9fa;">
         <div class="container">
 
-         {{-- Header Section --}}
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 gap-3">
+             <div class="aa controls-container" >
 
                 <div class="section-ar">
-                    <div class="section-title">
-                        <h3 class="fw-bold m-0 fs-5 me-3 text-nowrap"
-                            style="color: #2d3436; letter-spacing: -0.5px;">
-                            إدارة <span class="text-success">المقاسات</span>
-                        </h3>
+
+                    <div class="section-title" style="margin-bottom: 0px;">
+                        <h3 style="font-size: 20px">قائمة <span class="orange-text">ألطلبات</span></h3>
                     </div>
                 </div>
-
-                <div class="d-flex flex-column flex-md-row gap-3 align-items-center w-100 w-md-auto">
-
-                    {{-- Search Input --}}
-                    <div class="position-relative">
-                        <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                        <input
-                            type="text"
-                            class="form-control border-0 shadow-sm ps-5 py-2 px-4 rounded-3"
-                            placeholder="بحث عن مقاس..."
-                            style="min-width: 280px;">
-                    </div>
-
-                    {{-- Add Button --}}
-                    <a href="#"
-                    class="btn shadow-sm px-4 py-2 rounded-3 d-flex align-items-center fw-bold"
-                    style="background-color: #008870; border: none; color: #fff;">
-                        <i class="bi bi-plus-lg me-2"></i>
-                        <span>إضافة مقاس جديد</span>
-                    </a>
-
+                <div class="search-input-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search">
                 </div>
+
+                <a href="/sizeManagement" class="btn-add-product shadow-sm" style="justify-content: center ;">
+
+                    <i class="bi bi-arrow-clockwise"></i>
+                </a>
             </div>
+
 
             {{-- Grid Section --}}
             <div class="row g-4 px-2">
@@ -63,7 +48,7 @@
                              style="transition: transform 0.2s ease, shadow 0.2s ease;">
                             
                             {{-- Card Body --}}
-                            <div class="card-body p-3 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                            <div class="card-body p-3 d-flex align-items-center justify-content-between  gap-3">
                             {{-- Info Side --}}
                             <div class="d-flex align-items-center">
                                 <div class="image-holder ms-3">
@@ -88,11 +73,13 @@
 
                                 {{-- Actions Side --}}
                                 <div class="d-flex align-items-center gap-2">
-                                    <a href="#" class="btn btn-sm btn-light  border-0 px-3 py-2 rounded-3 hover-shadow transition" style="color:#008870 ">
+                                    <a href="#" class="btn btn-sm btn-light  border-0 px-1 py-1 px-md-3 py-md-2 me-1 me-md-2 rounded-3 hover-shadow transition d-flex align-items-center gap-1" 
+                                    style=" color:#008870; font-size: 11px ">
                                         <i class="bi bi-pencil-square ms-1"></i> تعديل
                                     </a>
                                     <div class="vr mx-1 d-none d-md-block" style="height: 20px; opacity: 0.1;"></div>
-                                    <a href="#" class="btn btn-sm btn-light text-danger border-0 px-3 py-2 rounded-3 hover-shadow transition">
+                                    <a href="#" class="btn btn-sm btn-light text-danger border-0 px-1 py-1 px-md-3 py-md-2 me-1 me-md-2 rounded-3 hover-shadow transition d-flex align-items-center gap-1"
+                                     style="font-size: 11px">
                                         <i class="bi bi-trash ms-1"></i> حذف
                                     </a>
                                 </div>
@@ -116,6 +103,20 @@
         </div>
     </div>
 
-    {{-- CSS Inline Improvement (Optional for the hover effect) --}}
+    <style>
+     .controls-container {
+    width: 90%;
+}
+
+@media (max-width: 767px) {
+    .controls-container {
+        width: 100%;
+    }
+    
+     
+    
+}
+
+    </style>
     
 @endsection
