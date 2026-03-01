@@ -488,10 +488,6 @@ footer{
     transition: all 0.5s ease-in-out;
   }
   
-  .navmenu .dropdown ul ul {
-    /* background-color: rgba(33, 37, 41, 0.1); */
-  }
-
   .navmenu .dropdown>.dropdown-active {
     display: block;
     /* background-color: rgba(33, 37, 41, 0.03); */
@@ -2590,7 +2586,7 @@ section,.section {
   margin-bottom: 15px;
   color: color-mix(in srgb, var(--default-color), transparent 15%);
   background-clip: text;
-  text-fill-color: transparent;
+  text-emphasis-color: transparent;
 }
 
 .contact .form-container p {
@@ -3137,6 +3133,3 @@ section,.section {
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
-}

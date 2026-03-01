@@ -189,14 +189,13 @@
     }
 
     .login-page {
-        background: linear-gradient(135deg,
-                #008870 0%,
-                #008870 20%,
-                #2fae98 35%,
-                #6fd8c6 55%,
-                #bff3e8 75%,
-                #eafdf9 90%,
-                #ffffff 100%);
+      background: linear-gradient(135deg,
+    #2fae99d8 25%,
+    #44c6b0 30%,
+    #6fd8c6 35%,
+    #bff3e8 45%,
+    #ffffff 65%,
+    #ffffff 100%);
     }
 
     .login-page .btn-login {
