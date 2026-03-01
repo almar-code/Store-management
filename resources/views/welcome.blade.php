@@ -2,11 +2,6 @@
 @section('link')
     <link href="assets/css/chart.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .mobile-nav-active .mobile-nav-toggle {
-    right:270px;
-  }
-    </style>
 @endsection
 @section('content')
     <div class="wrapper">
@@ -57,8 +52,8 @@
                 </div>
 
                 <div class="actions">
-                    <a>حفظ التقرير</a>
-                    <a>تصدير PDF</a>
+                    <a class="tab">حفظ التقرير</a>
+                    <a class="tab">تصدير PDF</a>
                 </div>
 
             </div>
@@ -116,7 +111,7 @@
                     </div>
                 </div>
 
-                <div class="half" style="display:flex; gap:20px; align-items:center;">
+                <div class="half">
                     <div style="flex:1;">
                         <div class="heading">المبيعات & الارباح</div>
                         <div class="metric-top" style="margin-top:10px;">
@@ -125,7 +120,7 @@
                         </div>
                         <div class="description">إجمالي عدد المبيعات ونسبة الارباح ضمن النطاق الزمني المحدد.</div>
                     </div>
-                    <div style="flex:1; height:140px;"><canvas id="chartSessions"></canvas></div>
+                    <div style="flex:1; height:140px; padding: 10px;"><canvas id="chartSessions"></canvas></div>
                 </div>
 
             </div>
@@ -143,7 +138,7 @@
                 <div class="description">
                     احصائيات اداء الموقع الالكتروني.
                 </div>
-                <div style="display: flex; justify-content: space-between; padding-left: 40px;">
+                <div style="display: flex; justify-content: space-around ; gap: 30px;">
                     <div class="acq-row">
                         <div class="acq-box " style="background-color: #14b8a6;">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
@@ -158,7 +153,7 @@
                         </div>
                     </div>
 
-                    <div class="acq-row">
+                    <div class="acq-row" >
                         <div class="acq-box purple">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
                                 <rect x="3" y="10" width="3" height="10" />
@@ -175,22 +170,22 @@
 
                 <hr style="margin:25px 0; border:none; border-top:1px solid #eee;">
 
-                <div class="heading">Sessions</div>
-                <div class="description">User engagement period.</div>
+                <div class="heading">الاداء</div>
+                <div class="description">مقارنة الاداء باليوم السابق</div>
 
                 <div class="session-circles">
-                    <div class="circle-box">
+                    <div class="circle-box" >
                         <canvas id="circle1"></canvas>
                         <div>
-                            <div class="meta-title">% New Sessions</div>
+                            <div class="meta-title">المبيعات</div>
                             <div class="meta-value">26.80%</div>
                         </div>
                     </div>
 
-                    <div class="circle-box">
+                    <div class="circle-box" >
                         <canvas id="circle2"></canvas>
                         <div>
-                            <div class="meta-title">Pages/Session</div>
+                            <div class="meta-title">المستخدمين</div>
                             <div class="meta-value">1,005</div>
                         </div>
                     </div>

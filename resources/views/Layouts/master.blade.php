@@ -32,142 +32,164 @@
     <link href="assets/css/card.css" rel="stylesheet">
 
     @yield('link')
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
 <body class="index-page">
-@unless(request()->is('login'))
-    <header id="header" class="header d-flex align-items-center sticky-top">
-        <div class="container position-relative d-flex align-items-center justify-content-between">
+    @unless (request()->is('login'))
+        <header id="header" class="header d-flex align-items-center sticky-top">
+            <div class="container position-relative d-flex align-items-center justify-content-between">
 
-            <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-                <!-- Uncomment the line below if you also wish to use an image logo -->
-                 {{-- <img src="assets/img/ligth-mode-logo.gif" alt="">  --}}
-                 <img src="assets/img/logo.png" alt=""> 
-                <h1 class="sitename" style="color:#008870">N<h1 style="color: rgb(0, 0, 0)">ice</h1></h1>
-            </a>
+                <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+                    <!-- Uncomment the line below if you also wish to use an image logo -->
+                    {{-- <img src="assets/img/ligth-mode-logo.gif" alt="">  --}}
+                    <img src="assets/img/logo.png" alt="">
+                    <h1 class="sitename" style="color:#008870">N<h1 style="color: rgb(0, 0, 0)">ice</h1>
+                    </h1>
+                </a>
 
-            <nav id="navmenu" class="navmenu">
-                <ul >
-                    <li><a href="/"class="{{ request()->is('/') ? 'active' : '' }}">الرئيسية</a></li>
-                    <li class="dropdown"><a href="#" ><span class="toggle-dropdown {{ request()->is('addproduct') || request()->is('products') ? 'active' : '' }}">المنتجات</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li></i><a href="/addproduct" class="{{ request()->is('addproduct') ? 'active' : '' }}">إضافة منتج</a></li>
-                            <li><a href="/products" class="{{ request()->is('products') ? 'active' : '' }}">قائمة المنتجات</a></li>
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a href="/"class="{{ request()->is('/') ? 'active' : '' }}">الرئيسية</a></li>
+                        <li class="dropdown"><a href="#"><span
+                                    class="toggle-dropdown {{ request()->is('addproduct') || request()->is('products') ? 'active' : '' }}">المنتجات</span>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li></i><a href="/addproduct"
+                                        class="{{ request()->is('addproduct') ? 'active' : '' }}">إضافة منتج</a></li>
+                                <li><a href="/products" class="{{ request()->is('products') ? 'active' : '' }}">قائمة
+                                        المنتجات</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addcategorie') || request()->is('categorieManagement') ? 'active' : '' }}">الفئات</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li></i><a href="/addcategorie" class="{{ request()->is('addcategorie') ? 'active' : '' }}">إضافة فئة</a></li>
-                            <li><a href="/categorieManagement" class="{{ request()->is('categorieManagement') ? 'active' : '' }}">قائمة الفئات</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"><a href="#"><span
+                                    class="toggle-dropdown {{ request()->is('addcategorie') || request()->is('categorieManagement') ? 'active' : '' }}">الفئات</span>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li></i><a href="/addcategorie"
+                                        class="{{ request()->is('addcategorie') ? 'active' : '' }}">إضافة فئة</a></li>
+                                <li><a href="/categorieManagement"
+                                        class="{{ request()->is('categorieManagement') ? 'active' : '' }}">قائمة الفئات</a>
+                                </li>
 
-                        </ul>
-                    </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li></i><a href="/addsection" class="{{ request()->is('addsection') ? 'active' : '' }}">إضافة قسم</a></li>
-                            <li><a href="/sections" class="{{ request()->is('sections') ? 'active' : '' }}">قائمة الاقسام</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"><a href="#"><span
+                                    class="toggle-dropdown {{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li></i><a href="/addsection"
+                                        class="{{ request()->is('addsection') ? 'active' : '' }}">إضافة قسم</a></li>
+                                <li><a href="/sections" class="{{ request()->is('sections') ? 'active' : '' }}">قائمة
+                                        الاقسام</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">الإعلانات</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li></i><a href="/addads" class="{{ request()->is('') ? 'active' : '' }}">إضافة إعلان</a></li>
-                            <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة الإعلانات</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"><a href="#"><span
+                                    class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">الإعلانات</span>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li></i><a href="/addads" class="{{ request()->is('') ? 'active' : '' }}">إضافة إعلان</a>
+                                </li>
+                                <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة الإعلانات</a>
+                                </li>
 
-                        </ul>
-                    </li>
-                     <li class="dropdown"><a href="#"><span  class="toggle-dropdown {{ request()->is('addUser') || request()->is('users') || request()->is('permission') ? 'active' : '' }}">المستخدمين</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li></i><a href="/addUser" class="{{ request()->is('addUser') ? 'active' : '' }}">إضافة مستحدم</a></li>
-                            <li><a href="/users" class="{{ request()->is('users') ? 'active' : '' }}">قائمة المستخدمين</a></li>
-                            <li><a href="/permission" class="{{ request()->is('permission') ? 'active' : '' }}">قائمة الصلاحيات</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"><a href="#"><span
+                                    class="toggle-dropdown {{ request()->is('addUser') || request()->is('users') || request()->is('permission') ? 'active' : '' }}">المستخدمين</span>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li></i><a href="/addUser" class="{{ request()->is('addUser') ? 'active' : '' }}">إضافة
+                                        مستحدم</a></li>
+                                <li><a href="/users" class="{{ request()->is('users') ? 'active' : '' }}">قائمة
+                                        المستخدمين</a></li>
+                                <li><a href="/permission" class="{{ request()->is('permission') ? 'active' : '' }}">قائمة
+                                        الصلاحيات</a></li>
 
-                        </ul>
-                    </li>
-                    
-                     <li><a href="/orders" class="{{ request()->is('orders') ? 'active' : '' }}">الطلبات</a></li>
- 
- <li><a href="/login">تسجيل خروج</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="/orders" class="{{ request()->is('orders') ? 'active' : '' }}">الطلبات</a></li>
+
+                        <li><a href="/login">تسجيل خروج</a></li>
 
 
-                </ul>
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </nav>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
 
-            <!-- <div class="header-social-links">
-        <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-      </div> -->
+                <!-- <div class="header-social-links">
+            <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          </div> -->
 
-        </div>
-    </header>
+            </div>
+        </header>
     @endunless
 
-<main>
-@yield('content')
-</main>
+    <main>
+        @yield('content')
+    </main>
 
-@unless(request()->is('login'))
-  
-   <footer class="footer mt-auto py-3  text-white-50">
-    <div class="container-fluid px-4">
-        <div class="row align-items-center justify-content-between flex-column flex-md-row text-center text-md-end ">
-            
-            <div class="col-auto">
-                <div class="small m-0 ">
-                    <i class="bi bi-person-circle text-turquoise me-1"></i>
-                    المستخدم الحالي: 
-                    <span class="fw-bold text-turquoise">
-                        {{ Auth::user()->name ?? 'مدير النظام' }}
-                    </span>
+    @unless (request()->is('login'))
+        <footer class="footer mt-auto py-3  text-white-50">
+            <div class="container-fluid px-4">
+                <div
+                    class="row align-items-center justify-content-between flex-column flex-md-row text-center text-md-end ">
+
+                    <div class="col-auto">
+                        <div class="small m-0 ">
+                            <i class="bi bi-person-circle text-turquoise me-1"></i>
+                            المستخدم الحالي:
+                            <span class="fw-bold text-turquoise">
+                                {{ Auth::user()->name ?? 'مدير النظام' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-auto my-2 my-md-0">
+                        <div class="small">
+                            <i class="bi bi-clock-fill text-turquoise me-1"></i>
+                            <span id="current-time">
+                                {{ now()->format('Y-m-d | h:i A') }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <div class="small m-0 ">
+                            إدارة متجر العبايات &copy; {{ date('Y') }}
+                            <span class="text-turquoise mx-1">|</span>
+                            الإصدار 1.0.0
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-            <div class="col-auto my-2 my-md-0">
-                <div class="small">
-                    <i class="bi bi-clock-fill text-turquoise me-1"></i>
-                    <span id="current-time">
-                        {{ now()->format('Y-m-d | h:i A') }}
-                    </span>
-                </div>
-            </div>
-
-            <div class="col-auto">
-                <div class="small m-0 ">
-                    إدارة متجر العبايات &copy; {{ date('Y') }} 
-                    <span class="text-turquoise mx-1">|</span> 
-                    الإصدار 1.0.0
-                </div>
-            </div>
-
-        </div>
-    </div>
-</footer>
- @endunless
-<script>
-    function updateTime() {
-        const now = new Date();
-        const options = { 
-            year: 'numeric', month: '2-digit', day: '2-digit',
-            hour: '2-digit', minute: '2-digit', second: '2-digit',
-            hour12: true 
-        };
-        document.getElementById('current-time').innerText = now.toLocaleString('en-GB', options).replace(',', ' |');
-    }
-    // تحديث الوقت كل ثانية
-    setInterval(updateTime, 1000);
-</script>
+        </footer>
+    @endunless
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            document.getElementById('current-time').innerText = now.toLocaleString('en-GB', options).replace(',', ' |');
+        }
+        // تحديث الوقت كل ثانية
+        setInterval(updateTime, 1000);
+    </script>
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>

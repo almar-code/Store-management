@@ -80,7 +80,7 @@ canvas {
     grid-template-columns: 1.6fr 1.4fr;
     gap: 25px;
     direction: rtl;
-     width: 100%;
+    width: 100%;
     overflow: hidden;
 }
 
@@ -103,13 +103,20 @@ canvas {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    /* padding: 25px; */
 }
 
 .half {
     flex: 1;
-    background: #f8f9fc;
+    /* background: #f8f9fc; */
     border-radius: 10px;
-    padding: 20px;
+    padding: 20px 0px 0px 0px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
 .chart-sm {
@@ -131,7 +138,7 @@ canvas {
 .acq-row {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 25px;
     margin-top: 20px;
 }
 
@@ -154,6 +161,7 @@ canvas {
 
 .session-circles {
     display: flex;
+    justify-content: space-around;
     gap: 25px;
     margin-top: 20px;
 }
@@ -233,7 +241,7 @@ canvas {
     display: flex;
     align-items: center;
     gap: 20px;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 
 .info-box {
@@ -267,8 +275,8 @@ canvas {
     border-radius: 4px;
     font-size: 14px;
     cursor: pointer;
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
 }
 
 .header-bottom {
@@ -278,7 +286,7 @@ canvas {
     align-items: center;
     border-top: 1px solid #e0e0e0;
     padding: 15px 0;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 15px;
 }
 
@@ -329,11 +337,6 @@ canvas {
 
 @media (max-width: 768px) {
 
-    .header-top,
-    .header-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 
     .actions {
         flex-wrap: wrap;
@@ -342,9 +345,8 @@ canvas {
 
 @media (max-width: 600px) {
     .wrapper {
-        padding: 0 20px;
-          padding: 0 15px;
-        margin: 20px 0;
+        padding: 0 15px;
+        margin: 0px 0;
     }
 
     .donut-wrap {
@@ -354,64 +356,110 @@ canvas {
 
 /* ================== MOBILE FIX ================== */
 
+/* ================== PROFESSIONAL MOBILE LAYOUT ================== */
+
 @media (max-width: 768px) {
 
-    /* الصف الأول */
-    .header-top {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
+    /* الحاوية الرئيسية */
+    .wrapper {
+        max-width: 100%;
+        padding: 0 16px;
+        margin: 0 auto;
     }
 
-    .left-title {
+    /* كل الجريد يصبح عمود واحد */
+    .grid-layout,
+    .bottom-grid,
+    .channel-grid {
         display: flex;
         flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+
+    /* كل بانل يأخذ عرض كامل */
+    .panel {
+        width: 100%;
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    /* المخططات الكبيرة */
+    .chart-lg {
+        height: 220px;
+    }
+
+    /* المخططات الصغيرة */
+    .chart-sm {
+        height: 120px;
+    }
+
+    /* الدونات */
+    .donut-wrap {
+        height: 200px;
+    }
+
+    /* إلغاء أي عرض زائد */
+    canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+
+    /* ترتيب العناصر الداخلية */
+
+    .meta-row{
+         flex-direction: row;
+        gap: 15px;
+    }
+    .acq-row {
+        gap: 15px;
+        flex-direction: column
+    }
+    .circle-box {
+   flex-direction: column
+}
+
+    /* الهيدر */
+    .header-top,
+    .header-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #e0e0e0;
+        padding: 15px 0;
+        /* flex-wrap: wrap; */
+       
     }
 
     .right-info {
-        display: flex;
-        align-items: center;
-        gap: 40px;
+        gap: 25px;
+    }
+
+    .tabs,
+    .actions {
+        gap: 15px;
         flex-wrap: wrap;
     }
 
-    /* نصغر المسافات */
-    .divider {
-        display: none;
+    .half {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
     }
 
-    .info-box {
-        font-size: 12px;
+    .label {
+        font-size: 9px;
     }
 
     .value {
-        font-size: 13px;
+        font-size: 11px;
     }
-
-    .export-btn {
-        padding: 8px 14px;
-        font-size: 13px;
-    }
-
-    /* الصف الثاني */
-    .header-bottom {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
-    .tabs {
-        display: flex;
-        gap: 15px;
-        font-size: 13px;
-    }
-
-    .actions {
-        display: flex;
-        gap: 15px;
-        font-size: 13px;
-    }
+    .tab {
+    font-size: 11px;
+    color: #161818;
+}
 
 }
