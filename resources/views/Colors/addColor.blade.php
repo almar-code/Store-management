@@ -19,7 +19,7 @@
                      <h3>نموذج إضافة لون للمنتج</h3>
                     <form action="forms/contact.php" method="post">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" readonly required="">
+                            <input type="text" class="form-control" readonly required="" readonly>
                             <label for="productName">اسم المنتج</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -27,7 +27,7 @@
                             <label for="productColor">لون المنتج</label>
                         </div>
                          <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="ColorName" name="ColorName" placeholder="Subject" required="">
+                            <input type="text" class="form-control" id="ColorName" name="ColorName" placeholder="Subject" required="">
                             <label for="ColorName">اسم اللون</label>
                         </div>
                         <div class="form-floating mb-3">
