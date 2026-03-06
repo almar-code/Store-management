@@ -8,7 +8,7 @@
                 <h3>Add <span class="orange-text">sections</span></h3>
             </div>
         </div>
-         <div class="container my-5" style="direction: rtl; text-align: right">
+         <div class="container my-5" style="direction: rtl; text-align: right" >
           <div class="row justify-content-center">
             
             <div class="col-14 col-md-10 col-lg-8">
@@ -24,7 +24,8 @@
                         </div>
                         
                           <div class="d-grid" style="direction: ltr">
-                            <button type="submit" class="btn-submit">إضافة <i class="bi bi-plus ms-2"></i></button>
+                            <button type="submit" class="btn-submit" hidden>إضافة <i class="bi bi-plus ms-2"></i></button>
+                            <button type="submit" class="btn-submit" >تعديل <i class="bi bi-plus ms-2"></i></button>
                         </div>
                     </form>
                 </div>
