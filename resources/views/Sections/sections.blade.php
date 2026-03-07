@@ -15,29 +15,12 @@
                     <input type="text" class="search-input" placeholder="Search">
                 </div>
 
-                <a href="#" class="btn-add-product shadow-sm">
+                <a href="/addsection" class="btn-add-product shadow-sm">
                     إضافة قسم
                     <i class="bi bi-plus-lg ms-2"></i>
                 </a>
             </div>
-     <div class="row g-4 px-2">
-
-                @php
-                     $sections = [
-                        (object) [
-                            'id' => 1,
-                            'name' => 'الرسمية',
-                        ],
-                        (object) [
-                            'id' => 2,
-                            'name' => 'تخرج',
-                        ],
-                        (object) [
-                            'id' => 3,
-                            'name' => 'الانيقة',
-                        ],
-                    ];
-                @endphp
+            <div class="row g-4 px-2">
 
                 @forelse($sections as $section)
                     <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white">
@@ -50,14 +33,14 @@
 
                                     <h6 class="mb-1 fw-bold text-truncate"
                                         style="font-size:13px; white-space:nowrap; color: #000;">
-                                        {{ $section->name ?? '-' }}
+                                        {{ $section->cat_name ?? '' }}
                                     </h6>
 
 
                                 </div>
                                 <div class="d-flex align-items-center gap-2 ms-lg-3">
 
-                                    <a href="#"
+                                    <a href="/edit-section/{{ $section->cat_id }}"
                                         class="btn btn-sm btn-lg-lg btn-light border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
                                         style="color:#008870; font-size:13px;">
                                         <i class="bi bi-pencil-square"></i>
@@ -65,11 +48,13 @@
                                     </a>
 
                                     <a href="#"
+                                        onclick="confirmDelete('/delete-section/{{ $section->cat_id }}','حذف قسم؟','هل أنت متأكد من حذف هذا القسم؟')"
                                         class="btn btn-sm btn-lg-lg btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
                                         style="font-size:13px;">
                                         <i class="bi bi-trash"></i>
                                         حذف
                                     </a>
+
 
                                 </div>
 
@@ -91,7 +76,7 @@
                         </div>
                     </div>
                 @endforelse
-            </div>  
+            </div>
         </div>
     </div>
 @endsection
