@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Stichoza\GoogleTranslate\GoogleTranslate;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -43,14 +43,20 @@ class SectionController extends Controller
     // حفظ القسم
     public function store(Request $request)
     {
+
         $request->validate([
             'sectionName' => 'required|max:255'
         ]);
 
         try {
 
+            /// ترجمة الاسم للإنجليزي
+            $tr = new GoogleTranslate('en');
+            $name_en = $tr->translate($request->sectionName);
+
             Category::create([
-                'cat_name' => $request->sectionName
+                'cat_name' => $request->sectionName,
+                'cat_name_en' => $name_en
             ]);
 
             return redirect()->back()->with('success', 'تم إضافة القسم بنجاح');
@@ -60,6 +66,7 @@ class SectionController extends Controller
             return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة القسم');
 
         }
+
     }
 
 
@@ -92,9 +99,12 @@ class SectionController extends Controller
         try {
 
             $section = Category::findOrFail($id);
-
+            // ترجمة الاسم للإنجليزي
+            $tr = new GoogleTranslate('en');
+            $name_en = $tr->translate($request->sectionName);
             $section->update([
-                'cat_name' => $request->sectionName
+                'cat_name' => $request->sectionName,
+                'cat_name_en' => $name_en
             ]);
 
             return redirect('/sections')->with('success', 'تم التعديل بنجاح');
