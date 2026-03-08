@@ -91,14 +91,16 @@
 /* تنسيق الحاوية لتكون مرنة (Flex) */
 .controls-container {
     padding: 15px;
-    border: rgb(136, 136, 136) solid 1px;
-     border-radius: 7px;
-    /* border-bottom: none; */
+    border: none; /* حذف البوردر */
+    border-radius: 7px;
+
+  box-shadow: 0 2px 8px rgba(2, 131, 116, 0.19);/* الشادو */
+
     display: flex;
     gap: 10px;
-    /* المسافة بين الحقل والزر */
     direction: rtl;
     margin: 20px auto;
+    background: #fff; /* مهم ليظهر الشادو بشكل جميل */
 }
 
 /* تنسيق زر إضافة منتج */

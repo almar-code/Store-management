@@ -79,81 +79,189 @@
 
                 <nav id="navmenu" class="navmenu">
                     <ul>
-                        <li><a href="/"class="{{ request()->is('/') ? 'active' : '' }}">الرئيسية</a></li>
-                        <li class="dropdown"><a href="#"><span
+
+                        <li>
+                            <a href="/" class="{{ request()->is('/') ? 'active' : '' }}">
+                                <div>
+                                <span  class="bi bi-house nav-icon"></span>
+                                الرئيسية
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#">
+                                <div class = "toggle-dropdown ">
+                                <span class="bi bi-box-seam nav-icon"></span>
+                                <span
                                     class="toggle-dropdown {{ request()->is('addproduct') || request()->is('products') ? 'active' : '' }}">المنتجات</span>
-                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                                <li></i><a href="/addproduct"
-                                        class="{{ request()->is('addproduct') ? 'active' : '' }}">إضافة منتج</a></li>
-                                <li><a href="/products" class="{{ request()->is('products') ? 'active' : '' }}">قائمة
-                                        المنتجات</a></li>
+                                </div>
+                                    <i class="bi bi-chevron-down toggle-dropdown"></i>
+                            </a>
 
+                            <ul>
+                                <li>
+                                    <a href="/addproduct" class="{{ request()->is('addproduct') ? 'active' : '' }}">
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>
+                                        إضافة منتج
+                                  </div>
+                                          </a>
+                                </li>
+
+                                <li>
+                                    <a href="/products" class="{{ request()->is('products') ? 'active' : '' }}">
+                                        <div><span class="bi bi-list-ul sub-icon"></span>
+                                        قائمة المنتجات
+                                 </div>   </a>
+                                </li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="#"><span
+
+
+                        <li class="dropdown">
+                            <a href="#">
+                                <div class = "toggle-dropdown "> <span class="bi bi-tags nav-icon"></span>
+                                <span
                                     class="toggle-dropdown {{ request()->is('addcategorie') || request()->is('categorieManagement') ? 'active' : '' }}">الفئات</span>
-                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                               </div>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i>
+                            </a>
+
                             <ul>
-                                <li></i><a href="/addcategorie"
-                                        class="{{ request()->is('addcategorie') ? 'active' : '' }}">إضافة فئة</a></li>
-                                <li><a href="/categorieManagement"
-                                        class="{{ request()->is('categorieManagement') ? 'active' : '' }}">قائمة الفئات</a>
+                                <li>
+                                    <a href="/addcategorie" class="{{ request()->is('addcategorie') ? 'active' : '' }}">
+                                       <div> <span class="bi bi-plus-circle sub-icon"></span>
+                                        إضافة فئة</div>
+                                    </a>
                                 </li>
 
+                                <li>
+                                    <a href="/categorieManagement"
+                                        class="{{ request()->is('categorieManagement') ? 'active' : '' }}">
+                                        <div><span class="bi bi-list-ul sub-icon"></span>
+                                        قائمة الفئات</div>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="#"><span
+
+
+                        <li class="dropdown">
+                            <a href="#">
+                                <div class = "toggle-dropdown "><span class="bi bi-grid nav-icon"></span>
+                                <span
                                     class="toggle-dropdown {{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span>
-                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                                <li></i><a href="/addsection"
-                                        class="{{ request()->is('addsection') ? 'active' : '' }}">إضافة قسم</a></li>
-                                <li><a href="/sections" class="{{ request()->is('sections') ? 'active' : '' }}">قائمة
-                                        الاقسام</a></li>
+                              </div>
+                                  <i class="bi bi-chevron-down toggle-dropdown"></i>
+                            </a>
 
-                            </ul>
-                        </li>
-                        <li class="dropdown"><a href="#"><span
-                                    class="toggle-dropdown {{ request()->is('') || request()->is('') ? 'active' : '' }}">الإعلانات</span>
-                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                             <ul>
-                                <li></i><a href="/addads" class="{{ request()->is('') ? 'active' : '' }}">إضافة إعلان</a>
-                                </li>
-                                <li><a href="#" class="{{ request()->is('') ? 'active' : '' }}">قائمة الإعلانات</a>
+                                <li>
+                                    <a href="/addsection" class="{{ request()->is('addsection') ? 'active' : '' }}">
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>
+                                        إضافة قسم</div>
+                                    </a>
                                 </li>
 
+                                <li>
+                                    <a href="/sections" class="{{ request()->is('sections') ? 'active' : '' }}">
+                                       <div> <span class="bi bi-list-ul sub-icon"></span>
+                                        قائمة الاقسام</div>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
-                        <li class="dropdown"><a href="#"><span
+
+
+                        <li class="dropdown">
+                            <a href="#">
+                                <div class="toggle-dropdown ">
+                                <span class="bi bi-megaphone nav-icon"></span>
+                                <span class="toggle-dropdown">الإعلانات</span>
+                                </div>
+                                <i class="bi bi-chevron-down toggle-dropdown"></i>
+                            </a>
+
+                            <ul>
+                                <li>
+                                    <a href="/addads">
+                                       <div> <span class="bi bi-plus-circle sub-icon"></span>
+                                        إضافة إعلان</div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div><span class="bi bi-list-ul sub-icon"></span>
+                                        قائمة الإعلانات</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="#" >
+                                <div class="toggle-dropdown ">
+                                <span class="bi bi-people nav-icon"></span>
+                                <span
                                     class="toggle-dropdown {{ request()->is('addUser') || request()->is('users') || request()->is('permission') ? 'active' : '' }}">المستخدمين</span>
-                                <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                                <li></i><a href="/addUser" class="{{ request()->is('addUser') ? 'active' : '' }}">إضافة
-                                        مستحدم</a></li>
-                                <li><a href="/users" class="{{ request()->is('users') ? 'active' : '' }}">قائمة
-                                        المستخدمين</a></li>
-                                <li><a href="/permission" class="{{ request()->is('permission') ? 'active' : '' }}">قائمة
-                                        الصلاحيات</a></li>
+                               </div>
+                                 <i class="bi bi-chevron-down toggle-dropdown"></i>
+                            </a>
 
+                            <ul>
+                                <li>
+                                    <a href="/addUser" class="{{ request()->is('addUser') ? 'active' : '' }}">
+                                       <div> <span class="bi bi-person-plus sub-icon"></span>
+                                        إضافة مستخدم</div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/users" class="{{ request()->is('users') ? 'active' : '' }}">
+                                       <div> <span class="bi bi-people sub-icon"></span>
+                                        قائمة المستخدمين</div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/permission" class="{{ request()->is('permission') ? 'active' : '' }}">
+                                       <div> <span class="bi bi-shield-lock sub-icon"></span>
+                                        قائمة الصلاحيات</div>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
-                        <li><a href="/orders" class="{{ request()->is('orders') ? 'active' : '' }}">الطلبات</a></li>
 
-                        <li><a href="/login">تسجيل خروج</a></li>
+                        <li>
+                            <a href="/orders" class="{{ request()->is('orders') ? 'active' : '' }}">
+                                <div><span class="bi bi-bag-check nav-icon"></span>
+                                الطلبات</div>
+                            </a>
+                        </li>
 
+
+                        <li>
+                            <a href="/login">
+                                <div><span class="bi bi-box-arrow-right nav-icon"></span>
+                                تسجيل خروج</div>
+                            </a>
+                        </li>
 
                     </ul>
+
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
                 </nav>
 
                 <!-- <div class="header-social-links">
-                                                <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-                                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                                              </div> -->
+                                                    <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+                                                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                                    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                                  </div> -->
 
             </div>
         </header>

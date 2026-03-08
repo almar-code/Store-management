@@ -20,52 +20,53 @@
                     <i class="bi bi-plus-lg ms-2"></i>
                 </a>
             </div>
-            <div class="row g-4 px-2">
+            <div class="row g-3 px-2">
 
                 @forelse($sections as $section)
-                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white">
+                    <div class="col-md-4 col-lg-12">
+                        <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white">
+                            <div class="card-body p-2">
 
-                        <div class="card-body p-2">
+                                <div class="d-flex align-items-center justify-content-between">
 
-                            <div class="d-flex align-items-center justify-content-between">
+                                    <div class="text-end flex-grow-1 overflow-hidden">
 
-                                <div class="text-end flex-grow-1 overflow-hidden">
+                                        <h6 class="mb-1 fw-bold text-truncate"
+                                            style="font-size:13px; white-space:nowrap; color: #000;">
+                                            {{ $section->cat_name ?? '' }}
+                                        </h6>
 
-                                    <h6 class="mb-1 fw-bold text-truncate"
-                                        style="font-size:13px; white-space:nowrap; color: #000;">
-                                        {{ $section->cat_name ?? '' }}
-                                    </h6>
+
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 ms-lg-3">
+
+                                        <a href="/edit-section/{{ $section->cat_id }}"
+                                            class="btn btn-sm btn-lg-lg btn-light border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
+                                            style="color:#008870; font-size:13px;">
+                                            <i class="bi bi-pencil-square"></i>
+                                            تعديل
+                                        </a>
+
+                                        <a href="#"
+                                            onclick="confirmDelete('/delete-section/{{ $section->cat_id }}','حذف قسم؟','هل أنت متأكد من حذف هذا القسم؟')"
+                                            class="btn btn-sm btn-lg-lg btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
+                                            style="font-size:13px;">
+                                            <i class="bi bi-trash"></i>
+                                            حذف
+                                        </a>
+
+
+                                    </div>
 
 
                                 </div>
-                                <div class="d-flex align-items-center gap-2 ms-lg-3">
-
-                                    <a href="/edit-section/{{ $section->cat_id }}"
-                                        class="btn btn-sm btn-lg-lg btn-light border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
-                                        style="color:#008870; font-size:13px;">
-                                        <i class="bi bi-pencil-square"></i>
-                                        تعديل
-                                    </a>
-
-                                    <a href="#"
-                                        onclick="confirmDelete('/delete-section/{{ $section->cat_id }}','حذف قسم؟','هل أنت متأكد من حذف هذا القسم؟')"
-                                        class="btn btn-sm btn-lg-lg btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
-                                        style="font-size:13px;">
-                                        <i class="bi bi-trash"></i>
-                                        حذف
-                                    </a>
-
-
-                                </div>
-
 
                             </div>
 
+                            {{-- الخط الجانبي --}}
+                            <div class="position-absolute start-0 top-0 h-100" style="width:4px; background:#008870;"></div>
+
                         </div>
-
-                        {{-- الخط الجانبي --}}
-                        <div class="position-absolute start-0 top-0 h-100" style="width:4px; background:#008870;"></div>
-
                     </div>
 
                 @empty
