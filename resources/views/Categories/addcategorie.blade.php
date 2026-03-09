@@ -6,7 +6,14 @@
         <!-- Section Title -->
         <div class="col-lg-8 offset-lg-2 text-center">
             <div class="section-title">
-                <h3>Add <span class="orange-text">categorie</span></h3>
+                <h3>
+                    @if (!isset($editCategory))
+                        Add 
+                    @endif
+                    @if (isset($editCategory))
+                        update 
+                    @endif
+                    <span class="orange-text">categorie</span></h3>
             </div>
         </div>
        
@@ -16,30 +23,90 @@
             <div class="col-14 col-md-10 col-lg-8">
                 
                 <div class="form-container">
-                     <h3>نموذج إضافة الفئات</h3>
-                    <form action="forms/contact.php" method="post">
+                    @if (!isset($editCategory))
+                        <h3>نموذج إضافة الفئات</h3>
+                    @endif
+                    @if (isset($editCategory))
+                        <h3>نموذج تعديل الفئات</h3>
+                    @endif
+                    @if (isset($editCategory))
+                            <div class="text-start">
+                                <a href="{{ url()->previous() }}">
+                                    <i class="bi bi-arrow-left fs-4 text-dark"></i>
+                                </a>
+                            </div>
+                        @endif
+                    <form action="{{ isset($editCategory) ? '/update-categorie/' . $editCategory->subcat_id : '/add-categorie' }}" 
+                        method="post" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="productName" name="productName" placeholder="Full Name" required="">
-                            <label for="productName">اسم الفئه</label>
+                            <input type="text" class="form-control" id="subcat_name" name="subcat_name" placeholder="Name"
+                            value="{{ $editCategory->subcat_name ?? ''}}" 
+                            >
+                            <label for="subcat_name" >اسم الفئه</label>
+                            @error('subcat_name')
+                                    <div class="form-error">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        الرجاء ادخال اسم الفئه
+                                    </div>
+                            @enderror
                         </div>
-                        
                         <div class="form-floating mb-3">
-                            <input type="file" class="form-control" id="productImage" name="productImage" placeholder="Subject" required="">
-                            <label for="productImage">صورة الفئه</label>
+                            <input type="file" class="form-control" id="subcat_image" name="subcat_image" onchange="previewImage(event)">
+                            <label for="subcat_image" class="form-label">صورة الفئه</label>
+                        @if (isset($editCategory))
+                            <div class="mt-2">
+                                <img id="imagePreview"
+                                    src="{{  asset('storage/uploads/subcategory/'.$editCategory->subcat_image) ?? '' }}"
+                                    class="rounded-circle"
+                                    width="60"
+                                    height="60"
+                                    style="object-fit: cover;" >
+                            </div>
+                            @endif
+
+                            @error('subcat_image')
+                                    <div class="form-error">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        الرجاء اختيار صورة الفئه 
+                                    </div>
+                            @enderror
                         </div>
-                        
+
                         <div class="form-floating mb-3">
-                            <select class="form-control" id="productSubcategory" name="productSubcategory" required="">
+                            <select class="form-select" id="cat_id" name="cat_id"> 
+                                
                                 <option value="" selected disabled>اختر القسم...</option>
-                                <option>رسمي </option>
-                                <option>تركي </option>
-                                <option>تخرج </option>
+                                
+                                @foreach($categories as $category)
+                                       <option value="{{ $category->cat_id }}"
+                                          {{ isset($editCategory) && $editCategory->cat_id == $category->cat_id ? 'selected' : '' }}>
+                                           {{ $category->cat_name }}
+                                       </option>
+                                    @endforeach
+                                
+                                   
                             </select>
-                            <label for="productSubcategory">فئة المنتج</label>
+                            <label for="cat_id">القسم</label>
+                            @error('cat_id')
+                                <div class="form-error">
+                                    <i class="bi bi-exclamation-circle"></i> الرجاء اختيار قسم الفئة
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="d-grid" style="direction: ltr">
-                            <button type="submit" class="btn-submit">إضافة <i class="bi bi-plus ms-2"></i></button>
+                            @if (!isset($editCategory))
+                                    <button type="submit" class="btn-submit">
+                                        إضافة <i class="bi bi-plus ms-2"></i>
+                                    </button>
+                            @endif
+
+                            @if (isset($editCategory))
+                                    <button type="submit" class="btn-submit">
+                                        تعديل <i class="bi bi-pencil-square" style=" font-size:13px; margin: 3px"></i>
+                                    </button>
+                            @endif
                         </div>
                     </form>
                 </div>
