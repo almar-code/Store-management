@@ -262,4 +262,23 @@ function confirmDelete(url, title = "هل أنت متأكد؟", text = "لن ت�
 
   });
 
+
 }
+
+function previewImage(event){
+
+    const input = event.target;
+    const preview = document.getElementById('imagePreview');
+
+    if(input.files && input.files[0]){
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+            preview.src = e.target.result;
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
