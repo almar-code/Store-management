@@ -25,6 +25,7 @@ Route::get('/delete-section/{id}',[SectionController::class,'destroy']);// حذ�
 
 
 
+
 Route::get('/addcategorie', [CategorieController::class, 'AddCategorie']);
 Route::get('/categorieManagement', [CategorieController::class, 'CategorieManagement']);
 Route::post('/add-categorie', [CategorieController::class, 'store']);
@@ -32,8 +33,14 @@ Route::get('/edit-categorie/{id}', [CategorieController::class, 'edit']);
 Route::post('/update-categorie/{id}',[CategorieController::class,'update']);
 Route::get('/delete-categorie/{id}',[CategorieController::class,'destroy']);
 
+
 Route::get('addproduct', [ProductController::class, 'AddProduct']);
 Route::get('products', [ProductController::class, 'Products']);
+Route::post('/add-product',[ProductController::class,'store']);// إضافة منتج
+Route::get('/edit-product/{id}',[ProductController::class,'edit']);// تحميل نفس الصفحة الاضافة لكن مع بيانات المنتج للتعديل
+Route::post('/update-product/{id}',[ProductController::class,'update']);// تعديل المنتج
+Route::get('/delete-product/{id}',[ProductController::class,'destroy']);// حذف منتج
+
 Route::get('login', [LoginController::class, 'Login']);
 Route::get('orders', [OrdersController::class, 'Orders']);
 Route::get('orderDetails', [OrdersController::class, 'OrderDetails']);
