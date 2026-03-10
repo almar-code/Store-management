@@ -32,7 +32,7 @@
 
                             <div class="form-floating mb-3">
 
-                                <input type="text" class="form-control" id="sectionName" name="sectionName"
+                                <input type="text" class="form-control @error('sectionName') is-invalid @enderror" id="sectionName" name="sectionName"
                                     {{-- إذا كنا في التعديل نضع القيمة --}} value="{{ $editSection->cat_name ?? '' }}"
                                     placeholder="اسم القسم">
 
