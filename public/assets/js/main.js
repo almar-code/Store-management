@@ -282,3 +282,9 @@ function previewImage(event){
     }
 }
 
+    document.getElementById('dataForm').addEventListener('submit', function() {
+    const btn = document.getElementById('saveBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    btn.disabled = true;
+
+});
