@@ -83,7 +83,6 @@ class CategorieController extends Controller
             $request->validate([
                 'subcat_name' => 'required',
                 'subcat_image' => 'image|mimes:jpg,jpeg,png|max:2048',
-                'subcat_images' => 'required',
                 'cat_id' => 'required'
             ]);
 
@@ -127,7 +126,7 @@ class CategorieController extends Controller
 
             $subcategory->delete();
 
-            return redirect()->back()->with('success', 'تم حذف القسم');
+            return redirect()->back()->with('success', 'تم حذف الفئه بنجاح');
 
         } catch (\Exception $e) {
 

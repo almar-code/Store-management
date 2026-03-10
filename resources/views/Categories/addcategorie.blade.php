@@ -36,12 +36,12 @@
                                 </a>
                             </div>
                         @endif
-                    <form action="{{ isset($editCategory) ? '/update-categorie/' . $editCategory->subcat_id : '/add-categorie' }}" 
+                    <form id="dataForm" action="{{ isset($editCategory) ? '/update-categorie/' . $editCategory->subcat_id : '/add-categorie' }}" 
                         method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="subcat_name" name="subcat_name" placeholder="Name"
-                            value="{{ $editCategory->subcat_name ?? ''}}" 
+                            value="{{ $editCategory->subcat_name ?? old('subcat_name')}}" 
                             >
                             <label for="subcat_name" >اسم الفئه</label>
                             @error('subcat_name')
@@ -76,12 +76,14 @@
                         <div class="form-floating mb-3">
                             <select class="form-select" id="cat_id" name="cat_id"> 
                                 
-                                <option value="" selected disabled>اختر القسم...</option>
+                                <option value="" disabled {{ old('cat_id', $editCategory->cat_id ?? '') == '' ? 'selected' : '' }}>
+                                    اختر القسم...
+                                </option>
                                 
                                 @foreach($categories as $category)
                                        <option value="{{ $category->cat_id }}"
-                                          {{ isset($editCategory) && $editCategory->cat_id == $category->cat_id ? 'selected' : '' }}>
-                                           {{ $category->cat_name }}
+                                        {{ old('cat_id', $editCategory->cat_id ?? '') == $category->cat_id ? 'selected' : '' }}>
+                                        {{ $category->cat_name }}
                                        </option>
                                     @endforeach
                                 
@@ -97,13 +99,13 @@
 
                         <div class="d-grid" style="direction: ltr">
                             @if (!isset($editCategory))
-                                    <button type="submit" class="btn-submit">
+                                    <button type="submit" class="btn-submit" id="saveBtn">
                                         إضافة <i class="bi bi-plus ms-2"></i>
                                     </button>
                             @endif
 
                             @if (isset($editCategory))
-                                    <button type="submit" class="btn-submit">
+                                    <button type="submit" class="btn-submit" id="saveBtn">
                                         تعديل <i class="bi bi-pencil-square" style=" font-size:13px; margin: 3px"></i>
                                     </button>
                             @endif
