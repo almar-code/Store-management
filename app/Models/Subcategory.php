@@ -16,10 +16,10 @@ class Subcategory extends Model
         'subcat_image',
         'cat_id'
     ];
-    
+
     public function category()
-{
-    return $this->belongsTo(Category::class, 'cat_id', 'cat_id');
-}
+    {
+        return $this->belongsTo(Category::class, 'cat_id', 'cat_id');
+    }
 
 }
