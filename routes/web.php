@@ -23,8 +23,16 @@ Route::get('/edit-section/{id}',[SectionController::class,'edit']);// تحميل
 Route::post('/update-section/{id}',[SectionController::class,'update']);// تعديل القسم
 Route::get('/delete-section/{id}',[SectionController::class,'destroy']);// حذف قسم
 
-Route::get('addcategorie', [CategorieController::class, 'AddCategorie']);
-Route::get('categorieManagement', [CategorieController::class, 'CategorieManagement']);
+
+
+
+Route::get('/addcategorie', [CategorieController::class, 'AddCategorie']);
+Route::get('/categorieManagement', [CategorieController::class, 'CategorieManagement']);
+Route::post('/add-categorie', [CategorieController::class, 'store']);
+Route::get('/edit-categorie/{id}', [CategorieController::class, 'edit']);
+Route::post('/update-categorie/{id}',[CategorieController::class,'update']);
+Route::get('/delete-categorie/{id}',[CategorieController::class,'destroy']);
+
 
 Route::get('addproduct', [ProductController::class, 'AddProduct']);
 Route::get('products', [ProductController::class, 'Products']);
