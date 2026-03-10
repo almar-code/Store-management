@@ -63,7 +63,7 @@
                                         تعديل
                                     </a>
 
-                                    <a href="#"onclick="confirmDelete('/delete-categorie/{{ $category->subcat_id }}','حذف قسم؟','هل أنت متأكد من حذف هذا القسم؟')"
+                                    <a href="#"onclick="confirmDelete('/delete-categorie/{{ $category->subcat_id }}','حذف الفئه؟','هل أنت متأكد من حذف هذا الفئة ؟')"
                                         class="btn btn-sm btn-lg-lg btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
                                         style="font-size:13px;">
                                         <i class="bi bi-trash"></i>
