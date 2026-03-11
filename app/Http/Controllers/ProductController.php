@@ -67,7 +67,10 @@ class ProductController extends Controller
             // ترجمة النصوص
             $productNameEn = $tr->translate($request->productName);
             $productDescriptionEn = $tr->translate($request->productDescription);
-            $colorNameEn = $tr->translate($request->colorName);
+            $colorNameEn = '';
+            if ($request->filled('colorName')) { // يتحقق إذا الحقل ليس فارغ
+                $colorNameEn = $tr->translate($request->colorName);
+            }
 
 
             // حفظ المنتج
@@ -136,13 +139,13 @@ class ProductController extends Controller
             }
 
             // حفظ المقاس
-            Size::create([
+            if ($request->filled('productSize')) {
+                Size::create([
+                    'size_name' => $request->productSize,
+                    'p_id' => $product->p_id
+                ]);
+            }
 
-                'size_name' => $request->productSize,
-
-                'p_id' => $product->p_id
-
-            ]);
 
 
 
@@ -150,7 +153,8 @@ class ProductController extends Controller
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المنتج')->withInput();;
+            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المنتج')->withInput();
+            ;
         }
 
     }
