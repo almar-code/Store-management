@@ -12,7 +12,7 @@
                 </div>
                 <div class="search-input-container">
                     <i class="bi bi-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search">
+                    <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
                 </div>
 
                 <a href="#" class="btn-add-product shadow-sm">
@@ -27,7 +27,7 @@
             <div class="row g-4 px-2">
 
                 @forelse($Subcategory as $category)
-                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white card-item">
 
                         <div class="card-body p-2">
 
@@ -42,12 +42,12 @@
                                 </div>
                                 <div class="text-end flex-grow-1 overflow-hidden">
 
-                                    <h6 class="mb-1 fw-bold text-truncate"
+                                    <h6 class="card-title mb-1 fw-bold text-truncate"
                                         style="font-size:13px; white-space:nowrap; color: #000;">
                                         {{ $category->subcat_name ?? '-'  }}
                                     </h6>
 
-                                    <span class="badge rounded-pill bg-light text-secondary border px-2 py-1 fw-normal"
+                                    <span class="card-text badge rounded-pill bg-light text-secondary border px-2 py-1 fw-normal"
                                         style="font-size:10px;">
                                         {{-- <i class="bi bi-rulers me-1 text-primary"></i> --}}
                                         {{ $category->category->cat_name  ?? '-' }}
@@ -63,7 +63,7 @@
                                         تعديل
                                     </a>
 
-                                    <a href="#"onclick="confirmDelete('/delete-categorie/{{ $category->subcat_id }}','حذف الفئه؟','هل أنت متأكد من حذف هذا الفئة ؟')"
+                                    <a href="#"onclick="confirmDelete('/delete-categorie/{{ $category->subcat_id }}','حذف الفئه؟','هل أنت متأكد من حذف هذا الفئة سيتم حذ كل المنتجات المرتبطة بها  ؟')"
                                         class="btn btn-sm btn-lg-lg btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
                                         style="font-size:13px;">
                                         <i class="bi bi-trash"></i>
@@ -94,4 +94,26 @@
         </div>
     </div>
     </div>
+     <script>const searchInput = document.getElementById('sectionSearch');
+const cards = document.querySelectorAll('.card-item'); // الكروت كاملة
+
+searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+
+    cards.forEach(card => {
+        const nameEl = card.querySelector('.card-title');
+        const descEl = card.querySelector('.card-text');
+
+        const name = nameEl ? nameEl.textContent.toLowerCase() : '';
+        const desc = descEl ? descEl.textContent.toLowerCase() : '';
+
+        // البحث في الاسم والوصف
+        if (name.includes(query) || desc.includes(query)) {
+            card.style.display = ''; // يظهر الكرت
+        } else {
+            card.style.display = 'none'; // يخفي الكرت
+        }
+    });
+});
+</script>
 @endsection

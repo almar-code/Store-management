@@ -12,7 +12,8 @@
                 </div>
                 <div class="search-input-container">
                     <i class="bi bi-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search">
+                    <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
+
                 </div>
 
                 <a href="/addsection" class="btn-add-product shadow-sm">
@@ -31,7 +32,7 @@
 
                                     <div class="text-end flex-grow-1 overflow-hidden">
 
-                                        <h6 class="mb-1 fw-bold text-truncate"
+                                        <h6 class="mb-1 fw-bold text-truncate "
                                             style="font-size:13px; white-space:nowrap; color: #000;">
                                             {{ $section->cat_name ?? '' }}
                                         </h6>
@@ -80,4 +81,21 @@
             </div>
         </div>
     </div>
+    <script>
+const searchInput = document.getElementById('sectionSearch');
+const cards = document.querySelectorAll('.row.g-3 .col-md-4'); // كل الكروت
+
+searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+
+    cards.forEach(card => {
+        const name = card.querySelector('h6').textContent.toLowerCase();
+        if (name.includes(query)) {
+            card.style.display = 'block'; // أو flex حسب التصميم
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+</script>
 @endsection

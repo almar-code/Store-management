@@ -12,7 +12,7 @@
                 </div>
                 <div class="search-input-container">
                     <i class="bi bi-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search">
+                    <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
                 </div>
 
                 <a href="#" class="btn-add-product shadow-sm">
@@ -24,7 +24,7 @@
 
         <div class="row g-0">
             @foreach ($products as $product)
-                <div class="col-12 col-lg-4 mt-3">
+                <div class="col-12 col-lg-4 mt-3 card-item">
                     <div class="card product-card text-dark h-100 shadow-sm mx-2">
                         <div class="row g-0 align-items-center px-3 py-2">
 
@@ -36,11 +36,11 @@
 
                             <div class="col-7 col-md-8 px-3 text-end">
                                 <div class="d-flex flex-column">
-                                    <h5 class="card-title mb-1 fw-bold text-truncate">{{ $product->p_name ?? '' }}</h5>
-                                    <p class="card-text mb-2 small text-muted text-truncate">
+                                    <h5 class="card-title mb-1 fw-bold text-truncate card-title">{{ $product->p_name ?? '' }}</h5>
+                                    <p class="card-text mb-2 small text-muted text-truncate ">
                                         {{ $product->p_description ?? '' }}
                                     </p>
-                                    <div class="fw-bold" style="font-size: 1rem;">
+                                    <div class="card-title fw-bold" style="font-size: 1rem;">
                                         {{ $product->p_price ?? '' }} <span class="small text-turquoise"
                                             style="font-size: 0.8rem;">ر.س</span>
                                     </div>
@@ -77,14 +77,14 @@
                                         </li>
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/addColor">
+                                                href="/addColor/{{ $product->p_id }}">
                                                 <span class="ms-2">اضافة لون</span>
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/colors">
+                                                href="/colors/{{ $product->p_id }}">
                                                 <span class="ms-2">اللوان المنتج</span>
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
@@ -117,4 +117,26 @@
             @endforeach
         </div>
     </div>
+     <script>const searchInput = document.getElementById('sectionSearch');
+const cards = document.querySelectorAll('.card-item'); // الكروت كاملة
+
+searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+
+    cards.forEach(card => {
+        const nameEl = card.querySelector('.card-title');
+        const descEl = card.querySelector('.card-text');
+
+        const name = nameEl ? nameEl.textContent.toLowerCase() : '';
+        const desc = descEl ? descEl.textContent.toLowerCase() : '';
+
+        // البحث في الاسم والوصف
+        if (name.includes(query) || desc.includes(query)) {
+            card.style.display = ''; // يظهر الكرت
+        } else {
+            card.style.display = 'none'; // يخفي الكرت
+        }
+    });
+});
+</script>
 @endsection
