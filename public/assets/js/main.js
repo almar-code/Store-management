@@ -265,26 +265,45 @@ function confirmDelete(url, title = "هل أنت متأكد؟", text = "لن ت�
 
 }
 
-function previewImage(event){
+function previewImage(event) {
 
-    const input = event.target;
-    const preview = document.getElementById('imagePreview');
+  const input = event.target;
+  const preview = document.getElementById('imagePreview');
 
-    if(input.files && input.files[0]){
+  if (input.files && input.files[0]) {
 
-        const reader = new FileReader();
+    const reader = new FileReader();
 
-        reader.onload = function(e){
-            preview.src = e.target.result;
-        }
-
-        reader.readAsDataURL(input.files[0]);
+    reader.onload = function (e) {
+      preview.src = e.target.result;
     }
+
+    reader.readAsDataURL(input.files[0]);
+  }
 }
 
-    document.getElementById('dataForm').addEventListener('submit', function() {
-    const btn = document.getElementById('saveBtn');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-    btn.disabled = true;
+document.getElementById('dataForm').addEventListener('submit', function () {
+  const btn = document.getElementById('saveBtn');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  btn.disabled = true;
 
 });
+// تحديث الصورة عند الاضافة
+function previewImage(event) {
+
+  const preview = document.getElementById('imagePreview');
+  const file = event.target.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      preview.src = e.target.result;
+      preview.style.display = "block";
+    }
+
+    reader.readAsDataURL(file);
+  }
+}
+
+
