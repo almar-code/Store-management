@@ -6,7 +6,15 @@
         <!-- Section Title -->
         <div class="col-lg-8 offset-lg-2 text-center">
             <div class="section-title">
-                <h3>Add <span class="orange-text">size</span></h3>
+                <h3>
+                    @if (!isset($editsize))
+                        Add 
+                    @endif
+                    @if (isset($editsize))
+                        update 
+                    @endif
+                    
+                <span class="orange-text">size</span></h3>
             </div>
         </div>
         <div class="container my-5" style="direction: rtl; text-align: right">
@@ -14,35 +22,83 @@
             
             <div class="col-14 col-md-10 col-lg-8">
                 
+
                 <div class="form-container">
                     <div class="d-flex flex-md-row justify-content-between align-items-center mb-3">
-                            <h3 class="mb-2 mb-md-0 fs-5">نموذج إضافة المقاسات</h3>
-                       <a href="/products"> <i class="fas fa-arrow-left"></i></a>
+                    @if (!isset($editsize))
+                        <h3>نموذج إضافة مقاس المنتج </h3>
+                    @endif
+                    @if (isset($editsize))
+                        <h3>نموذج تعديل مقاس المنتج </h3>
+                    @endif
+                       <a href="{{ url()->previous() }}">
+                            <i class="bi bi-arrow-left fs-4 text-dark"></i>
+                        </a>
                     </div>
 
-                    <form action="forms/contact.php" method="post">
+                    <form id="dataForm" action="{{ isset($editsize) ? '/update-size/' . $editsize->size_id : '/add-size/' .$productID }}" method="post"
+                        >
+                        @csrf
                         
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="productPrice" name="productPrice"  placeholder="Full Name" required=""
-                            value="حمد عبدو" readonly>
+                            <input type="text" class="form-control" id="productName" name="productName"  placeholder="Full Name" required=""
+                            @if (!isset($editsize))
+                            value="{{ $productName ?? 'uu' }}"
+                            @endif
+                            @if (isset($editsize))
+                            value="  {{ isset($editsize) ? $editsize->product->p_name : ($productName ?? 'uu') }}"
+                            @endif
+                            readonly>
+                            <input type="hidden" name="product_id" value="{{ $editsize->product->p_id ?? '' }}">
                             <label for="productName">المنتج   </label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="SizeName" name="SizeName" placeholder="Full Name" required="">
-                            <label for="SizeName">المقاس  </label>
+                            <input type="text" class="form-control" id="size_name" name="size_name" placeholder="Full Name" 
+                            @if (isset($editsize))
+                            value="{{ $editsize->size_name ?? 'uu' }}"
+                            @endif
+                            required="">
+                            <label for="size_name">المقاس  </label>
                         </div>
+                        @error('size_name')
+                            <div class="form-error">
+                                <i class="bi bi-exclamation-circle"></i>
+                                الرجاء ادخال  مقاس المنتج 
+                            </div>
+                        @enderror
                         
                        
                         
 
                         <div class="d-grid" style="direction: ltr">
-                            <button type="submit" class="btn-submit">إضافة <i class="bi bi-plus ms-2"></i></button>
+                            @if (!isset($editsize))
+                                    <button type="submit" class="btn-submit" id="saveBtn">
+
+                                        إضافة <i class="bi bi-plus ms-2"></i>
+
+                                    </button>
+                                @endif
+                                @if (isset($editsize))
+                                    <button type="submit" class="btn-submit" id="saveBtn">
+
+                                        تعديل <i class="bi bi-pencil-square" style=" font-size:13px; margin: 3px"></i>
+
+                                    </button>
+                                @endif
                         </div>
                     </form>
                 </div>
 
         </div> </div> </div>
     </section><!-- /Contact Section -->
+    <script>
+          document.getElementById('dataForm').addEventListener('submit', function() {
+    const btn = document.getElementById('saveBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    btn.disabled = true;
+
+});
+    </script>
 @endsection
 

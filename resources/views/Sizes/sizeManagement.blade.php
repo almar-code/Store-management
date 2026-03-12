@@ -20,7 +20,7 @@
                     <input type="text" class="search-input" placeholder="Search">
                 </div>
 
-                <a href="/permission" class="btn-add-product shadow-sm" style="justify-content: center ;">
+                <a href="/sizeManagement" class="btn-add-product shadow-sm" style="justify-content: center ;">
 
                     <i class="bi bi-arrow-clockwise"></i>
                 </a>
@@ -30,24 +30,7 @@
 
         </div>
         <div class="row g-4 px-2">
-            @php
-                $categories = [
-                    (object) [
-                        'id' => 101,
-                        'name' => 'مقاسات رسمية',
-                        'sizename' => (object) ['name' => '48 Standard'],
-                        'image' => 'assets/img/photos/a3.jpg',
-                    ],
-                    (object) [
-                        'id' => 101,
-                        'name' => 'مقاسات كاجوال',
-                        'sizename' => (object) ['name' => '50 Slim Fit'],
-                        'image' => 'assets/img/photos/a3.jpg',
-                    ],
-                ];
-            @endphp
-
-            @forelse($categories as $category)
+            @forelse($sizes as $size)
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white">
 
                     <div class="card-body p-2">
@@ -56,7 +39,7 @@
 
                             <div class="image-holder ms-3">
                                 <div class="p-1 bg-white rounded-circle border shadow-sm">
-                                    <img src="{{ $category->image }}" class="rounded-circle" width="55" height="55"
+                                    <img src="{{  asset('storage/uploads/products/' . ($size->product->p_image ?? 'default.png')) }}" class="rounded-circle" width="55" height="55"
                                         style="object-fit: cover;">
                                 </div>
                             </div>
@@ -64,26 +47,26 @@
 
                                 <h6 class="mb-1 fw-bold text-truncate"
                                     style="font-size:13px; white-space:nowrap; color: #000;">
-                                    {{ $category->name ?? '-' }}
+                                    {{ $size->product->p_name ?? '-' }}
                                 </h6>
 
                                 <span class="badge rounded-pill bg-light text-secondary border px-2 py-1 fw-normal"
                                     style="font-size:10px;">
                                     <i class="bi bi-rulers me-1 text-primary"></i>
-                                    {{ $category->sizename->name ?? '-' }}
+                                    {{ $size->size_name ?? '-' }}
                                 </span>
 
                             </div>
                             <div class="d-flex align-items-center gap-2 ms-lg-3">
 
-                                <a href="#"
+                                <a href="edit-size/{{ $size->size_id ?? '-' }}"
                                     class="btn btn-sm btn-lg-lg btn-light border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
                                     style="color:#008870; font-size:13px;">
                                     <i class="bi bi-pencil-square"></i>
                                     تعديل
                                 </a>
 
-                                <a href="#"
+                                <a href="#" onclick="confirmDelete('/delete-size/{{ $size->size_id }}','حذف المقاس','هل أنت متأكد من حذف هذا المقاس ؟')"
                                     class="btn btn-sm btn-lg-lg btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
                                     style="font-size:13px;">
                                     <i class="bi bi-trash"></i>
