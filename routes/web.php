@@ -49,8 +49,15 @@ Route::get('users', [UserController::class, 'Users']);
 Route::get('addPermission', [UserController::class, 'AddPermission']);
 Route::get('permission', [UserController::class, 'Permission']);
 Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
-Route::get('addsize', [SizeController::class, 'Addsize']);
+
+Route::get('addsize/{id}', [SizeController::class, 'Addsize']);
+Route::get('sizeManagement', [SizeController::class, 'SizeManagement']);
+Route::post('/add-size/{id}', [SizeController::class, 'store']);
+Route::get('/edit-size/{id}', [SizeController::class, 'edit']);
+Route::post('/update-size/{id}', [SizeController::class, 'update']);
+Route::get('/delete-size/{id}', [SizeController::class, 'destroy']);
+
+
 Route::get('addColor', [ColorsController::class, 'AddColor']);
 Route::get('colors', [ColorsController::class, 'Colors']);
-Route::get('sizeManagement', [SizeController::class, 'SizeManagement']);
 Route::get('addads', [AdsController::class, 'AddAds']);
