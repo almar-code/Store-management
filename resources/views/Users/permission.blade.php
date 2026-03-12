@@ -1,83 +1,6 @@
 @extends('layouts.master')
 @section('link')
     <link href="assets/css/order.css" rel="stylesheet">
-    <style>
-        /* Custom Animated Checkbox - Scoped */
-        .ux-checkbox-wrapper {
-  display: inline-block; /* يأخذ حجم المحتوى فقط */
-}
-.ux-checkbox {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  font-size: 20px;
-  user-select: none;
-  border: 3px solid #beddd0;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-/* Hide default checkbox */
-.ux-checkbox input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* Custom box */
-.ux-checkmark {
-  position: relative;
-  height: 1.3em;
-  width: 1.3em;
-  background-color: #2dc38c;
-  border-bottom: 1.5px solid #2dc38c;
-  box-shadow: 0 0 1px #cef1e4, 
-              inset 0 -2.5px 3px #62eab8,
-              inset 0 3px 3px rgba(0, 0, 0, 0.34);
-  border-radius: 8px;
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Checked state */
-.ux-checkbox input:checked ~ .ux-checkmark {
-  transform: translateY(40px);
-  animation: ux-wipeDown 0.6s ease-in-out forwards;
-}
-
-/* Unchecked state */
-.ux-checkbox input:not(:checked) ~ .ux-checkmark {
-  transform: translateY(-40px);
-  animation: ux-wipeUp 0.6s ease-in-out forwards;
-}
-
-/* Animations */
-@keyframes ux-wipeDown {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(40px); }
-}
-
-@keyframes ux-wipeUp {
-  0% { transform: translateY(40px); }
-  100% { transform: translateY(0px); }
-}
-
-/* Check icon */
-.ux-checkmark:before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 4px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  box-shadow: 0 4px 2px rgba(0, 0, 0, 0.34);
-}
-        
-    </style>
 @endsection
 @section('content')
     <div class="container my-4  px-2 px-md-2" dir="rtl">
@@ -121,13 +44,17 @@
                             <td>سارة محمد</td>
                             <td>sara</td>
                             <td>22210Sara</td>
-                            <td><!-- From Uiverse.io by elijahgummer --> 
-<div class="ux-checkbox-wrapper">
-  <label class="ux-checkbox">
-    <input type="checkbox" />
-    <div class="ux-checkmark"></div>
+                            <td>
+<div class="checkbox-wrapper-46">
+  <input type="checkbox" id="cbx-46" class="inp-cbx" />
+  <label for="cbx-46" class="cbx"
+    ><span>
+      <svg viewBox="0 0 12 10" height="10px" width="12px">
+        <polyline points="1.5 6 4.5 9 10.5 1"></polyline></svg></span
+    ><span></span>
   </label>
 </div>
+
 </td>
                             <td>
                                 <div class="dropdown">

@@ -24,15 +24,12 @@ Route::post('/update-section/{id}',[SectionController::class,'update']);// تع�
 Route::get('/delete-section/{id}',[SectionController::class,'destroy']);// حذف قسم
 
 
-
-
 Route::get('/addcategorie', [CategorieController::class, 'AddCategorie']);
 Route::get('/categorieManagement', [CategorieController::class, 'CategorieManagement']);
 Route::post('/add-categorie', [CategorieController::class, 'store']);
 Route::get('/edit-categorie/{id}', [CategorieController::class, 'edit']);
 Route::post('/update-categorie/{id}',[CategorieController::class,'update']);
 Route::get('/delete-categorie/{id}',[CategorieController::class,'destroy']);
-
 
 Route::get('addproduct', [ProductController::class, 'AddProduct']);
 Route::get('products', [ProductController::class, 'Products']);
@@ -58,6 +55,12 @@ Route::post('/update-size/{id}', [SizeController::class, 'update']);
 Route::get('/delete-size/{id}', [SizeController::class, 'destroy']);
 
 
-Route::get('addColor', [ColorsController::class, 'AddColor']);
-Route::get('colors', [ColorsController::class, 'Colors']);
+Route::get('addColor/{id}', [ColorsController::class, 'AddColor']);
+Route::post('/add-color/{id}', [ColorsController::class, 'store']);
+Route::post('/update-color/{id}', [ColorsController::class, 'update']);
+Route::get('/edit-color/{id}', [ColorsController::class, 'edit']);
+Route::get('colors/{id}', [ColorsController::class, 'Colors']);
+Route::get('/delete-categorie/{id}',[CategorieController::class,'destroy']);
+Route::get('/delete-color/{id}',[ColorsController::class,'destroy']);
+
 Route::get('addads', [AdsController::class, 'AddAds']);

@@ -18,15 +18,13 @@
                 <div class="form-container">
                     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
                             <h3>نموذج إضافة اعلانات </h3>
-                       <a href="/"> 
-                     
                     </div>
 
                     <form action="forms/contact.php" method="post">
                         
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="AdsTitle" name="AdsTitle"  placeholder="Advertisement Title" required="">
-                            <label for="AdsTitle">اسم الاعلان    </label>
+                            <label for="AdsTitle">اسم الاعلان</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="file" class="form-control" id="AdsImage" name="AdsImage" placeholder="Subject" required="">
