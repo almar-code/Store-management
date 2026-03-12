@@ -5,7 +5,12 @@
         <!-- Section Title -->
         <div class="col-lg-8 offset-lg-2 text-center">
             <div class="section-title">
-                <h3>Add <span class="orange-text">sections</span></h3>
+                <h3> @if (!isset($editSection))
+                        Add 
+                    @endif
+                    @if (isset($editSection))
+                        update 
+                    @endif <span class="orange-text">sections</span></h3>
             </div>
         </div>
         <div class="container my-5" style="direction: rtl; text-align: right">
@@ -14,7 +19,7 @@
                 <div class="col-14 col-md-10 col-lg-8">
 
                     <div class="form-container">
-                        <h3>نموذج إضافة قسم</h3>
+                        <h3> {{ isset($editSection) ? 'نموذج تعديل قسم' : 'نموذج إضافة قسم ' }}</h3> 
                         @if (isset($editSection))
                             <div class="text-start">
                                 <a href="{{ url()->previous() }}">
@@ -23,7 +28,7 @@
                             </div>
                         @endif
 
-                        <form {{-- إذا كان هناك قسم للتعديل يتغير الرابط --}}
+                        <form id="dataForm" {{-- إذا كان هناك قسم للتعديل يتغير الرابط --}}
                             action="{{ isset($editSection) ? '/update-section/' . $editSection->cat_id : '/add-section' }}"
                             method="POST">
 
@@ -32,9 +37,9 @@
 
                             <div class="form-floating mb-3">
 
-                                <input type="text" class="form-control @error('sectionName') is-invalid @enderror" id="sectionName" name="sectionName"
-                                    {{-- إذا كنا في التعديل نضع القيمة --}} value="{{ $editSection->cat_name ?? '' }}"
-                                    placeholder="اسم القسم">
+                                <input type="text" class="form-control @error('sectionName') is-invalid @enderror"
+                                    id="sectionName" name="sectionName" {{-- إذا كنا في التعديل نضع القيمة --}}
+                                    value="{{ $editSection->cat_name ?? '' }}" placeholder="اسم القسم">
 
                                 <label for="sectionName">اسم القسم</label>
 
@@ -57,7 +62,7 @@
 
                                 {{-- زر الإضافة يظهر فقط إذا لم يكن هناك تعديل --}}
                                 @if (!isset($editSection))
-                                    <button type="submit" class="btn-submit">
+                                    <button type="submit" class="btn-submit" id="saveBtn">
 
                                         إضافة <i class="bi bi-plus ms-2"></i>
 
@@ -67,7 +72,7 @@
 
                                 {{-- زر التعديل يظهر فقط في حالة التعديل --}}
                                 @if (isset($editSection))
-                                    <button type="submit" class="btn-submit">
+                                    <button type="submit" class="btn-submit" id="saveBtn">
 
                                         تعديل <i class="bi bi-pencil-square" style=" font-size:13px; margin: 3px"></i>
 

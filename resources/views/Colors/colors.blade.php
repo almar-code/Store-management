@@ -13,7 +13,7 @@
                 </div>
                 <div class="search-input-container">
                     <i class="bi bi-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search">
+                    <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
                 </div>
 
                 <a href="/permission" class="btn-add-product shadow-sm" style="justify-content: center ;">
@@ -26,110 +26,87 @@
 
         </div>
         <div class="row g-4 px-2">
-            @php
-                $colors = [
-                    (object) [
-                        'id' => 101,
-                        'name' => 'الاسود',
-                        'colorHash' => '#000000',
-                        'images' =>
-                            'assets/img/photos/a3.jpg,assets/img/photos/product_78.jpg,assets/img/photos/a3.jpg',
-                    ],
-                    (object) [
-                        'id' => 101,
-                        'name' => 'الازرق',
-                        'colorHash' => '#14eaf9',
-                        'images' =>
-                            'assets/img/photos/a3.jpg,assets/img/photos/product_78.jpg,assets/img/photos/a3.jpg',
-                    ],
-                ];
-            @endphp
 
-            @forelse($colors as $color)
-                <div class="col-12">
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white"
-         style="transition: all .2s ease;">
 
-        <div class="card-body p-2 p-md-3 d-flex align-items-center justify-content-between">
+            @forelse($productColor as $color)
+                <div class="card-item col-12">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white"
+                        style="transition: all .2s ease;">
 
-            {{-- Info Side --}}
-            <div class="d-flex align-items-center">
+                        <div class="card-body p-2 p-md-3 d-flex align-items-center justify-content-between">
 
-                @php
-                    $images = explode(',', $color->images);
-                @endphp
+                            {{-- Info Side --}}
+                            <div class="d-flex align-items-center">
 
-                <div class="image-holder ms-2 ms-md-3">
-                    <div class="p-1 bg-white rounded-circle border shadow-sm position-relative"
-                         style="width:65px; height:65px; overflow:hidden;">
+                                @php
+                                    $images = $color->images;
+                                @endphp
 
-                        @foreach ($images as $index => $img)
-                            <img src="{{ asset(trim($img)) }}"
-                                 class="rounded-circle color-image"
-                                 width="55"
-                                 height="55"
-                                 style="
-                                    object-fit: cover;
-                                    position:absolute;
-                                    top:5px;
-                                    left:5px;
-                                    display: {{ $index == 0 ? 'block' : 'none' }};
-                                 ">
-                        @endforeach
+                                <div class="image-holder ms-2 ms-md-3">
+                                    <div class="p-1 bg-white rounded-circle border shadow-sm position-relative"
+                                        style="width:65px; height:65px; overflow:hidden;">
+
+                                        @foreach ($images as $index => $img)
+                                                                <img src="{{ asset('storage/uploads/products/' .$img->img_url) }}" class="rounded-circle color-image" width="55"
+                                                                    height="55" style="
+                                                object-fit: cover;
+                                                position:absolute;
+                                                top:5px;
+                                                left:5px;
+                                                display: {{ $index == 0 ? 'block' : 'none' }};
+                                            ">
+                                        @endforeach
+
+                                    </div>
+                                </div>
+
+                                <div class=" text-end me-2 me-md-3">
+
+                                    <h6 class="card-title mb-1 fw-bold" style="font-size:14px; color: {{ $color->color_code ?? '#000000' }};">
+                                        {{ $color->color_name }}
+                                    </h6>
+
+                                    <span class="d-inline-block rounded-circle" style="
+                                    width:18px;
+                                    height:18px;
+                                    background-color: {{ $color->color_code ?? '#000000' }};
+                                    border:1px solid #ddd;
+                                  ">
+                                    </span>
+
+                                </div>
+                            </div>
+
+                            {{-- Actions Side --}}
+                            <div class="d-flex align-items-center gap-2 ms-lg-3">
+
+                                <a href="/edit-color/{{ $color->color_id }}" class="btn btn-sm btn-light border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
+                                    style="color:#008870; font-size:13px;">
+                                    <i class="bi bi-pencil-square ms-1"></i>
+                                    تعديل
+                                </a>
+
+                                <div class="vr mx-1 d-none d-md-block" style="height:20px; opacity:.1;"></div>
+
+                                <a href="#"
+                                    class="btn btn-sm btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
+                                    style="font-size:13px;"
+                                     onclick="confirmDelete('/delete-color/{{ $color->color_id }}','حذف لون؟','هل أنت متأكد من حذف هذا اللون؟')">
+                                    <i class="bi bi-trash ms-1"></i>
+                                    حذف
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                        {{-- الخط الجانبي --}}
+                        <div class="position-absolute start-0 top-0 h-100"
+                            style="width:4px; opacity:.8; background-color: {{ $color->colorHash ?? '#ccc' }};">
+                        </div>
 
                     </div>
                 </div>
-
-                <div class="text-end me-2 me-md-3">
-
-                    <h6 class="mb-1 fw-bold text-dark"
-                        style="font-size:14px;">
-                        {{ $color->name }}
-                    </h6>
-
-                    <span class="d-inline-block rounded-circle"
-                          style="
-                            width:18px;
-                            height:18px;
-                            background-color: {{ $color->colorHash ?? '#ccc' }};
-                            border:1px solid #ddd;
-                          ">
-                    </span>
-
-                </div>
-            </div>
-
-            {{-- Actions Side --}}
-            <div class="d-flex align-items-center gap-2 ms-lg-3">
-
-                <a href="#"
-                   class="btn btn-sm btn-light border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
-                   style="color:#008870; font-size:13px;">
-                    <i class="bi bi-pencil-square ms-1"></i>
-                    تعديل
-                </a>
-
-                <div class="vr mx-1 d-none d-md-block"
-                     style="height:20px; opacity:.1;"></div>
-
-                <a href="#"
-                   class="btn btn-sm btn-light text-danger border-0 rounded-3 px-2 px-lg-3 py-1 py-lg-2"
-                   style="font-size:13px;">
-                    <i class="bi bi-trash ms-1"></i>
-                    حذف
-                </a>
-
-            </div>
-
-        </div>
-
-        {{-- الخط الجانبي --}}
-        <div class="position-absolute start-0 top-0 h-100"
-             style="width:4px; opacity:.8; background-color: {{ $color->colorHash ?? '#ccc' }};">
-        </div>
-
-    </div>
-</div>
             @empty
                 <div class="col-12">
                     <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-dashed">
@@ -146,7 +123,7 @@
 @endsection
 @section('jsfile')
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const containers = document.querySelectorAll('.image-holder');
 
             containers.forEach(container => {
@@ -162,5 +139,27 @@
                 }
             });
         });
+
+        const searchInput = document.getElementById('sectionSearch');
+const cards = document.querySelectorAll('.card-item'); // الكروت كاملة
+
+searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+
+    cards.forEach(card => {
+        const nameEl = card.querySelector('.card-title');
+        const descEl = card.querySelector('.card-text');
+
+        const name = nameEl ? nameEl.textContent.toLowerCase() : '';
+        const desc = descEl ? descEl.textContent.toLowerCase() : '';
+
+        // البحث في الاسم والوصف
+        if (name.includes(query) || desc.includes(query)) {
+            card.style.display = ''; // يظهر الكرت
+        } else {
+            card.style.display = 'none'; // يخفي الكرت
+        }
+    });
+});
     </script>
 @endsection
