@@ -5,7 +5,12 @@
         <!-- Section Title -->
         <div class="col-lg-8 offset-lg-2 text-center">
             <div class="section-title">
-                <h3>Add <span class="orange-text">Product</span></h3>
+                <h3> @if (!isset($editProduct))
+                        Add 
+                    @endif
+                    @if (isset($editProduct))
+                        update 
+                    @endif <span class="orange-text">Product</span></h3>
             </div>
         </div>
 
@@ -23,13 +28,13 @@
                                 </a>
                             </div>
                         @endif
-                        <form action="{{ isset($editProduct) ? '/update-product/' . $editProduct->p_id : '/add-product' }}"
+                        <form id="dataForm" action="{{ isset($editProduct) ? '/update-product/' . $editProduct->p_id : '/add-product' }}"
                             method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="productName" name="productName"
-                                    placeholder="Full Name" required=""
-                                    value="{{ old('productName', $editProduct->p_name ?? '') }}">>
+                                    placeholder="Full Name"
+                                    value="{{ old('productName', $editProduct->p_name ?? '') }}">
                                 <label for="productName">اسم المنتج</label>
                             </div>
                             <div class="d-flex align-items-end gap-3">
@@ -65,7 +70,7 @@
 
                             <div class="form-floating mb-3">
                                 <input type="number" class="form-control" id="productPrice" name="productPrice"
-                                    placeholder="Subject" lang="en" inputmode="numeric" required=""
+                                    placeholder="Subject" lang="en" inputmode="numeric"
                                     value="{{ old('productPrice', $editProduct->p_price ?? '') }}">
                                 <label for="productPrice">سعر المنتج</label>
                                 @error('productPrice')
@@ -121,7 +126,7 @@
 
                             <div class="d-grid" style="direction: ltr">
                                 @if (!isset($editProduct))
-                                    <button type="submit" class="btn-submit">
+                                    <button type="submit" class="btn-submit" id="saveBtn">
 
                                         إضافة <i class="bi bi-plus ms-2"></i>
 
@@ -131,7 +136,7 @@
 
                                 {{-- زر التعديل يظهر فقط في حالة التعديل --}}
                                 @if (isset($editProduct))
-                                    <button type="submit" class="btn-submit">
+                                    <button type="submit" class="btn-submit" id="saveBtn">
 
                                         تعديل <i class="bi bi-pencil-square" style=" font-size:13px; margin: 3px"></i>
 
@@ -145,22 +150,4 @@
             </div>
         </div>
     </section><!-- /Contact Section -->
-    <script>
-        function previewImage(event) {
-
-            const preview = document.getElementById('imagePreview');
-            const file = event.target.files[0];
-
-            if (file) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = "block";
-                }
-
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
 @endsection
