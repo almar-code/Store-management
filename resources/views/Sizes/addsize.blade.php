@@ -36,8 +36,8 @@
                         </a>
                     </div>
 
-                    <form  action="{{ isset($editsize) ? '/update-size/' . $editsize->size_id : '/add-size/' .$productID }}" method="post"
-                        id="dataForm">
+                    <form id="dataForm" action="{{ isset($editsize) ? '/update-size/' . $editsize->size_id : '/add-size/' .$productID }}" method="post"
+                        >
                         @csrf
                         
                         <div class="form-floating mb-3">
@@ -73,14 +73,14 @@
 
                         <div class="d-grid" style="direction: ltr">
                             @if (!isset($editsize))
-                                    <button type="submit" class="btn-submit" id="seaveBtn">
+                                    <button type="submit" class="btn-submit" id="saveBtn">
 
                                         إضافة <i class="bi bi-plus ms-2"></i>
 
                                     </button>
                                 @endif
                                 @if (isset($editsize))
-                                    <button type="submit" class="btn-submit" id="seaveBtn">
+                                    <button type="submit" class="btn-submit" id="saveBtn">
 
                                         تعديل <i class="bi bi-pencil-square" style=" font-size:13px; margin: 3px"></i>
 
@@ -92,5 +92,13 @@
 
         </div> </div> </div>
     </section><!-- /Contact Section -->
+    <script>
+          document.getElementById('dataForm').addEventListener('submit', function() {
+    const btn = document.getElementById('saveBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    btn.disabled = true;
+
+});
+    </script>
 @endsection
 
