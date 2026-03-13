@@ -22,22 +22,24 @@
                             </a>
                         </div>
 
-                        <form action="forms/contact.php" method="post">
+                        <form action="{{'/add-discount/'.$productID }}" method="post">
+                            @csrf
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="price" placeholder="" required=""
-                                    value="200" readonly>
+                                    value="{{ $productPrice }}" readonly>
+                                    <input type="hidden" name="p_id" value="{{ $productID }}">
                                 <label for="price">سعر المنتج</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="discount" name="discount"
+                                <input type="number" class="form-control" id="discount_perce" name="discount_perce"
                                     placeholder="Subject" required="">
-                                <label for="discount">الخصم</label>
+                                <label for="discount_perce">الخصم</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="discountPeriod" name="discountPeriod"
+                                <input type="number" class="form-control" id="duration" name="duration"
                                     placeholder="Subject" required="">
-                                <label for="discountPeriod">مدة الخصم</label>
+                                <label for="duration">مدة الخصم</label>
                             </div>
                             <div class="d-grid" style="direction: ltr">
                                 <button type="submit" class="btn-submit">إضافة <i class="bi bi-plus ms-2"></i></button>
