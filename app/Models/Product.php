@@ -23,4 +23,9 @@ public function subcategory()
     return $this->belongsTo(Subcategory::class, 'subcat_id','subcat_id');   
 
 }
+public function discount()
+{
+    return $this->hasOne(Discount::class,'p_id','p_id')
+        ->where('end_date','>=',now());
+}
 }
