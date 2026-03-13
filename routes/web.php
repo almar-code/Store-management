@@ -48,7 +48,7 @@ Route::get('permission', [UserController::class, 'Permission']);
 Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
 
 Route::get('addsize/{id}', [SizeController::class, 'Addsize']);
-Route::get('sizeManagement', [SizeController::class, 'SizeManagement']);
+Route::get('sizeManagement/{id}', [SizeController::class, 'SizeManagement']);
 Route::post('/add-size/{id}', [SizeController::class, 'store']);
 Route::get('/edit-size/{id}', [SizeController::class, 'edit']);
 Route::post('/update-size/{id}', [SizeController::class, 'update']);

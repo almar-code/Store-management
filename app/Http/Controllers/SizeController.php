@@ -18,9 +18,12 @@ class SizeController extends Controller
         }
         
     }
-    public function SizeManagement(){
+    public function SizeManagement($productID){
          try {
-            $sizes = Size::with('Product')->get();
+            $sizes = Size::with('Product')
+                ->where('p_id', $productID)
+                ->get();
+
             return view('Sizes.sizeManagement', compact('sizes'));
          } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'حدث خطأ أثناء جلب المقاسات');
