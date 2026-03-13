@@ -45,7 +45,11 @@ Route::get('addUser', [UserController::class, 'AddUser']);
 Route::get('users', [UserController::class, 'Users']);
 Route::get('addPermission', [UserController::class, 'AddPermission']);
 Route::get('permission', [UserController::class, 'Permission']);
-Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
+
+Route::get('addDiscount/{id}', [DiscountController::class, 'AddDiscount']);
+Route::post('/add-discount/{id}', [DiscountController::class, 'store']);
+Route::get('/delete-discount/{id}', [DiscountController::class, 'destroy']);
+
 
 Route::get('addsize/{id}', [SizeController::class, 'Addsize']);
 Route::get('sizeManagement/{id}', [SizeController::class, 'SizeManagement']);
