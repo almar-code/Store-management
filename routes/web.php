@@ -41,10 +41,16 @@ Route::get('/delete-product/{id}',[ProductController::class,'destroy']);// حذ�
 Route::get('login', [LoginController::class, 'Login']);
 Route::get('orders', [OrdersController::class, 'Orders']);
 Route::get('orderDetails', [OrdersController::class, 'OrderDetails']);
-Route::get('addUser', [UserController::class, 'AddUser']);
-Route::get('users', [UserController::class, 'Users']);
 Route::get('addPermission', [UserController::class, 'AddPermission']);
 Route::get('permission', [UserController::class, 'Permission']);
+
+Route::get('users', [UserController::class, 'Users']);
+Route::get('addUser', [UserController::class, 'AddUser']);
+Route::post('/add-user', [UserController::class, 'store']);
+Route::get('/edit-user/{id}', [UserController::class, 'edit']);
+Route::post('/update-user/{id}', [UserController::class, 'update']);
+Route::get('/delete-user/{id}', [UserController::class, 'destroy']);
+
 
 Route::get('addDiscount/{id}', [DiscountController::class, 'AddDiscount']);
 Route::post('/add-discount/{id}', [DiscountController::class, 'store']);
