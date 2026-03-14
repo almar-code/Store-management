@@ -15,7 +15,7 @@
                     <input type="text" class="search-input" placeholder="Search">
                 </div>
 
-                <a href="#" class="btn-add-product shadow-sm">
+                <a href="/addcategorie" class="btn-add-product shadow-sm">
                     إضافة فئة
                     <i class="bi bi-plus-lg ms-2"></i>
                 </a>
