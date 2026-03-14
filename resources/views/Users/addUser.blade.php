@@ -6,7 +6,15 @@
         <!-- Section Title -->
         <div class="col-lg-8 offset-lg-2 text-center">
             <div class="section-title">
-                <h3>Add <span class="orange-text">User</span></h3>
+                <h3>
+                @if (!isset($edituser))
+                    Add 
+                @endif
+                @if (isset($edituser))
+                    update 
+                @endif
+                
+                    <span class="orange-text">User</span></h3>
             </div>
         </div>
        
@@ -16,28 +24,121 @@
             <div class="col-14 col-md-10 col-lg-8">
                 
                 <div class="form-container">
-                     <h3>نموذج إضافة مستخدم</h3>
-                    <form action="forms/contact.php" method="post">
+                    <div class="d-flex flex-md-row justify-content-between align-items-center mb-3">
+
+                    @if (!isset($edituser))
+                        <h3>نموذج إضافة مستخدم</h3>
+                    @endif
+                    @if (isset($edituser))
+                        <h3>نموذج تعديل المستخدم</h3>
+                    @endif
+                    <a href="{{ url()->previous() }}">
+                            <i class="bi bi-arrow-left fs-4 text-dark"></i>
+                    </a>
+                    </div>
+                
+                    <form id="dataForm" action="{{ isset($edituser) ? '/update-user/' . $edituser->user_id : '/add-user' }}" method="post">
+                        @csrf
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="userFullName" name="userFullName" placeholder="Full Name" required="">
+                            <input type="text" class="form-control" id="userFullName" name="userFullName" placeholder="Full Name" required=""
+                            @if (isset($edituser))
+                            value="{{ $edituser->full_name }}"
+                                
+                            @endif>
                             <label for="userFullName">اسم المستخدم</label>
+                            @error('userFullName')
+                                    <div class="form-error">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        الرجاء اختيار اسم المستخدم   
+                                    </div>
+                            @enderror
                         </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="userName" name="userName" placeholder="Full Name" required=""
+                            @if (isset($edituser))
+                            value="{{ $edituser->username }}"
+                                
+                            @endif>
+                            
+                            <label for="userName">الاسم</label>
+                            @error('userName')
+                                    <div class="form-error">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        الرجاء اختيار الاسم  
+                                    </div>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password_hash" name="password_hash" placeholder="كلمة السر">
+                            <label for="password_hash">كلمة السر</label>
+
+                            @if(isset($edituser))
+                                <small class="text-muted">اترك الحقل فارغ إذا لا تريد تغيير كلمة السر</small>
+                            @endif
+
+                            @error('password_hash')
+                                <div class="form-error">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    الرجاء اختيار كلمة السر
+                                </div>
+                            @enderror
+                        </div>
+
                         
                         <div class="form-floating mb-3">
-                            <input type="tel" class="form-control" id="usrePhone" name="usrePhone" placeholder="Subject" required="">
-                            <label for="usrePhone">رقم الهاتف</label>
+                            <input type="tel" class="form-control" id="email" name="email" placeholder="Subject" required=""
+                            @if (isset($edituser))
+                            value="{{ $edituser->email }}"
+                                
+                            @endif>
+                            
+                            <label for="email">الاميل </label>
+                            @error('email')
+                                    <div class="form-error">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        الرجاء اختيار الاميل   
+                                    </div>
+                            @enderror
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="userAddress" name="userAddress" placeholder="Subject" required="">
+                            <input type="text" class="form-control" id="userAddress" name="userAddress" placeholder="Subject" required=""
+                            @if (isset($edituser))
+                            value="{{ $edituser->address }}"
+                                
+                            @endif>
+                            
                             <label for="userAddress">عنوان المستخدم</label>
+                            @error('subcat_image')
+                                    <div class="form-error">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        الرجاء اختيار عنوان المستخدم  
+                                    </div>
+                            @enderror
                         </div>
                         <div class="d-grid" style="direction: ltr">
-                            <button type="submit" class="btn-submit">إضافة <i class="bi bi-plus ms-2"></i></button>
+                            @if (!isset($edituser))
+                                    <button type="submit" class="btn-submit" id="saveBtn">
+                                        إضافة <i class="bi bi-plus ms-2"></i>
+                                    </button>
+                            @endif
+
+                            @if (isset($edituser))
+                                    <button type="submit" class="btn-submit" id="saveBtn">
+                                        تعديل <i class="bi bi-pencil-square" style=" font-size:13px; margin: 3px"></i>
+                                    </button>
+                            @endif
                         </div>
                     </form>
                 </div>
 
         </div> </div> </div>
     </section><!-- /Contact Section -->
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function() {
+        const btn = document.getElementById('saveBtn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        btn.disabled = true;
+            });
+    </script>
 @endsection
 
