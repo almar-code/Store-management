@@ -8,6 +8,8 @@ use App\Models\ProductImage;
 use App\Models\Size;
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Discount;
+use Carbon\Carbon;
 class ProductController extends Controller
 {
 
@@ -16,9 +18,9 @@ class ProductController extends Controller
     {
         try {
 
-            $products = Product::all();
-
-            return view('Products.Products', compact('products'));
+             $products = Product::with(['discount' => function ($query) {
+            $query->where('end_date', '>=', Carbon::today());}])->get();
+            return view('Products.products', compact('products'));
 
         } catch (\Exception $e) {
 
@@ -154,7 +156,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
 
             return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المنتج')->withInput();
-            ;
+            
         }
 
     }
