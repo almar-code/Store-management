@@ -40,7 +40,7 @@ class CategorieController extends Controller
 
          $request->validate([
             'subcat_name' => 'required',
-            'subcat_image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'subcat_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'cat_id' => 'required'
         ]);
         try {
@@ -82,7 +82,7 @@ class CategorieController extends Controller
     {
             $request->validate([
                 'subcat_name' => 'required',
-                'subcat_image' => 'image|mimes:jpg,jpeg,png|max:2048',
+                'subcat_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
                 'cat_id' => 'required'
             ]);
 
