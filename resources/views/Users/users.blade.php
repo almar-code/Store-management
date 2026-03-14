@@ -16,16 +16,16 @@
                 </div>
                 <div class="search-input-container">
                     <i class="bi bi-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search">
+                    <input type="text" class="search-input" placeholder="Search" id="userSearch">
                 </div>
 
-                <a href="#" class="btn-add-product shadow-sm">
+                <a href="/addUser" class="btn-add-product shadow-sm">
                     إضافة مستخدم
                     <i class="bi bi-plus-lg ms-2"></i>
                 </a>
             </div>
 
-            <div class="table-container">
+            <div class="table-container ">
                 <table>
                     <thead>
                         <tr>
@@ -37,12 +37,16 @@
                         
                         </tr>
                     </thead>
+                    @foreach ($users as $user)
+                        
+                    
                     <tbody>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td>779271679</td>
-                            <td>الرياض</td>
+                         <tr class="user-card">
+                            <td>{{$user->user_id}}</td>
+                            <td class="user-name"> {{$user->full_name}}</td>
+                            <td> {{$user->username}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->address}}</td>
                             <td>
                                 <div class="dropdown">
                                     <button class="btn text-dark p-0 border-0 shadow-none " type="button"
@@ -52,14 +56,14 @@
                                     <ul class="dropdown-menu dropdown-menu-start shadow border-light">
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="#">
+                                                href="/edit-user/{{ $user->user_id  ?? '-'}}">
                                                 <span class="ms-2">تعديل</span>
                                                 <i class="bi bi-pencil-square text-turquoise"></i>
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/addPermission">
+                                                href="/addPermission/{{ $user->user_id}}">
                                                 <span class="ms-2">اضافة صلاحية</span>
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
@@ -69,8 +73,8 @@
                                         </li>
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-danger font-weight-bold text-end"
-                                                href="#">
-                                                <span class="ms-2">حذف المنتج</span>
+                                                href="#"  onclick="confirmDelete('/delete-user/{{ $user->user_id }}','حذف المستخدم ','هل أنت متأكد من حذف هذا المستخدم  ؟')">
+                                                <span class="ms-2">حذف المستخدم</span>
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                         </li>
@@ -79,8 +83,24 @@
                             </td>
                         </tr>
                     </tbody>
+                    @endforeach
                 </table>
             </div>
         </div>
     </div>
+    <script>
+        const searchInput = document.getElementById('userSearch');
+        const users = document.querySelectorAll('.user-card');
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            users.forEach(user => {
+                const name = user.querySelector('.user-name').textContent.toLowerCase();
+                if (name.includes(query)) {
+                    user.style.display = '';
+                } else {
+                    user.style.display = 'none';
+                }
+            });
+        });
+    </script>
 @endsection

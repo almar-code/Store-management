@@ -51,26 +51,35 @@
                                     </div>
                             @enderror
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="file" class="form-control" id="subcat_image" name="subcat_image" onchange="previewImage(event)">
-                            <label for="subcat_image" class="form-label">صورة الفئه</label>
-                        @if (isset($editCategory))
-                            <div class="mt-2">
-                                <img id="imagePreview"
-                                    src="{{  asset('storage/uploads/subcategory/'.$editCategory->subcat_image) ?? '' }}"
-                                    class="rounded-circle"
-                                    width="60"
-                                    height="60"
-                                    style="object-fit: cover;" >
-                            </div>
-                            @endif
+                        <div class="d-flex align-items-end gap-3">
 
-                            @error('subcat_image')
-                                    <div class="form-error">
-                                        <i class="bi bi-exclamation-circle"></i>
-                                        الرجاء اختيار صورة الفئه 
+                                <div class="form-floating mb-3 flex-grow-1">
+                                    <input type="file" class="form-control" id="subcat_image" name="subcat_image"
+                                        multiple onchange="previewImage(event)" {{ isset($editCategory) ? '' : 'required' }}>
+
+                                    <label for="subcat_image">صور الفئه</label>
+
+                                    @error('subcat_image')
+                                        <div class="form-error">
+                                            <i class="bi bi-exclamation-circle"></i>
+                                            الرجاء ادخال صور الفئه
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                @isset($editCategory)
+                                    <div class="image-preview mb-3" >
+                                        <img id="imagePreview"
+                                            src="{{ asset('storage/uploads/subcategory/'.$editCategory->subcat_image) ?? '' }}"
+                                            class="rounded" width="60" height="60" style="object-fit: cover;">
                                     </div>
-                            @enderror
+                                @else
+                                    <div class="image-preview mb-3">
+                                        <img id="imagePreview" class="rounded" width="60" height="60"
+                                            style="object-fit: cover; display:none;">
+                                    </div>
+                                @endisset
+
                         </div>
 
                         <div class="form-floating mb-3">

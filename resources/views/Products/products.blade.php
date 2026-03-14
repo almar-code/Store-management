@@ -41,8 +41,20 @@
                                         {{ $product->p_description ?? '' }}
                                     </p>
                                     <div class="card-title fw-bold" style="font-size: 1rem;">
-                                        {{ $product->p_price ?? '' }} <span class="small text-turquoise"
-                                            style="font-size: 0.8rem;">ر.س</span>
+
+                                  @if($product->discount)
+                                    <span style="text-decoration: line-through; color: gray;">
+                                        {{ $product->p_price }}
+                                    </span>
+                                    <span style="color:red; font-weight:bold; padding: 10px;">
+                                        {{ $product->p_price - $product->discount->discount_perce }}
+                                    </span>
+                                    @else
+                                    {{ $product->p_price }}
+                                    @endif
+                                    <span class="small text-turquoise" style="font-size: 0.8rem;">
+                                        ر.س
+                                    </span>
                                     </div>
                                 </div>
                             </div>
@@ -89,13 +101,24 @@
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
                                         </li>
+                                        @if(!isset($product->discount))
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/addDiscount">
+                                                href="/addDiscount/{{ $product->p_id }}">
                                                 <span class="ms-2">اضافة خصم</span>
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
                                         </li>
+                                        @endif
+                                        @if(isset($product->discount))
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                                                href="/delete-discount/{{$product->discount->discount_id }}">
+                                                <span class="ms-2">حذف الخصم</span>
+                                                <i class="bi bi-plus-circle text-turquoise"></i>
+                                            </a>
+                                        </li>
+                                        @endif
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>

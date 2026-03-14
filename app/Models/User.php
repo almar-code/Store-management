@@ -9,7 +9,24 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+   
     protected $table = 'users';
 
     protected $primaryKey = 'user_id';
+  protected $fillable = [
+    'username',
+    'full_name',
+    'email',
+    'address',
+    'password_hash', // هذا موجود في قاعدة البيانات ✔
+];
+
+
+protected function casts(): array
+{
+    return [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed', // Laravel سيعمل hash تلقائيًا
+    ];
+}
 }
