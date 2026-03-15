@@ -9,14 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+   
     protected $table = 'users';
 
     protected $primaryKey = 'user_id';
@@ -36,5 +29,4 @@ protected function casts(): array
         'password' => 'hashed', // Laravel سيعمل hash تلقائيًا
     ];
 }
-
 }

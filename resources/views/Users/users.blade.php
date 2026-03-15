@@ -63,7 +63,7 @@
                                         </li>
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/addPermission">
+                                                href="/addPermission/{{ $user->user_id}}">
                                                 <span class="ms-2">اضافة صلاحية</span>
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>

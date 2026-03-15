@@ -7,6 +7,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorsController;
@@ -41,8 +42,17 @@ Route::get('/delete-product/{id}',[ProductController::class,'destroy']);// حذ�
 Route::get('login', [LoginController::class, 'Login']);
 Route::get('orders', [OrdersController::class, 'Orders']);
 Route::get('orderDetails', [OrdersController::class, 'OrderDetails']);
-Route::get('addPermission', [UserController::class, 'AddPermission']);
-Route::get('permission', [UserController::class, 'Permission']);
+
+Route::get('addPermission/{id}', [PermissionController::class, 'AddPermission']);
+Route::get('permission', [PermissionController::class, 'Permissions']);
+Route::post('/add-permission/{id}', [PermissionController::class, 'store']);
+Route::get('/edit-permission/{userID}/{permissionID}', [PermissionController::class, 'edit']);
+Route::post('/update-permission/{userID}/{permissionID}', [PermissionController::class, 'update'])->name('permission.update');
+Route::post('/update-permission-status/{userID}/{permissionID}', [PermissionController::class, 'updateStatus'])->name('permission.updateStatus');
+Route::get('/delete-permission/{userID}/{permissionID}', [PermissionController::class, 'destroy']);
+
+Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
+Route::get('Discounts', [DiscountController::class, 'Discounts']);
 
 Route::get('users', [UserController::class, 'Users']);
 Route::get('addUser', [UserController::class, 'AddUser']);
@@ -55,8 +65,6 @@ Route::get('/delete-user/{id}', [UserController::class, 'destroy']);
 Route::get('addDiscount/{id}', [DiscountController::class, 'AddDiscount']);
 Route::post('/add-discount/{id}', [DiscountController::class, 'store']);
 Route::get('/delete-discount/{id}', [DiscountController::class, 'destroy']);
-
-
 Route::get('addsize/{id}', [SizeController::class, 'Addsize']);
 Route::get('sizeManagement/{id}', [SizeController::class, 'SizeManagement']);
 Route::post('/add-size/{id}', [SizeController::class, 'store']);
