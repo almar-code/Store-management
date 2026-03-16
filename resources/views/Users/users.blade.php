@@ -16,7 +16,7 @@
                 </div>
                 <div class="search-input-container">
                     <i class="bi bi-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search" id="userSearch">
+                    <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
                 </div>
 
                 <a href="/addUser" class="btn-add-product shadow-sm">
@@ -41,9 +41,9 @@
                         
                     
                     <tbody>
-                         <tr class="user-card">
+                         <tr class="card-item">
                             <td>{{$user->user_id}}</td>
-                            <td class="user-name"> {{$user->full_name}}</td>
+                            <td class="card-title"> {{$user->full_name}}</td>
                             <td> {{$user->username}}</td>
                             <td>{{$user->email}}</td>
                             <td>{{$user->address}}</td>
@@ -88,19 +88,4 @@
             </div>
         </div>
     </div>
-    <script>
-        const searchInput = document.getElementById('userSearch');
-        const users = document.querySelectorAll('.user-card');
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase();
-            users.forEach(user => {
-                const name = user.querySelector('.user-name').textContent.toLowerCase();
-                if (name.includes(query)) {
-                    user.style.display = '';
-                } else {
-                    user.style.display = 'none';
-                }
-            });
-        });
-    </script>
 @endsection

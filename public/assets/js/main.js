@@ -235,6 +235,64 @@
     }
 
   });
+// ألكود الخاص بالبحث
+const searchInput = document.getElementById('sectionSearch');
+const cards = document.querySelectorAll('.card-item');
+
+searchInput.addEventListener('input', function() {
+
+const query = this.value.toLowerCase();
+
+cards.forEach(card => {
+
+const nameEl = card.querySelector('.card-title');
+const descEl = card.querySelector('.card-text');
+
+let nameText = nameEl ? nameEl.textContent : '';
+let descText = descEl ? descEl.textContent : '';
+
+let name = nameText.toLowerCase();
+let desc = descText.toLowerCase();
+
+if (name.includes(query) || desc.includes(query)) {
+
+card.style.display = '';
+
+if(query.length > 0){
+
+const regex = new RegExp(`(${query})`, 'gi');
+
+if(nameEl){
+nameEl.innerHTML = nameText.replace(regex, '<span class="highlight">$1</span>');
+}
+
+if(descEl){
+descEl.innerHTML = descText.replace(regex, '<span class="highlight">$1</span>');
+}
+
+}else{
+
+if(nameEl) nameEl.textContent = nameText;
+if(descEl) descEl.textContent = descText;
+
+}
+
+} else {
+
+card.style.display = 'none';
+
+}
+
+});
+
+});
+// كود تغيير زر الحفظ عند الضغط عليه
+document.getElementById('dataForm').addEventListener('submit', function () {
+  const btn = document.getElementById('saveBtn');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  btn.disabled = true;
+
+});
 
 })();
 
@@ -281,13 +339,6 @@ function previewImage(event) {
     reader.readAsDataURL(input.files[0]);
   }
 }
-
-document.getElementById('dataForm').addEventListener('submit', function () {
-  const btn = document.getElementById('saveBtn');
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-  btn.disabled = true;
-
-});
 // تحديث الصورة عند الاضافة
 function previewImage(event) {
 

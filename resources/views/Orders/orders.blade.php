@@ -16,7 +16,7 @@
                 </div>
                 <div class="search-input-container">
                     <i class="bi bi-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search">
+                    <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
                 </div>
 
                 <a href="/orders" class="btn-add-product shadow-sm" style="justify-content: center ;">
@@ -26,108 +26,77 @@
             </div>
 
             <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>اسم العميل</th>
-                            <th class="show">رقم العميل</th>
-                            <th class="show">المدينة</th>
-                            <th>إجمالي الطلب</th>
-                            <th>حالة الطلب</th>
-                            <th class="show">تاريخ الطلب</th>
-                            <th>التفاصيل</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/orderDetails" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/orderDetails" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/orderDetails" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/orderDetails" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="#" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                     
-                    </tbody>
-                </table>
+               <table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>اسم العميل</th>
+            <th class="show">رقم العميل</th>
+            <th class="show">المدينة</th>
+            <th>إجمالي الطلب</th>
+            <th>حالة الطلب</th>
+            <th class="show">تاريخ الطلب</th>
+            <th>التفاصيل</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    @foreach ($orders as $order)
+
+        <tr class="card-item">
+            <td>{{ $order->order_id }}</td>
+
+            <td class="card-title">{{ $order->customer->name }}</td>
+
+            <td class="show">
+                {{ $order->customer->phone ?? '-' }}
+            </td>
+
+            <td class="show">
+                {{ $order->address->city ?? '-' }}
+            </td>
+
+            <td>
+                {{ $order->total_price }} ر.س
+            </td>
+
+            <td>
+
+                @if($order->status == 'قيد المعالجة')
+                    <span class="badge bg-warning text-dark">قيد المعالجة</span>
+
+                @elseif($order->status == 'مكتمل')
+                    <span class="badge bg-success">مكتمل</span>
+
+                @elseif($order->status == 'ملغي')
+                    <span class="badge bg-danger" >ملغي</span>
+
+                @else
+                    <span class="badge bg-secondary">{{ $order->status }}</span>
+
+                @endif
+
+            </td>
+
+            <td class="show">
+                {{ $order->created_at->format('Y-m-d') }}
+            </td>
+
+            <td>
+                <a href="/orderDetails/{{ $order->order_id }}" class="text-dark fs-5">
+                    <i class="bi bi-eye"></i>
+                </a>
+            </td>
+
+        </tr>
+
+    @endforeach
+
+    </tbody>
+</table>
             </div>
         </div>
     </div>
+    
 @endsection

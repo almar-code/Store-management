@@ -65,7 +65,9 @@ class ProductController extends Controller
             //  الترجمة
 
             $tr = new GoogleTranslate('en');
-
+             $tr->setOptions([
+            'verify' => false
+        ]);
             // ترجمة النصوص
             $productNameEn = $tr->translate($request->productName);
             $productDescriptionEn = $tr->translate($request->productDescription);
@@ -196,6 +198,9 @@ class ProductController extends Controller
 
             // ترجمة للإنجليزية
             $tr = new GoogleTranslate('en');
+             $tr->setOptions([
+            'verify' => false
+        ]);
             $name_en = $tr->translate($request->productName);
             $productDescriptionEn = $tr->translate($request->productDescription);
 

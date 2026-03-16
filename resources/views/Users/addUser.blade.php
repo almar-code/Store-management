@@ -45,7 +45,7 @@
                             value="{{ $edituser->full_name }}"
                                 
                             @endif>
-                            <label for="userFullName">اسم المستخدم</label>
+                            <label for="userFullName">الاسم</label>
                             @error('userFullName')
                                     <div class="form-error">
                                         <i class="bi bi-exclamation-circle"></i>
@@ -60,7 +60,7 @@
                                 
                             @endif>
                             
-                            <label for="userName">الاسم</label>
+                            <label for="userName">اسم المستخدم</label>
                             @error('userName')
                                     <div class="form-error">
                                         <i class="bi bi-exclamation-circle"></i>
