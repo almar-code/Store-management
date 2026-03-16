@@ -35,8 +35,16 @@
                         </span>
 
                         <div class="status-dropdown">
+<<<<<<< HEAD
 
+=======
+<<<<<<< Updated upstream
+>>>>>>> customer-db
                             <button onclick="toggleStatus(this)">
+=======
+
+                            <button onmouseenter="toggleStatus(this)">
+>>>>>>> Stashed changes
                                 <i class="bi bi-pencil-square"></i>
                             </button>
 

@@ -91,7 +91,13 @@
             </table>
         </div>
     </div>
+<<<<<<< HEAD
 @endsection
+=======
+<<<<<<< Updated upstream
+    <script>
+=======
+>>>>>>> customer-db
 </div>
 
 <script>
@@ -108,6 +114,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
         const searchInput = document.getElementById('userSearch');
         const userCards = document.querySelectorAll('.user-card');
 
@@ -122,4 +129,21 @@
         }
     });
 </script>
+=======
+>>>>>>> Stashed changes
+        const searchInput = document.getElementById('userSearch');
+        const users = document.querySelectorAll('.user-card');
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            users.forEach(user => {
+                const name = user.querySelector('.user-name').textContent.toLowerCase();
+                if (name.includes(query)) {
+                    user.style.display = '';
+                } else {
+                    user.style.display = 'none';
+                }
+            });
+        });
+    </script>
+>>>>>>> customer-db
 @endsection
