@@ -143,6 +143,10 @@ tbody tr:nth-child(even) {
     font-weight: bold;
 }
 
+/* --- تعديل لجعل القائمة المنسدلة تظهر في الوسط تماماً --- */
+
+
+
 tbody td {
     text-align: center;
     padding: 8px 7px;
@@ -165,7 +169,7 @@ tbody td {
     top: 100% !important;
     left: 50% !important;        /* التحرك لمنتصف العنصر */
     right: auto !important;
-    transform: translateX(-10%) !important; /* الإزاحة لليسار بنصف عرض القائمة لضبط الوسط */
+    transform: translateX(-50%) !important; /* الإزاحة لليسار بنصف عرض القائمة لضبط الوسط */
     
     z-index: 9999 !important;
     min-width: 160px;
@@ -185,8 +189,6 @@ tbody td {
     text-align: right;
     padding: 10px 15px;
 }
-
-
 @media (max-width: 768px) {
 
     .order-grid {
