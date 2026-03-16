@@ -26,6 +26,9 @@ class ColorsController extends Controller
                 'productImages.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
             ]);
             $tr = new GoogleTranslate('en');
+             $tr->setOptions([
+            'verify' => false
+        ]);
 
             // ترجمة النصوص
             $colorNameEn = '';
@@ -115,6 +118,9 @@ class ColorsController extends Controller
         try {
             $color = Color::findOrFail($colorID);
             $tr = new GoogleTranslate('en');
+             $tr->setOptions([
+            'verify' => false
+        ]);
 
             // ترجمة الاسم
             $colorNameEn = '';

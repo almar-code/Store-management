@@ -139,27 +139,5 @@
                 }
             });
         });
-
-        const searchInput = document.getElementById('sectionSearch');
-const cards = document.querySelectorAll('.card-item'); // الكروت كاملة
-
-searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase();
-
-    cards.forEach(card => {
-        const nameEl = card.querySelector('.card-title');
-        const descEl = card.querySelector('.card-text');
-
-        const name = nameEl ? nameEl.textContent.toLowerCase() : '';
-        const desc = descEl ? descEl.textContent.toLowerCase() : '';
-
-        // البحث في الاسم والوصف
-        if (name.includes(query) || desc.includes(query)) {
-            card.style.display = ''; // يظهر الكرت
-        } else {
-            card.style.display = 'none'; // يخفي الكرت
-        }
-    });
-});
     </script>
 @endsection

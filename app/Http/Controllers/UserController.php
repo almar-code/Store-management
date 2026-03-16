@@ -16,7 +16,13 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
+        
         try {
+            $existingUser = User::where('email', $request->email)->first();
+if ($existingUser) {
+    return back()->with('error', 'البريد الإلكتروني مستخدم من قبل');
+}
+
              $request->validate([
             'userFullName' => 'required|max:255',
             'userName' => 'required|max:255',
@@ -33,7 +39,8 @@ class UserController extends Controller
         ]);
             return redirect()->back()->with('success', 'تم إضافة المستخدم بنجاح');
 
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
             return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المستخدم ');
         }
     }
