@@ -45,6 +45,9 @@ class CategorieController extends Controller
         ]);
         try {
             $tr = new GoogleTranslate('en');
+             $tr->setOptions([
+            'verify' => false
+        ]);
             $subcat_name_en = $tr->translate($request->subcat_name);
 
             $imageName = time().'_'.$request->file('subcat_image')->getClientOriginalName();
@@ -90,6 +93,9 @@ class CategorieController extends Controller
                 $subcategory = Subcategory::findOrFail($id);
 
                 $tr = new GoogleTranslate('en');
+                 $tr->setOptions([
+            'verify' => false
+        ]);
                 $subcat_name_en = $tr->translate($request->subcat_name);
 
                 $data = [

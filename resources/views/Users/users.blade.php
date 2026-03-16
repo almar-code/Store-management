@@ -11,8 +11,7 @@
             <div class="section-ar">
                 <div class="section-title" style="margin-bottom: 0px;">
                     <h3 style="font-size: 20px">قائمة <span class="orange-text">المستخدمين</span></h3>
-                </div>
-            </div>
+                </div>         </div>
 
             <div class="search-input-container" id="tour-search-box" data-intro="من هنا يمكنك البحث عن المستخدمين بالاسم بسرعة" data-step="1">
                 <i class="bi bi-search search-icon"></i>
@@ -45,9 +44,9 @@
                 <tbody>
                     @foreach ($users as $user)
                     <tbody>
-                         <tr class="user-card">
+                         <tr class="card-item">
                             <td>{{$user->user_id}}</td>
-                            <td class="user-name"> {{$user->full_name}}</td>
+                            <td class="card-title"> {{$user->full_name}}</td>
                             <td> {{$user->username}}</td>
                             <td>{{$user->email}}</td>
                             <td>{{$user->address}}</td>
@@ -92,6 +91,7 @@
             </table>
         </div>
     </div>
+@endsection
 </div>
 
 <script>

@@ -24,15 +24,15 @@
             <div class="row g-3 px-2">
 
                 @forelse($sections as $section)
-                    <div class="col-md-4 col-lg-12">
+                    <div class="card-item col-md-4 col-lg-12">
                         <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white">
                             <div class="card-body p-2">
 
                                 <div class="d-flex align-items-center justify-content-between">
 
-                                    <div class="text-end flex-grow-1 overflow-hidden">
+                                    <div class=" text-end flex-grow-1 overflow-hidden">
 
-                                        <h6 class="mb-1 fw-bold text-truncate "
+                                        <h6 class="card-title mb-1 fw-bold text-truncate "
                                             style="font-size:13px; white-space:nowrap; color: #000;">
                                             {{ $section->cat_name ?? '' }}
                                         </h6>
@@ -81,21 +81,5 @@
             </div>
         </div>
     </div>
-    <script>
-const searchInput = document.getElementById('sectionSearch');
-const cards = document.querySelectorAll('.row.g-3 .col-md-4'); // كل الكروت
-
-searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase();
-
-    cards.forEach(card => {
-        const name = card.querySelector('h6').textContent.toLowerCase();
-        if (name.includes(query)) {
-            card.style.display = 'block'; // أو flex حسب التصميم
-        } else {
-            card.style.display = 'none';
-        }
-    });
-});
-</script>
+    
 @endsection

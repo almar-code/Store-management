@@ -52,6 +52,10 @@ class SectionController extends Controller
 
             /// ترجمة الاسم للإنجليزي
             $tr = new GoogleTranslate('en');
+            // تعطيل التحقق من SSL (حل للمشكلة)
+        $tr->setOptions([
+            'verify' => false
+        ]);
             $name_en = $tr->translate($request->sectionName);
 
             Category::create([
@@ -62,7 +66,7 @@ class SectionController extends Controller
             return redirect()->back()->with('success', 'تم إضافة القسم بنجاح');
 
         } catch (\Exception $e) {
-
+return redirect()->back()->with('error', $e->getMessage());
             return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة القسم');
 
         }
@@ -101,6 +105,9 @@ class SectionController extends Controller
             $section = Category::findOrFail($id);
             // ترجمة الاسم للإنجليزي
             $tr = new GoogleTranslate('en');
+             $tr->setOptions([
+            'verify' => false
+        ]);
             $name_en = $tr->translate($request->sectionName);
             $section->update([
                 'cat_name' => $request->sectionName,
