@@ -12,6 +12,7 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorsController;
 use App\Http\Controllers\AdsController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Http\Request;
 Route::get('/', function () {
     return view('welcome');
@@ -82,3 +83,4 @@ Route::get('/delete-categorie/{id}',[CategorieController::class,'destroy']);
 Route::get('/delete-color/{id}',[ColorsController::class,'destroy']);
 
 Route::get('addads', [AdsController::class, 'AddAds']);
+Route::get('customers', [CustomerController::class, 'Customers']);

@@ -88,7 +88,26 @@
             </div>
         </div>
     </div>
+<<<<<<< Updated upstream
     <script>
+=======
+</div>
+
+<script>
+    function startTour() {
+        introJs().setOptions({
+            nextLabel: 'التالي',
+            prevLabel: 'السابق',
+            doneLabel: 'تم',
+            showProgress: true,
+            showBullets: true,
+            overlayOpacity: 0.5,
+            disableInteraction: false // السماح للمستخدم بالضغط على النقاط أثناء الشرح
+        }).start();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+>>>>>>> Stashed changes
         const searchInput = document.getElementById('userSearch');
         const users = document.querySelectorAll('.user-card');
         searchInput.addEventListener('input', function() {

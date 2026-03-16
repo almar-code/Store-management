@@ -241,6 +241,12 @@
                                 الطلبات</div>
                             </a>
                         </li>
+                        <li>
+                            <a href="/customers" class="{{ request()->is('customers') ? 'active' : '' }}">
+                                <div><span class="bi bi-bag-check nav-icon"></span>
+                                العملاء</div>
+                            </a>
+                        </li>
 
 
                         <li>

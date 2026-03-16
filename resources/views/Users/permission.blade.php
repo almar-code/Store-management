@@ -18,8 +18,9 @@
                    <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
             </div>
 
-            <a href="/permission" class="btn-add-product shadow-sm" style="justify-content: center;">
-                <i class="bi bi-arrow-clockwise"></i>
+            <a href="/permission" class="btn-add-product shadow-sm" style="justify-content: center;" title="تحديث الصفحة">
+                <i class="bi bi-arrow-clockwise" ></i>
+
             </a>
         </div>
 
@@ -50,7 +51,7 @@
         border-radius: 50%;
         background-color: {{ $permission->is_active ? '#008870' : '#ff0000' }};
         display: inline-block;
-    "></div>
+    " title="{{ $permission->is_active ? 'المستخدم نشط' : 'المستخدم غير نشط' }}"></div>
 </td>
 
 
@@ -92,26 +93,5 @@
         </div>
     </div>
 </div>
-<script>const searchInput = document.getElementById('sectionSearch');
-const cards = document.querySelectorAll('.card-item'); // الكروت كاملة
 
-searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase();
-
-    cards.forEach(card => {
-        const nameEl = card.querySelector('.card-title');
-        const descEl = card.querySelector('.card-text');
-
-        const name = nameEl ? nameEl.textContent.toLowerCase() : '';
-        const desc = descEl ? descEl.textContent.toLowerCase() : '';
-
-        // البحث في الاسم والوصف
-        if (name.includes(query) || desc.includes(query)) {
-            card.style.display = ''; // يظهر الكرت
-        } else {
-            card.style.display = 'none'; // يخفي الكرت
-        }
-    });
-});
-</script>
 @endsection
