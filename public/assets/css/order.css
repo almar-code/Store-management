@@ -143,6 +143,49 @@ tbody tr:nth-child(even) {
     font-weight: bold;
 }
 
+tbody td {
+    text-align: center;
+    padding: 8px 7px;
+    position: relative; /* ضروري لعمل القائمة المنسدلة */
+    overflow: visible !important;
+}
+
+/* حاوية النقاط الثلاث */
+.dropdown {
+    display: flex;
+    justify-content: center; /* توسيط الزر داخل الخلية */
+    align-items: center;
+}
+
+.dropdown-menu {
+    position: absolute !important;
+    transform: none !important;
+    
+    /* الكود السحري للتوسيط */
+    top: 100% !important;
+    left: 50% !important;        /* التحرك لمنتصف العنصر */
+    right: auto !important;
+    transform: translateX(-10%) !important; /* الإزاحة لليسار بنصف عرض القائمة لضبط الوسط */
+    
+    z-index: 9999 !important;
+    min-width: 160px;
+    margin-top: 8px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid #eee !important;
+    border-radius: 8px !important;
+}
+
+/* إلغاء أي حواف زائدة قد تسبب ميلان القائمة */
+.dropdown-menu-end {
+    right: auto !important;
+}
+
+/* تحسين شكل العناصر داخل القائمة لتكون متناسقة مع التوسيط */
+.dropdown-item {
+    text-align: right;
+    padding: 10px 15px;
+}
+
 
 @media (max-width: 768px) {
 

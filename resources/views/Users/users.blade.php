@@ -1,45 +1,49 @@
 @extends('layouts.master')
+
 @section('link')
     <link href="assets/css/order.css" rel="stylesheet">
 @endsection
+
 @section('content')
-    <div class="container my-4  px-2 px-md-2" dir="rtl">
-        <div class="container">
-
-            <div class="controls-container">
-
-                <div class="section-ar">
-
-                    <div class="section-title" style="margin-bottom: 0px;">
-                        <h3 style="font-size: 20px">قائمة <span class="orange-text">المستخدمين</span></h3>
-                    </div>
+<div class="container my-4 px-2 px-md-2" dir="rtl">
+    <div class="container">
+        <div class="controls-container">
+            <div class="section-ar">
+                <div class="section-title" style="margin-bottom: 0px;">
+                    <h3 style="font-size: 20px">قائمة <span class="orange-text">المستخدمين</span></h3>
                 </div>
-                <div class="search-input-container">
-                    <i class="bi bi-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search" id="userSearch">
-                </div>
-
-                <a href="/addUser" class="btn-add-product shadow-sm">
-                    إضافة مستخدم
-                    <i class="bi bi-plus-lg ms-2"></i>
-                </a>
             </div>
 
-            <div class="table-container ">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>اسم المستخدم</th>
-                            <th>رقم الهاتف</th>
-                            <th>العنوان</th>
-                            <th>عمليات</th>
-                        
-                        </tr>
-                    </thead>
+            <div class="search-input-container" id="tour-search-box" data-intro="من هنا يمكنك البحث عن المستخدمين بالاسم بسرعة" data-step="1">
+                <i class="bi bi-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search" id="userSearch">
+            </div>
+
+            <a href="/addUser" id="tour-add-btn" class="btn-add-product shadow-sm" data-intro="أضف مستخدم جديد للنظام من هذا الزر" data-step="2">
+                إضافة مستخدم
+                <i class="bi bi-plus-lg ms-2"></i>
+            </a>
+           <i class="bi bi-question-circle text-turquoise fs-4" 
+            onclick="startTour()" 
+            style="cursor: pointer; margin-right: 15px;" 
+            title="مساعدة - Help">
+            </i>
+        </div>
+
+        <div class="table-container">
+            <table id="tour-table" class="table" data-intro="هذا الجدول يعرض كافة بيانات المستخدمين المسجلين" data-step="3">
+                <thead>
+                    <tr>
+                        <th>الرقم</th>
+                        <th>اسم المستخدم</th>
+                        <th>الاسم</th>
+                        <th>الايميل</th>
+                        <th>العنوان</th>
+                        <th>العمليات</th>
+                    </tr>
+                </thead>
+                <tbody>
                     @foreach ($users as $user)
-                        
-                    
                     <tbody>
                          <tr class="user-card">
                             <td>{{$user->user_id}}</td>
@@ -84,23 +88,38 @@
                         </tr>
                     </tbody>
                     @endforeach
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
-    <script>
+</div>
+
+<script>
+    function startTour() {
+        introJs().setOptions({
+            nextLabel: 'التالي',
+            prevLabel: 'السابق',
+            doneLabel: 'تم',
+            showProgress: true,
+            showBullets: true,
+            overlayOpacity: 0.5,
+            disableInteraction: false // السماح للمستخدم بالضغط على النقاط أثناء الشرح
+        }).start();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('userSearch');
-        const users = document.querySelectorAll('.user-card');
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase();
-            users.forEach(user => {
-                const name = user.querySelector('.user-name').textContent.toLowerCase();
-                if (name.includes(query)) {
-                    user.style.display = '';
-                } else {
-                    user.style.display = 'none';
-                }
+        const userCards = document.querySelectorAll('.user-card');
+
+        if(searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                userCards.forEach(card => {
+                    const name = card.querySelector('.user-name').textContent.toLowerCase();
+                    card.style.display = name.includes(query) ? '' : 'none';
+                });
             });
-        });
-    </script>
+        }
+    });
+</script>
 @endsection
