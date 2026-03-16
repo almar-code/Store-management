@@ -14,14 +14,4 @@ class Customer extends Model
         'email',
         'phone'
     ];
-
-<<<<<<< HEAD
-    public function addresses()
-    {
-        return $this->hasMany(CustomerAddress::class, 'customer_id');
-    }
-=======
-    
-   
->>>>>>> customer-db
 }
