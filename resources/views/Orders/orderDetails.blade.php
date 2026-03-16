@@ -29,7 +29,12 @@
                         <span class="status-badge">قيد المعالجة</span>
 
                         <div class="status-dropdown">
+<<<<<<< Updated upstream
                             <button onclick="toggleStatus(this)">
+=======
+
+                            <button onmouseenter="toggleStatus(this)">
+>>>>>>> Stashed changes
                                 <i class="bi bi-pencil-square"></i>
                             </button>
 
