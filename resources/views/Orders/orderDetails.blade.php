@@ -35,8 +35,8 @@
                         </span>
 
                         <div class="status-dropdown">
-
-                            <button onclick="toggleStatus(this)">
+           
+                            <button onmouseenter="toggleStatus(this)">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
 

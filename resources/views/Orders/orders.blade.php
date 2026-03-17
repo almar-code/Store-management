@@ -19,9 +19,9 @@
                     <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
                 </div>
 
-                <a href="/orders" class="btn-add-product shadow-sm" style="justify-content: center ;">
+                <a href="/orders" class="btn-add-product shadow-sm" style="justify-content: center ;" title="تحديث الصفحة">
 
-                    <i class="bi bi-arrow-clockwise"></i>
+                    <i class="bi bi-arrow-clockwise" ></i>
                 </a>
             </div>
 
@@ -85,7 +85,7 @@
 
             <td>
                 <a href="/orderDetails/{{ $order->order_id }}" class="text-dark fs-5">
-                    <i class="bi bi-eye"></i>
+                    <i class="bi bi-eye" title="عرض تفاصيل الطلب"></i>
                 </a>
             </td>
 
