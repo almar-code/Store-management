@@ -36,25 +36,34 @@
 
                             <div class="col-7 col-md-8 px-3 text-end">
                                 <div class="d-flex flex-column">
-                                    <h5 class="card-title mb-1 fw-bold text-truncate card-title">{{ $product->p_name ?? '' }}</h5>
+                                    <h5 class="card-title mb-1 fw-bold text-truncate card-title">
+                                        {{ $product->p_name ?? '' }}</h5>
                                     <p class="card-text mb-2 small text-muted text-truncate ">
                                         {{ $product->p_description ?? '' }}
                                     </p>
                                     <div class="card-title fw-bold" style="font-size: 1rem;">
 
-                                  @if($product->discount)
-                                    <span style="text-decoration: line-through; color: gray;">
-                                        {{ $product->p_price }}
-                                    </span>
-                                    <span style="color:red; font-weight:bold; padding: 10px;">
-                                        {{ $product->p_price - $product->discount->discount_perce }}
-                                    </span>
-                                    @else
-                                    {{ $product->p_price }}
-                                    @endif
-                                    <span class="small text-turquoise" style="font-size: 0.8rem;">
-                                        ر.س
-                                    </span>
+                                        @if ($product->discount)
+                                            <span style="text-decoration: line-through; color: gray;">
+                                                {{ $product->p_price }}
+                                            </span>
+                                            <span style="color:red; font-weight:bold; padding-right: 10px;">
+                                                {{ $product->p_price - $product->discount->discount_perce }}
+                                            </span>
+                                            <span class="small text-turquoise" style="font-size: 0.8rem;">
+                                                ر.س
+                                            </span>
+                                            <span
+                                                style="color:green; font-weight:bold; padding-right: 10px;font-size: 0.8rem;">
+                                                خصم {{ $product->discount->discount_perce }}%
+                                            </span>
+                                        @else
+                                            {{ $product->p_price }}
+                                            <span class="small text-turquoise" style="font-size: 0.8rem;">
+                                                ر.س
+                                            </span>
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
@@ -75,14 +84,14 @@
                                         </li>
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/addsize/{{$product->p_id}}">
+                                                href="/addsize/{{ $product->p_id }}">
                                                 <span class="ms-2">اضافة مقاس</span>
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/sizeManagement/{{$product->p_id}}">
+                                                href="/sizeManagement/{{ $product->p_id }}">
                                                 <span class="ms-2">مقاسات المنتج</span>
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
@@ -101,23 +110,23 @@
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
                                         </li>
-                                        @if(!isset($product->discount))
-                                        <li>
-                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/addDiscount/{{ $product->p_id }}">
-                                                <span class="ms-2">اضافة خصم</span>
-                                                <i class="bi bi-plus-circle text-turquoise"></i>
-                                            </a>
-                                        </li>
+                                        @if (!isset($product->discount))
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                                                    href="/addDiscount/{{ $product->p_id }}">
+                                                    <span class="ms-2">اضافة خصم</span>
+                                                    <i class="bi bi-plus-circle text-turquoise"></i>
+                                                </a>
+                                            </li>
                                         @endif
-                                        @if(isset($product->discount))
-                                        <li>
-                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                href="/delete-discount/{{$product->discount->discount_id }}">
-                                                <span class="ms-2">حذف الخصم</span>
-                                                <i class="bi bi-plus-circle text-turquoise"></i>
-                                            </a>
-                                        </li>
+                                        @if (isset($product->discount))
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                                                    href="/delete-discount/{{ $product->discount->discount_id }}">
+                                                    <span class="ms-2">حذف الخصم</span>
+                                                    <i class="bi bi-plus-circle text-turquoise"></i>
+                                                </a>
+                                            </li>
                                         @endif
                                         <li>
                                             <hr class="dropdown-divider">
@@ -140,5 +149,4 @@
             @endforeach
         </div>
     </div>
- 
 @endsection
