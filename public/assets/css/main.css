@@ -3310,3 +3310,8 @@ color:#f04438;
     transform: scale(0.9);
   }
 }
+.highlight {
+background: yellow;
+color: black;
+font-weight: bold;
+}

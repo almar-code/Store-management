@@ -42,7 +42,8 @@ Route::get('/delete-product/{id}',[ProductController::class,'destroy']);// حذ�
 
 Route::get('login', [LoginController::class, 'Login']);
 Route::get('orders', [OrdersController::class, 'Orders']);
-Route::get('orderDetails', [OrdersController::class, 'OrderDetails']);
+Route::get('orderDetails/{orderID}', [OrdersController::class, 'OrderDetails']);
+Route::post('/order/update-status/{id}', [OrdersController::class,'updateStatus'])->name('order.updateStatus');
 
 Route::get('addPermission/{id}', [PermissionController::class, 'AddPermission']);
 Route::get('permission', [PermissionController::class, 'Permissions']);

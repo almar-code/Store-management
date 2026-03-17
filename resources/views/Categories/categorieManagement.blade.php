@@ -27,7 +27,7 @@
             <div class="row g-4 px-2">
 
                 @forelse($Subcategory as $category)
-                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white card-item">
+                    <div class="card card-item  border-0 shadow-sm rounded-4 overflow-hidden position-relative bg-white card-item">
 
                         <div class="card-body p-2">
 
@@ -94,26 +94,4 @@
         </div>
     </div>
     </div>
-     <script>const searchInput = document.getElementById('sectionSearch');
-const cards = document.querySelectorAll('.card-item'); // الكروت كاملة
-
-searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase();
-
-    cards.forEach(card => {
-        const nameEl = card.querySelector('.card-title');
-        const descEl = card.querySelector('.card-text');
-
-        const name = nameEl ? nameEl.textContent.toLowerCase() : '';
-        const desc = descEl ? descEl.textContent.toLowerCase() : '';
-
-        // البحث في الاسم والوصف
-        if (name.includes(query) || desc.includes(query)) {
-            card.style.display = ''; // يظهر الكرت
-        } else {
-            card.style.display = 'none'; // يخفي الكرت
-        }
-    });
-});
-</script>
 @endsection
