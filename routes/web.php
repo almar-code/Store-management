@@ -84,4 +84,6 @@ Route::get('/delete-categorie/{id}',[CategorieController::class,'destroy']);
 Route::get('/delete-color/{id}',[ColorsController::class,'destroy']);
 
 Route::get('addads', [AdsController::class, 'AddAds']);
+Route::post('/add-ads', [AdsController::class, 'store']);
+
 Route::get('customers', [CustomerController::class, 'Customers']);
