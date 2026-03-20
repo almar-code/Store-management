@@ -287,14 +287,29 @@ card.style.display = 'none';
 
 });
 // كود تغيير زر الحفظ عند الضغط عليه
-document.getElementById('dataForm').addEventListener('submit', function () {
-  const btn = document.getElementById('saveBtn');
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-  btn.disabled = true;
-
-});
-
 })();
+
+function activateLoading(formId, btnId) {
+    const btn = document.getElementById(btnId);
+    const form = document.getElementById(formId);
+
+    if (btn && form) {
+        btn.addEventListener('click', function (e) {
+            // التحقق إذا كان الفورم شغال (بمعنى أن الحقول المطلوبة مليئة)
+            if (form.checkValidity()) {
+                // تغيير شكل الزر فوراً
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+                btn.disabled = true;
+                
+                // إرسال الفورم
+                form.submit();
+            } else {
+                // إذا في حقول ناقصة، المتصفح بيظهر تنبيهاته العادية
+                form.reportValidity();
+            }
+        });
+    }
+}
 
 function confirmDelete(url, title = "هل أنت متأكد؟", text = "لن تستطيع استرجاع هذا العنصر بعد الحذف") {
 
@@ -355,6 +370,18 @@ function previewImage(event) {
 
     reader.readAsDataURL(file);
   }
+}
+
+function startTour() {
+        introJs().setOptions({
+            nextLabel: 'التالي',
+            prevLabel: 'السابق',
+            doneLabel: 'تم',
+            showProgress: true,
+            showBullets: true,
+            overlayOpacity: 0.5,
+            disableInteraction: false // السماح للمستخدم بالضغط على النقاط أثناء الشرح
+        }).start();
 }
 
 
