@@ -80,10 +80,13 @@ Route::post('/add-color/{id}', [ColorsController::class, 'store']);
 Route::post('/update-color/{id}', [ColorsController::class, 'update']);
 Route::get('/edit-color/{id}', [ColorsController::class, 'edit']);
 Route::get('colors/{id}', [ColorsController::class, 'Colors']);
-Route::get('/delete-categorie/{id}',[CategorieController::class,'destroy']);
 Route::get('/delete-color/{id}',[ColorsController::class,'destroy']);
 
 Route::get('addads', [AdsController::class, 'AddAds']);
 Route::post('/add-ads', [AdsController::class, 'store']);
+Route::get('/ads', [AdsController::class, 'Ads']);
+Route::get('/update-ads/{id}', [AdsController::class, 'update']);
+Route::get('/delete-ads/{id}', [AdsController::class, 'destroy']);
+
 
 Route::get('customers', [CustomerController::class, 'Customers']);

@@ -125,7 +125,7 @@
                         @enderror
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="AdsLink" name="AdsLink"  placeholder="Advertisement Title" >
+                            <input type="url" class="form-control" id="AdsLink" name="AdsLink"  placeholder="Advertisement Title" >
                             <label for="AdsLink">رابط الاعلان </label>
                         @error('AdsLink')
                             <div class="form-error">

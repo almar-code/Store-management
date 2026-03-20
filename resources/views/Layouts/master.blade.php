@@ -197,7 +197,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="/ads">
                                         <div><span class="bi bi-list-ul sub-icon"></span>
                                         قائمة الإعلانات</div>
                                     </a>
