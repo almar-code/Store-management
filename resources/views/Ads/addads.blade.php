@@ -84,7 +84,7 @@
                             <h3>نموذج إضافة اعلانات </h3>
                     </div>
 
-                    <form action="{{ '/add-ads' }}" method="post" enctype="multipart/form-data">
+                    <form id="dataForm" action="{{ '/add-ads' }}" method="post" enctype="multipart/form-data">
                      @csrf   
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="AdsName" name="AdsName"  placeholder="Advertisement Title" >
@@ -164,7 +164,8 @@
                         </div>
 
                         <div class="d-grid" style="direction: ltr">
-                            <button type="submit" class="btn-submit">إضافة <i class="bi bi-plus ms-2"></i></button>
+                            <button type="submit" class="btn-submit" id="saveBtn" onclick="activateLoading('dataForm', 'saveBtn');">
+                                إضافة <i class="bi bi-plus ms-2"></i></button>
                         </div>
                     </form>
                 </div>
