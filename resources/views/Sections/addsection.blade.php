@@ -62,7 +62,7 @@
 
                                 {{-- زر الإضافة يظهر فقط إذا لم يكن هناك تعديل --}}
                                 @if (!isset($editSection))
-                                    <button type="submit" class="btn-submit" id="saveBtn">
+                                    <button type="button" class="btn-submit" id="saveBtn" onclick="activateLoading('dataForm', 'saveBtn');">
 
                                         إضافة <i class="bi bi-plus ms-2"></i>
 
@@ -72,7 +72,7 @@
 
                                 {{-- زر التعديل يظهر فقط في حالة التعديل --}}
                                 @if (isset($editSection))
-                                    <button type="submit" class="btn-submit" id="saveBtn">
+                                    <button type="button" class="btn-submit" id="saveBtn" onclick="activateLoading('dataForm', 'saveBtn');">
 
                                         تعديل <i class="bi bi-pencil-square" style=" font-size:13px; margin: 3px"></i>
 
