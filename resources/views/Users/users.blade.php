@@ -16,7 +16,7 @@
 
             <div class="search-input-container" id="tour-search-box" data-intro="من هنا يمكنك البحث عن المستخدمين بالاسم بسرعة" data-step="1">
                 <i class="bi bi-search search-icon"></i>
-                <input type="text" class="search-input" placeholder="Search" id="userSearch">
+                <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
             </div>
 
             <a href="/addUser" id="tour-add-btn" class="btn-add-product shadow-sm" data-intro="أضف مستخدم جديد للنظام من هذا الزر" data-step="2">
@@ -44,9 +44,9 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                    <tr class="user-card">
+                    <tr class="card-item">
                         <td>{{$loop->iteration}}</td>
-                        <td class="user-name">{{$user->full_name}}</td>
+                        <td class="card-title">{{$user->full_name}}</td>
                         <td>{{$user->username}}</td>
                         <td>{{ str_repeat('.', 5) . substr($user->email, 0, 3) }}</td>
                         <td>{{$user->address}}</td>
@@ -86,33 +86,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    function startTour() {
-        introJs().setOptions({
-            nextLabel: 'التالي',
-            prevLabel: 'السابق',
-            doneLabel: 'تم',
-            showProgress: true,
-            showBullets: true,
-            overlayOpacity: 0.5,
-            disableInteraction: false // السماح للمستخدم بالضغط على النقاط أثناء الشرح
-        }).start();
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('userSearch');
-        const userCards = document.querySelectorAll('.user-card');
-
-        if(searchInput) {
-            searchInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase();
-                userCards.forEach(card => {
-                    const name = card.querySelector('.user-name').textContent.toLowerCase();
-                    card.style.display = name.includes(query) ? '' : 'none';
-                });
-            });
-        }
-    });
-</script>
 @endsection

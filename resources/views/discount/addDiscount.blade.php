@@ -22,7 +22,7 @@
                             </a>
                         </div>
 
-                        <form action="{{'/add-discount/'.$productID }}" method="post">
+                        <form id="dataForm" action="{{'/add-discount/'.$productID }}" method="post">
                             @csrf
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="price" placeholder="" required=""
@@ -42,7 +42,8 @@
                                 <label for="duration">مدة الخصم</label>
                             </div>
                             <div class="d-grid" style="direction: ltr">
-                                <button type="submit" class="btn-submit">إضافة <i class="bi bi-plus ms-2"></i></button>
+                                <button type="button" class="btn-submit" id="saveBtn" onclick="activateLoading('dataForm', 'saveBtn');">إضافة 
+                                    <i class="bi bi-plus ms-2"></i></button>
                             </div>
                         </form>
                     </div>

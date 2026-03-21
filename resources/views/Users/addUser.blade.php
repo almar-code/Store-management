@@ -117,13 +117,13 @@
                         </div>
                         <div class="d-grid" style="direction: ltr">
                             @if (!isset($edituser))
-                                    <button type="submit" class="btn-submit" id="saveBtn">
+                                    <button type="button" class="btn-submit" id="saveBtn" onclick="activateLoading('dataForm', 'saveBtn');">
                                         إضافة <i class="bi bi-plus ms-2"></i>
                                     </button>
                             @endif
 
                             @if (isset($edituser))
-                                    <button type="submit" class="btn-submit" id="saveBtn">
+                                    <button type="button" class="btn-submit" id="saveBtn" onclick="activateLoading('dataForm', 'saveBtn');">
                                         تعديل <i class="bi bi-pencil-square" style=" font-size:13px; margin: 3px"></i>
                                     </button>
                             @endif
@@ -133,12 +133,5 @@
 
         </div> </div> </div>
     </section><!-- /Contact Section -->
-    <script>
-        document.getElementById('dataForm').addEventListener('submit', function() {
-        const btn = document.getElementById('saveBtn');
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        btn.disabled = true;
-            });
-    </script>
 @endsection
 
