@@ -286,9 +286,9 @@ card.style.display = 'none';
 });
 
 });
-// كود تغيير زر الحفظ عند الضغط عليه
 })();
 
+// كود تغيير زر الحفظ عند الضغط عليه
 function activateLoading(formId, btnId) {
     const btn = document.getElementById(btnId);
     const form = document.getElementById(formId);
@@ -298,7 +298,7 @@ function activateLoading(formId, btnId) {
             // التحقق إذا كان الفورم شغال (بمعنى أن الحقول المطلوبة مليئة)
             if (form.checkValidity()) {
                 // تغيير شكل الزر فوراً
-                btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
                 btn.disabled = true;
                 
                 // إرسال الفورم
