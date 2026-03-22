@@ -55,7 +55,7 @@
                                             </span>
                                             <span
                                                 style="color:green; font-weight:bold; padding-right: 10px;font-size: 0.8rem;">
-                                                خصم {{ $product->discount->discount_perce }}%
+                                                خصم {{ round(($product->discount->discount_perce / $product->p_price) * 100) }}%
                                             </span>
                                         @else
                                             {{ $product->p_price }}
@@ -122,7 +122,8 @@
                                         @if (isset($product->discount))
                                             <li>
                                                 <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                    href="/delete-discount/{{ $product->discount->discount_id }}">
+                                                    href="#"
+                                                    onclick="confirmDelete('/delete-discount/{{ $product->discount->discount_id }}' ,'حذف الخصم ','هل أنت متأكد من حذف هذا الخصم   ؟')">
                                                     <span class="ms-2">حذف الخصم</span>
                                                     <i class="bi bi-plus-circle text-turquoise"></i>
                                                 </a>
