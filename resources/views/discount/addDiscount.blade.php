@@ -25,7 +25,7 @@
                         <form id="dataForm" action="{{'/add-discount/'.$productID }}" method="post">
                             @csrf
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="price" placeholder="" required=""
+                                <input type="text" class="form-control" id="price" name="price" placeholder="" required=""
                                     value="{{ $productPrice }}" readonly>
                                     <input type="hidden" name="p_id" value="{{ $productID }}">
                                 <label for="price">سعر المنتج</label>
