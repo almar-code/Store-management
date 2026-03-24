@@ -150,12 +150,6 @@ tbody td {
     overflow: visible !important;
 }
 
-/* حاوية النقاط الثلاث */
-.dropdown {
-    display: flex;
-    justify-content: center; /* توسيط الزر داخل الخلية */
-    align-items: center;
-}
 
 .dropdown-menu {
     position: absolute !important;
@@ -163,7 +157,7 @@ tbody td {
     
     /* الكود السحري للتوسيط */
     top: 100% !important;
-    left: 50% !important;        /* التحرك لمنتصف العنصر */
+    left: 60% !important;        /* التحرك لمنتصف العنصر */
     right: auto !important;
     transform: translateX(-10%) !important; /* الإزاحة لليسار بنصف عرض القائمة لضبط الوسط */
     
