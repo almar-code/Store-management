@@ -29,4 +29,10 @@ protected function casts(): array
         'password' => 'hashed', // Laravel سيعمل hash تلقائيًا
     ];
 }
+// app/Models/User.php
+
+public function userPermissions() {
+    // هذه العلاقة تربط المستخدم بجدول الصلاحيات الوسيط
+    return $this->hasMany(UserPermission::class, 'user_id', 'user_id');
+}
 }
