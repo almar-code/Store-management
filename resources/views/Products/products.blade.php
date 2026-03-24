@@ -45,7 +45,7 @@
 
                                         @if ($product->discount)
                                             <span style="text-decoration: line-through; color: gray;">
-                                                {{ $product->p_price }}
+                                                {{(integer)$product->p_price }}
                                             </span>
                                             <span style="color:red; font-weight:bold; padding-right: 10px;">
                                                 {{ $product->p_price - $product->discount->discount_perce }}
@@ -58,7 +58,7 @@
                                                 خصم {{ $product->discount->discount_perce }}%
                                             </span>
                                         @else
-                                            {{ $product->p_price }}
+                                            {{(integer) $product->p_price }}
                                             <span class="small text-turquoise" style="font-size: 0.8rem;">
                                                 ر.س
                                             </span>
