@@ -14,39 +14,40 @@ use App\Http\Controllers\ColorsController;
 use App\Http\Controllers\AdsController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Http\Request;
+Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/addsection', [SectionController::class, 'AddSection']);// صفحة إضافة قسم
-Route::get('/sections',[SectionController::class,'Sections']); // عرض الأقسام
+Route::get('/addsection', [SectionController::class, 'AddSection'])->middleware('check.permission:مدير المخزن');// صفحة إضافة قسم
+Route::get('/sections',[SectionController::class,'Sections'])->middleware('check.permission:مدير المخزن'); // عرض الأقسام
 Route::post('/add-section',[SectionController::class,'store']);// إضافة قسم
 Route::get('/edit-section/{id}',[SectionController::class,'edit']);// تحميل نفس الصفحة الاضافة لكن مع بيانات القسم للتعديل
 Route::post('/update-section/{id}',[SectionController::class,'update']);// تعديل القسم
 Route::get('/delete-section/{id}',[SectionController::class,'destroy']);// حذف قسم
 
 
-Route::get('/addcategorie', [CategorieController::class, 'AddCategorie']);
-Route::get('/categorieManagement', [CategorieController::class, 'CategorieManagement']);
+Route::get('/addcategorie', [CategorieController::class, 'AddCategorie'])->middleware('check.permission:مدير المخزن');
+Route::get('/categorieManagement', [CategorieController::class, 'CategorieManagement'])->middleware('check.permission:مدير المخزن');
 Route::post('/add-categorie', [CategorieController::class, 'store']);
 Route::get('/edit-categorie/{id}', [CategorieController::class, 'edit']);
 Route::post('/update-categorie/{id}',[CategorieController::class,'update']);
 Route::get('/delete-categorie/{id}',[CategorieController::class,'destroy']);
 
-Route::get('addproduct', [ProductController::class, 'AddProduct']);
-Route::get('products', [ProductController::class, 'Products']);
+Route::get('addproduct', [ProductController::class, 'AddProduct'])->middleware('check.permission:مدير المخزن');
+Route::get('products', [ProductController::class, 'Products'])->middleware('check.permission:مدير المخزن');
 Route::post('/add-product',[ProductController::class,'store']);// إضافة منتج
 Route::get('/edit-product/{id}',[ProductController::class,'edit']);// تحميل نفس الصفحة الاضافة لكن مع بيانات المنتج للتعديل
 Route::post('/update-product/{id}',[ProductController::class,'update']);// تعديل المنتج
 Route::get('/delete-product/{id}',[ProductController::class,'destroy']);// حذف منتج
 
-Route::get('login', [LoginController::class, 'Login']);
-Route::get('orders', [OrdersController::class, 'Orders']);
+
+Route::get('orders', [OrdersController::class, 'Orders'])->middleware('check.permission:مدير المبيعات');
 Route::get('orderDetails/{orderID}', [OrdersController::class, 'OrderDetails']);
 Route::post('/order/update-status/{id}', [OrdersController::class,'updateStatus'])->name('order.updateStatus');
 
-Route::get('addPermission/{id}', [PermissionController::class, 'AddPermission']);
-Route::get('permission', [PermissionController::class, 'Permissions']);
+Route::get('addPermission/{id}', [PermissionController::class, 'AddPermission'])->middleware('check.permission:مدير المتجر');
+Route::get('permission', [PermissionController::class, 'Permissions'])->middleware('check.permission:مدير المتجر');
 Route::post('/add-permission/{id}', [PermissionController::class, 'store']);
 Route::get('/edit-permission/{userID}/{permissionID}', [PermissionController::class, 'edit']);
 Route::post('/update-permission/{userID}/{permissionID}', [PermissionController::class, 'update'])->name('permission.update');
@@ -56,8 +57,8 @@ Route::get('/delete-permission/{userID}/{permissionID}', [PermissionController::
 Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
 Route::get('Discounts', [DiscountController::class, 'Discounts']);
 
-Route::get('users', [UserController::class, 'Users']);
-Route::get('addUser', [UserController::class, 'AddUser']);
+Route::get('users', [UserController::class, 'Users'])->middleware('check.permission:مدير المتجر');
+Route::get('addUser', [UserController::class, 'AddUser'])->middleware('check.permission:مدير المتجر');
 Route::post('/add-user', [UserController::class, 'store']);
 Route::get('/edit-user/{id}', [UserController::class, 'edit']);
 Route::post('/update-user/{id}', [UserController::class, 'update']);
@@ -82,11 +83,19 @@ Route::get('/edit-color/{id}', [ColorsController::class, 'edit']);
 Route::get('colors/{id}', [ColorsController::class, 'Colors']);
 Route::get('/delete-color/{id}',[ColorsController::class,'destroy']);
 
-Route::get('addads', [AdsController::class, 'AddAds']);
-Route::post('/add-ads', [AdsController::class, 'store']);
+Route::get('addads', [AdsController::class, 'AddAds'])->middleware('check.permission:مدير المخزن');
+Route::post('/add-ads', [AdsController::class, 'store'])->middleware('check.permission:مدير المخزن');
 Route::get('/ads', [AdsController::class, 'Ads']);
 Route::get('/update-ads/{id}', [AdsController::class, 'update']);
 Route::get('/delete-ads/{id}', [AdsController::class, 'destroy']);
 
 
-Route::get('customers', [CustomerController::class, 'Customers']);
+Route::get('customers', [CustomerController::class, 'Customers'])->middleware('check.permission:مدير المبيعات');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+});
+
+// أضف ->name('login') في نهاية السطر
+Route::get('/login', [LoginController::class, 'Login'])->name('login');
+
+Route::post('/login-user', [LoginController::class, 'Examine']);
