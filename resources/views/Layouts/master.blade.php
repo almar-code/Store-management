@@ -223,7 +223,8 @@
                         <li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">
                             <a href="#" >
                                 <div class = "toggle-dropdown divnav">
-                                    <div></div>
+                             
+                                <div>
                                 <span class="bi bi-people nav-icon"></span>
                                 <span
                                     class="{{ request()->is('addUser') || request()->is('users') || request()->is('permission') ? 'active' : '' }}">المستخدمين</span>
