@@ -33,8 +33,8 @@ class ProductController extends Controller
     // صفحة إضافة منتج
     public function AddProduct()
     {
-        $subCategories = Subcategory::all();
         try {
+            $subCategories = Subcategory::all();
 
             return view('Products.addproduct', compact('subCategories'));
 
@@ -55,7 +55,6 @@ class ProductController extends Controller
             // التحقق من الحقول
             $request->validate([
                 'productName' => 'required|string|max:255',
-                'productDescription' => 'nullable|string',
                 'productPrice' => 'required|numeric',
                 'productImages.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
             ]);
@@ -189,7 +188,6 @@ class ProductController extends Controller
         $request->validate([
             'productName' => 'required|max:255',
             'productPrice' => 'required|numeric',
-            'productDescription' => 'required',
             'productSubcategory' => 'required|exists:subcategories,subcat_id',
         ]);
 

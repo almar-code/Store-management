@@ -55,7 +55,7 @@
 
                                 <div class="form-floating mb-3 flex-grow-1">
                                     <input type="file" class="form-control" id="subcat_image" name="subcat_image"
-                                        multiple onchange="previewImage(event)" {{ isset($editCategory) ? '' : 'required' }}>
+                                         onchange="previewImage(event)" {{ isset($editCategory) ? '' : 'required' }}>
 
                                     <label for="subcat_image">صور الفئه</label>
 

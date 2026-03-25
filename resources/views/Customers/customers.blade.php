@@ -51,7 +51,7 @@
                                         {{-- تنسيق التاريخ --}}
                                         <span class="text-muted" style="font-size: 10px;">
                                             <i class="bi bi-calendar3 me-1"></i>
-                                            {{ $customer->created_at }}
+                                            {{ $customer->created_at->format('Y-m-d') }}
                                         </span>
                                     </div>
                                 </div>

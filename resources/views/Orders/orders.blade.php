@@ -26,112 +26,6 @@
             </div>
 
             <div class="table-container">
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>اسم العميل</th>
-                            <th class="show">رقم العميل</th>
-                            <th class="show">المدينة</th>
-                            <th>إجمالي الطلب</th>
-                            <th>حالة الطلب</th>
-                            <th class="show">تاريخ الطلب</th>
-                            <th>التفاصيل</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/orderDetails" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/orderDetails" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/orderDetails" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/orderDetails" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="#" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>سارة محمد</td>
-                            <td class="show">779271679</td>
-                            <td class="show">الرياض</td>
-                            <td>450 ر.س</td>
-                            <td><span class="badge  text-dark">قيد المعالجة</span></td>
-                            <td class="show">2026-02-20</td>
-                            <td>
-                                <a href="/" class="text-dark fs-5">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                     
-                    </tbody>
-                </table>
-=======
->>>>>>> customer-db
                <table>
     <thead>
         <tr>
@@ -191,11 +85,7 @@
 
             <td>
                 <a href="/orderDetails/{{ $order->order_id }}" class="text-dark fs-5">
-<<<<<<< HEAD
-                    <i class="bi bi-eye"></i>
-=======
                     <i class="bi bi-eye" title="عرض تفاصيل الطلب"></i>
->>>>>>> customer-db
                 </a>
             </td>
 
@@ -205,10 +95,6 @@
 
     </tbody>
 </table>
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
->>>>>>> customer-db
             </div>
         </div>
     </div>
