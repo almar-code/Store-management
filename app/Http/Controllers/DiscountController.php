@@ -22,44 +22,52 @@ class DiscountController extends Controller
     }
 
     public function store(Request $request, $id)
-{
-    try {
-        $request->validate([
-            'discount_perce' => 'required|numeric|min:0',
-            'duration' => 'required|numeric|min:1',
-        ]);
+        {
+            $request->validate([
+                'price' => 'required|numeric|min:1',
+                'discount_perce' => 'required|numeric|min:0',
+                'duration' => 'required|numeric|min:1',
+            ]);
+            try {
 
-        $duration = (int) $request->duration; // <- هذا هو التصحيح
-        $startDate = Carbon::today();
-        $endDate = $startDate->copy()->addDays($duration);
+                $price = (float) $request->price;
+                $discount =  $request->discount_perce;
+                // لا يتجاوز 40% من السعر القديم
+                $maxDiscount = $price * 0.4;
+                if ($discount > $maxDiscount) {
+                    return redirect()->back()->with('error', 'لا يمكن أن تتجاوز قيمة الخصم 40٪ من السعر الأصلي');
+                }
 
-        Discount::create([
-            'p_id' => $id,
-            'discount_perce' => $request->discount_perce,
-            'end_date' => $endDate
-        ]);
-        return redirect('/products')->with('success', 'تم إضافة الخصم بنجاح');
-        } catch (\Throwable $th) {
-        return redirect()->back()->with('success', 'حدث خطاء اثناء إضافة الخصم ');
 
-    }
-}
- public function destroy($id)
-    {
-        try {
-
-            $discount = Discount::findOrFail($id);
-
-            $discount->delete();
-
-            return redirect()->back()->with('success', 'تم حذف الخصم');
-
-        } catch (\Exception $e) {
-
-            return redirect()->back()->with('error', 'حدث خطأ أثناء الحذف');
-
+                $duration = (int) $request->duration; // <- هذا هو التصحيح
+                $startDate = Carbon::today();
+                $endDate = $startDate->copy()->addDays($duration);
+                Discount::create([
+                    'p_id' => $id,
+                    'discount_perce' => $request->discount_perce,
+                    'end_date' => $endDate
+                ]);
+                return redirect('/products')->with('success', 'تم إضافة الخصم بنجاح');
+            }catch (\Throwable $th) {
+                return redirect()->back()->with('error', 'حدث خطاء اثناء إضافة الخصم ');
+            }
         }
-    }
+    public function destroy($id)
+        {
+            try {
+
+                $discount = Discount::findOrFail($id);
+
+                $discount->delete();
+
+                return redirect()->back()->with('success', 'تم حذف الخصم');
+
+            } catch (\Exception $e) {
+
+                return redirect()->back()->with('error', 'حدث خطأ أثناء الحذف');
+
+            }
+        }
 
 
 }

@@ -45,7 +45,7 @@
 
                                         @if ($product->discount)
                                             <span style="text-decoration: line-through; color: gray;">
-                                                {{ $product->p_price }}
+                                                {{(integer)$product->p_price }}
                                             </span>
                                             <span style="color:red; font-weight:bold; padding-right: 10px;">
                                                 {{ $product->p_price - $product->discount->discount_perce }}
@@ -55,10 +55,10 @@
                                             </span>
                                             <span
                                                 style="color:green; font-weight:bold; padding-right: 10px;font-size: 0.8rem;">
-                                                خصم {{ $product->discount->discount_perce }}%
+                                                خصم {{ round(($product->discount->discount_perce / $product->p_price) * 100) }}%
                                             </span>
                                         @else
-                                            {{ $product->p_price }}
+                                            {{(integer) $product->p_price }}
                                             <span class="small text-turquoise" style="font-size: 0.8rem;">
                                                 ر.س
                                             </span>
@@ -122,7 +122,8 @@
                                         @if (isset($product->discount))
                                             <li>
                                                 <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                    href="/delete-discount/{{ $product->discount->discount_id }}">
+                                                    href="#"
+                                                    onclick="confirmDelete('/delete-discount/{{ $product->discount->discount_id }}' ,'حذف الخصم ','هل أنت متأكد من حذف هذا الخصم   ؟')">
                                                     <span class="ms-2">حذف الخصم</span>
                                                     <i class="bi bi-plus-circle text-turquoise"></i>
                                                 </a>
@@ -149,7 +150,10 @@
             @endforeach
         </div>
     </div>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 80d7182717030e9201aed0727822a6e20633f2df
 @endsection
