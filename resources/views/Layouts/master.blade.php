@@ -69,6 +69,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js"></script>
 </head>
 
+<style>
+ .locked-item {
+    opacity: 0.5; 
+    cursor: not-allowed; 
+    pointer-events: none;
+}
+</style>
+
 <body class="index-page">
 
     @unless (request()->is('login'))
@@ -85,7 +93,6 @@
 
                 <nav id="navmenu" class="navmenu">
                     <ul>
-
                         <li>
                             <a href="/" class="{{ request()->is('/') ? 'active' : '' }}">
                                 <div>
@@ -95,7 +102,7 @@
                             </a>
                         </li>
 
-                        <li class="dropdown">
+                        <li class="dropdown {{ !$isStoreManager ? 'locked-item' : '' }}">
                             <a href="#">
                                 <div class = "toggle-dropdown divnav">
                                 <div>
@@ -110,23 +117,18 @@
                             <ul>
                                 <li>
                                     <a href="/addproduct" class="{{ request()->is('addproduct') ? 'active' : '' }}">
-                                        <div><span class="bi bi-plus-circle sub-icon"></span>
-                                        إضافة منتج
-                                  </div>
-                                          </a>
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة منتج</div>
+                                    </a>
                                 </li>
-
                                 <li>
                                     <a href="/products" class="{{ request()->is('products') ? 'active' : '' }}">
-                                        <div><span class="bi bi-list-ul sub-icon"></span>
-                                        قائمة المنتجات
-                                 </div>   </a>
+                                        <div><span class="bi bi-list-ul sub-icon"></span>قائمة المنتجات</div>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
 
-
-                        <li class="dropdown">
+                        <li class="dropdown {{ !$isStoreManager ? 'locked-item' : '' }}">
                             <a href="#">
                                 <div class = "toggle-dropdown divnav">
                                 <div>
@@ -158,7 +160,7 @@
                         </li>
 
 
-                        <li class="dropdown">
+                        <li class="dropdown {{ !$isStoreManager ? 'locked-item' : '' }}">
                             <a href="#">
                                 <div class = "toggle-dropdown divnav">
                                 <div><span class="bi bi-grid nav-icon"></span>
@@ -187,7 +189,7 @@
                         </li>
 
 
-                        <li class="dropdown">
+                        <li class="dropdown {{ !$isStoreManager ? 'locked-item' : '' }}">
                             <a href="#">
                                 <div class = "toggle-dropdown divnav">
                                 <div>
@@ -209,7 +211,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="/ads">
                                         <div><span class="bi bi-list-ul sub-icon"></span>
                                         قائمة الإعلانات</div>
                                     </a>
@@ -218,10 +220,10 @@
                         </li>
 
 
-                        <li class="dropdown">
-                            <a href="#">
+                        <li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">
+                            <a href="#" >
                                 <div class = "toggle-dropdown divnav">
-                                <div>
+                                    <div></div>
                                 <span class="bi bi-people nav-icon"></span>
                                 <span
                                     class="{{ request()->is('addUser') || request()->is('users') || request()->is('permission') ? 'active' : '' }}">المستخدمين</span>
@@ -254,13 +256,13 @@
                         </li>
 
 
-                        <li>
+                        <li class="dropdown {{ !$isSalesManager ? 'locked-item' : '' }}">
                             <a href="/orders" class="{{ request()->is('orders') ? 'active' : '' }}">
                                 <div><span class="bi bi-bag-check nav-icon"></span>
                                 الطلبات</div>
                             </a>
                         </li>
-                        <li>
+                        <li class="dropdown {{ !$isSalesManager ? 'locked-item' : '' }}">
                             <a href="/customers" class="{{ request()->is('customers') ? 'active' : '' }}">
                                 <div><span class="bi bi-people nav-icon"></span>
                                 العملاء</div>
@@ -268,12 +270,13 @@
                         </li>
 
 
-                        <li>
-                            <a href="/login">
+                        <li class="dropdown">
+                            <a href="#" onclick="confirmDelete('/logout','خروج  ','هل أنت متأكد من تسجيل الخروج ؟')">
                                 <div><span class="bi bi-box-arrow-right nav-icon"></span>
                                 تسجيل خروج</div>
                             </a>
                         </li>
+                        
 
                     </ul>
 
@@ -307,7 +310,7 @@
                             <i class="bi bi-person-circle text-turquoise me-1"></i>
                             المستخدم الحالي:
                             <span class="fw-bold text-turquoise">
-                                {{ Auth::user()->name ?? 'مدير النظام' }}
+                                {{ !empty($userPrivileges) ? implode(' | ', $userPrivileges) : 'بدون صلاحية'}}
                             </span>
                         </div>
                     </div>
