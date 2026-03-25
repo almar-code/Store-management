@@ -97,12 +97,14 @@
 
                         <li class="dropdown">
                             <a href="#">
-                                <div class = "toggle-dropdown ">
+                                <div class = "toggle-dropdown divnav">
+                                <div>
                                 <span class="bi bi-box-seam nav-icon"></span>
                                 <span
-                                    class="toggle-dropdown {{ request()->is('addproduct') || request()->is('products') ? 'active' : '' }}">المنتجات</span>
+                                    class="{{ request()->is('addproduct') || request()->is('products') ? 'active' : '' }}">المنتجات</span>
                                 </div>
-                                    <i class="bi bi-chevron-down toggle-dropdown"></i>
+                                    <i class="bi bi-chevron-down "></i>
+                                    </div>
                             </a>
 
                             <ul>
@@ -126,12 +128,16 @@
 
                         <li class="dropdown">
                             <a href="#">
-                                <div class = "toggle-dropdown "> <span class="bi bi-tags nav-icon"></span>
+                                <div class = "toggle-dropdown divnav">
+                                <div>
+                                <span class="bi bi-tags nav-icon"></span>
                                 <span
-                                    class="toggle-dropdown {{ request()->is('addcategorie') || request()->is('categorieManagement') ? 'active' : '' }}">الفئات</span>
-                               </div>
-                                <i class="bi bi-chevron-down toggle-dropdown"></i>
+                                    class=" {{ request()->is('addcategorie') || request()->is('categorieManagement') ? 'active' : '' }}">الفئات</span>
+                                </div>
+                                    <i class="bi bi-chevron-down "></i>
+                                    </div>
                             </a>
+                           
 
                             <ul>
                                 <li>
@@ -154,13 +160,15 @@
 
                         <li class="dropdown">
                             <a href="#">
-                                <div class = "toggle-dropdown "><span class="bi bi-grid nav-icon"></span>
+                                <div class = "toggle-dropdown divnav">
+                                <div><span class="bi bi-grid nav-icon"></span>
                                 <span
-                                    class="toggle-dropdown {{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span>
-                              </div>
-                                  <i class="bi bi-chevron-down toggle-dropdown"></i>
+                                    class="{{ request()->is('addsection') || request()->is('sections') ? 'active' : '' }}">الاقسام</span>
+                             </div>
+                                    <i class="bi bi-chevron-down "></i>
+                                    </div>
                             </a>
-
+                            
                             <ul>
                                 <li>
                                     <a href="/addsection" class="{{ request()->is('addsection') ? 'active' : '' }}">
@@ -181,12 +189,16 @@
 
                         <li class="dropdown">
                             <a href="#">
-                                <div class="toggle-dropdown ">
-                                <span class="bi bi-megaphone nav-icon"></span>
-                                <span class="toggle-dropdown">الإعلانات</span>
+                                <div class = "toggle-dropdown divnav">
+                                <div>
+                                <span class="bi bi-box-seam nav-icon"></span>
+                                <span
+                                    class="{{ request()->is('addads') || request()->is('ads') ? 'active' : '' }}">الإعلانات</span>
                                 </div>
-                                <i class="bi bi-chevron-down toggle-dropdown"></i>
+                                    <i class="bi bi-chevron-down "></i>
+                                    </div>
                             </a>
+                           
 
                             <ul>
                                 <li>
@@ -207,15 +219,16 @@
 
 
                         <li class="dropdown">
-                            <a href="#" >
-                                <div class="toggle-dropdown ">
+                            <a href="#">
+                                <div class = "toggle-dropdown divnav">
+                                <div>
                                 <span class="bi bi-people nav-icon"></span>
                                 <span
-                                    class="toggle-dropdown {{ request()->is('addUser') || request()->is('users') || request()->is('permission') ? 'active' : '' }}">المستخدمين</span>
+                                    class="{{ request()->is('addUser') || request()->is('users') || request()->is('permission') ? 'active' : '' }}">المستخدمين</span>
                                </div>
-                                 <i class="bi bi-chevron-down toggle-dropdown"></i>
+                                    <i class="bi bi-chevron-down "></i>
+                                    </div>
                             </a>
-
                             <ul>
                                 <li>
                                     <a href="/addUser" class="{{ request()->is('addUser') ? 'active' : '' }}">
@@ -249,7 +262,7 @@
                         </li>
                         <li>
                             <a href="/customers" class="{{ request()->is('customers') ? 'active' : '' }}">
-                                <div><span class="bi bi-bag-check nav-icon"></span>
+                                <div><span class="bi bi-people nav-icon"></span>
                                 العملاء</div>
                             </a>
                         </li>
@@ -355,7 +368,7 @@
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
     @yield('jsfile')
-    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js')}}"></script>
     @if (session('success'))
         <script>
             Swal.fire({
@@ -371,7 +384,7 @@
                     popup: 'compact-alert'
                 }
             })
-        </script>F
+        </script>
     @endif
 
     @if (session('error'))

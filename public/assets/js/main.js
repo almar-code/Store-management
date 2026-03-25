@@ -226,6 +226,7 @@
     // إذا الضغط كان على الخلفية نفسها (وليس داخل القائمة)
     if (e.target === this) {
 
+      
       document.body.classList.remove('mobile-nav-active');
 
       const toggleBtn = document.querySelector('.mobile-nav-toggle');

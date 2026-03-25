@@ -15,7 +15,7 @@
                     <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
                 </div>
 
-                <a href="#" class="btn-add-product shadow-sm">
+                <a href="/addproduct" class="btn-add-product shadow-sm">
                     إضافة منتج
                     <i class="bi bi-plus-lg ms-2"></i>
                 </a>
@@ -149,33 +149,7 @@
             @endforeach
         </div>
     </div>
-<<<<<<< HEAD
- 
-=======
-<<<<<<< Updated upstream
-     <script>const searchInput = document.getElementById('sectionSearch');
-const cards = document.querySelectorAll('.card-item'); // الكروت كاملة
 
-searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase();
 
-    cards.forEach(card => {
-        const nameEl = card.querySelector('.card-title');
-        const descEl = card.querySelector('.card-text');
 
-        const name = nameEl ? nameEl.textContent.toLowerCase() : '';
-        const desc = descEl ? descEl.textContent.toLowerCase() : '';
-
-        // البحث في الاسم والوصف
-        if (name.includes(query) || desc.includes(query)) {
-            card.style.display = ''; // يظهر الكرت
-        } else {
-            card.style.display = 'none'; // يخفي الكرت
-        }
-    });
-});
-</script>
-=======
->>>>>>> Stashed changes
->>>>>>> customer-db
 @endsection

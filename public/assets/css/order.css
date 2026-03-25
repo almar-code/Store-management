@@ -151,7 +151,7 @@ tbody td {
 }
 
 /* حاوية النقاط الثلاث */
-.dropdown {
+.card-item.dropdown {
     display: flex;
     justify-content: center; /* توسيط الزر داخل الخلية */
     align-items: center;

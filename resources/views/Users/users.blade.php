@@ -91,15 +91,8 @@
             </table>
         </div>
     </div>
-<<<<<<< HEAD
-@endsection
-=======
-<<<<<<< Updated upstream
-    <script>
-=======
->>>>>>> customer-db
-</div>
 
+</div>
 <script>
     function startTour() {
         introJs().setOptions({
@@ -112,38 +105,6 @@
             disableInteraction: false // السماح للمستخدم بالضغط على النقاط أثناء الشرح
         }).start();
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-<<<<<<< HEAD
-        const searchInput = document.getElementById('userSearch');
-        const userCards = document.querySelectorAll('.user-card');
-
-        if(searchInput) {
-            searchInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase();
-                userCards.forEach(card => {
-                    const name = card.querySelector('.user-name').textContent.toLowerCase();
-                    card.style.display = name.includes(query) ? '' : 'none';
-                });
-            });
-        }
-    });
 </script>
-=======
->>>>>>> Stashed changes
-        const searchInput = document.getElementById('userSearch');
-        const users = document.querySelectorAll('.user-card');
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase();
-            users.forEach(user => {
-                const name = user.querySelector('.user-name').textContent.toLowerCase();
-                if (name.includes(query)) {
-                    user.style.display = '';
-                } else {
-                    user.style.display = 'none';
-                }
-            });
-        });
-    </script>
->>>>>>> customer-db
+
 @endsection
