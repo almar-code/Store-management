@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('Layouts.master')
 @section('content')
     <div class="container my-4 " dir="rtl">
         <div class="container">

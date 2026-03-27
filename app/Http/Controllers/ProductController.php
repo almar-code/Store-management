@@ -108,37 +108,33 @@ class ProductController extends Controller
 
             // رفع الصور
             if ($request->hasFile('productImages')) {
-
                 $images = $request->file('productImages');
 
                 foreach ($images as $index => $image) {
-
                     // إنشاء اسم فريد للصورة
-                    $imageName = time() . '_' . rand(1, 10000) . '.' . $image->extension();
+                    $imageName = time() . '_' . rand(1, 10000) . '.' . $image->getClientOriginalExtension();
 
-                    // تخزين الصورة داخل storage/app/public/uploads/products
-                    $image->storeAs('uploads/products', $imageName, 'public');
-                    // حفظ اسم الصورة فقط في جدول الصور
+                    // التعديل هنا: الرفع المباشر لمجلد public
+                    $destinationPath = public_path('storage/uploads/products');
+                    $image->move($destinationPath, $imageName);
+
+                    // حفظ اسم الصورة في جدول الصور
                     ProductImage::create([
                         'img_url' => $imageName,
                         'color_id' => $color->color_id
                     ]);
 
-                    // نجعل أول صورة صورة المنتج الرئيسية
+                    // تعيين أول صورة كصورة رئيسية للمنتج
                     if ($index == 0) {
                         $p_imageName = $imageName;
                     }
                 }
-
             }
-            if ($p_imageName) {
 
+            if (isset($p_imageName)) {
                 $product->update([
-
                     'p_image' => $p_imageName
-
                 ]);
-
             }
 
             // حفظ المقاس
@@ -196,37 +192,36 @@ class ProductController extends Controller
 
             // ترجمة للإنجليزية
             $tr = new GoogleTranslate('en');
-             $tr->setOptions([
-            'verify' => false
-        ]);
+            $tr->setOptions(['verify' => false]);
             $name_en = $tr->translate($request->productName);
             $productDescriptionEn = $tr->translate($request->productDescription);
 
-
-            // تحديث بيانات المنتج
+            // تحديث بيانات المنتج النصية
             $product->p_name = $request->productName;
             $product->p_name_en = $name_en;
             $product->p_price = $request->productPrice;
             $product->p_description = $request->productDescription;
-            $product->p_description_en = $request->productDescriptionEn;
+            $product->p_description_en = $productDescriptionEn;
             $product->subcat_id = $request->productSubcategory;
 
-            // معالجة رفع الصور (إذا اختار المستخدم صور جديدة)
+            // معالجة رفع الصور (إذا اختار المستخدم صوراً جديدة)
             if ($request->hasFile('productImages')) {
-                $image = $request->file('productImages')[0]; // أول صورة فقط حالياً
+                $images = $request->file('productImages');
+                $image = is_array($images) ? $images[0] : $images; // التأكد من جلب أول صورة
 
-                // حذف الصورة القديمة إذا كانت موجودة
-                if ($product->p_image && Storage::disk('public')->exists('uploads/products/' . $product->p_image)) {
-                    Storage::disk('public')->delete('uploads/products/' . $product->p_image);
+                // 1. حذف الصورة القديمة من المجلد (باستخدام المسار المباشر)
+                $oldImagePath = public_path('storage/uploads/products/' . $product->p_image);
+                if (!empty($product->p_image) && \File::exists($oldImagePath)) {
+                    \File::delete($oldImagePath);
                 }
 
-                // إنشاء اسم فريد للصورة
+                // 2. تجهيز الصورة الجديدة
                 $imageName = time() . '_' . $image->getClientOriginalName();
 
-                // رفع الصورة باستخدام storeAs داخل storage/app/public/uploads/products
-                $image->storeAs('uploads/products', $imageName, 'public');
+                // 3. رفع الصورة الجديدة باستخدام move (يعمل في اللوكل والاستضافة)
+                $image->move(public_path('storage/uploads/products'), $imageName);
 
-                // حفظ اسم الصورة الجديدة في قاعدة البيانات
+                // 4. تحديث اسم الصورة في الكائن
                 $product->p_image = $imageName;
             }
 
@@ -235,26 +230,26 @@ class ProductController extends Controller
             return redirect('/products')->with('success', 'تم التعديل بنجاح');
 
         } catch (\Exception $e) {
+            // نصيحة: يمكنك استخدام return $e->getMessage(); هنا إذا أردت اكتشاف أي خطأ أثناء التجربة
             return redirect()->back()->with('error', 'حدث خطأ أثناء التعديل');
         }
     }
-
-
     // حذف المنتج
-    public function destroy($id)
+   public function destroy($id)
     {
         try {
-
-            $products = Product::findOrFail($id);
-
-            $products->delete();
-
-            return redirect()->back()->with('success', 'تم حذف المنتج');
-
+            $product = Product::findOrFail($id);
+            // 1. تحديد مسار الصورة الرئيسية للمنتج
+            $imagePath = public_path('storage/uploads/products/' . $product->p_image);
+            // 2. حذف ملف الصورة من المجلد (يعمل في اللوكل والاستضافة)
+            // أضفنا \ قبل File لتفادي خطأ Class Not Found
+            if (!empty($product->p_image) && \File::exists($imagePath)) {
+                \File::delete($imagePath);
+            }
+            $product->delete();
+            return redirect()->back()->with('success', 'تم حذف المنتج وصورته بنجاح');
         } catch (\Exception $e) {
-
             return redirect()->back()->with('error', 'حدث خطأ أثناء الحذف');
-
         }
     }
 

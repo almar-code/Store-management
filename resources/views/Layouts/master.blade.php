@@ -29,23 +29,20 @@
 
 
     <!-- Vendor CSS -->
-
-    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/img/logo.png') }}?v={{ time() }}" rel="icon">
+<link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('assets/vendor/aos/aos.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}?v={{ time() }}" rel="stylesheet">
 
 
     <!-- Main CSS -->
 
-    <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/main.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('assets/css/card.css') }}?v={{ time() }}" rel="stylesheet">
 
-    <link href="{{ asset('assets/css/card.css') }}" rel="stylesheet">
+
 
 
     @yield('link')
