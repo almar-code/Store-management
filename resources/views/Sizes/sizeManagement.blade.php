@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('Layouts.master')
 @section('link')
     <link href="{{ asset('assets/css/order.css') }}" rel="stylesheet">
 @endsection
