@@ -4,7 +4,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection
 @section('content')
-    <div class="wrapper">
+    <div class="wrapper {{ !$isStoreManager ? 'locked-wrapper' : '' }}">
+
+    @if(!$isStoreManager)
+    <div class="lock-overlay">
+        <div class="lock-card">
+            <div class="lock-icon">
+                <i class="bi bi-lock-fill"></i>
+            </div>
+            <h4>الوصول محدود</h4>
+            <p>عذراً، هذه البيانات والإحصائيات متاحة فقط لمدير المتجر.</p>
+        </div>
+    </div>
+    @endif
         <div class="top-header" dir="rtl">
 
             <div class="header-top">
