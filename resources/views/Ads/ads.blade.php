@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('Layouts.master')
 @section('link')
 <link href="assets/css/order.css" rel="stylesheet">
 @endsection
@@ -29,11 +29,11 @@
                 <thead>
                     <tr>
                         <th>متسلسل</th>
-                        <th>اسم الاعلان </th>
+                        <th> الاعلان </th>
                         <th>الصوره </th>
                         <th>الرابط </th>
                         <th>النشاط </th>
-                        <th>تاريخ الانتهاء </th>
+                        <th> الانتهاء </th>
                         <th> العمليات  </th>
 
                     </tr>
@@ -41,13 +41,13 @@
                 <tbody>
                     @foreach ($ads as $adss)
                     <tr class="card-item">
-                        <td>{{ $loop->iteration }}</td>
-                        <td class="card-title">{{ $adss->AdsName }}</td>
+                        <td style="font-size: 10px">{{ $loop->iteration }}</td>
+                        <td class="card-title" style="font-size: 10px">{{ $adss->AdsName }}</td>
                         <td class="card-text">
                                     <img src="{{ asset('storage/uploads/Advertisement/'.$adss->AdsImage) }}" class="rounded-circle" width="50"
                                             height="50" style="object-fit: cover;">
                         </td>
-                        <td>{{$adss->AdsLink}}</td>
+                        <td style="font-size: 10px">{{str_repeat('.', 5) . substr($adss->AdsLink, 0, 3)}}</td>
 
                         <!-- النشاط -->
                        <td data-intro="من هنا يمكنك التحكم في حاله الاعلان مفعل او غير مفعل من خلال الضغط على الدائر  " data-step="2">
@@ -63,7 +63,7 @@
                         </a>
                     </td>   
                            
-                            <td>{{$adss->expires_at}}</td>
+                            <td style="font-size: 10px">{{$adss->expires_at}}</td>
                             <td>
                                 <a class="text-danger "
                                     href="#"
