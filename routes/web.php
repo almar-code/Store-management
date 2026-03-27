@@ -46,6 +46,10 @@ Route::get('orders', [OrdersController::class, 'Orders'])->middleware('check.per
 Route::get('orderDetails/{orderID}', [OrdersController::class, 'OrderDetails']);
 Route::post('/order/update-status/{id}', [OrdersController::class,'updateStatus'])->name('order.updateStatus');
 
+
+Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
+Route::get('Discounts', [DiscountController::class, 'Discounts']);
+
 Route::get('addPermission/{id}', [PermissionController::class, 'AddPermission'])->middleware('check.permission:مدير المتجر');
 Route::get('permission', [PermissionController::class, 'Permissions'])->middleware('check.permission:مدير المتجر');
 Route::post('/add-permission/{id}', [PermissionController::class, 'store']);
@@ -54,16 +58,12 @@ Route::post('/update-permission/{userID}/{permissionID}', [PermissionController:
 Route::post('/update-permission-status/{userID}/{permissionID}', [PermissionController::class, 'updateStatus'])->name('permission.updateStatus');
 Route::get('/delete-permission/{userID}/{permissionID}', [PermissionController::class, 'destroy']);
 
-Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
-Route::get('Discounts', [DiscountController::class, 'Discounts']);
-
 Route::get('users', [UserController::class, 'Users'])->middleware('check.permission:مدير المتجر');
 Route::get('addUser', [UserController::class, 'AddUser'])->middleware('check.permission:مدير المتجر');
 Route::post('/add-user', [UserController::class, 'store']);
 Route::get('/edit-user/{id}', [UserController::class, 'edit']);
 Route::post('/update-user/{id}', [UserController::class, 'update']);
 Route::get('/delete-user/{id}', [UserController::class, 'destroy']);
-
 
 Route::get('addDiscount/{id}', [DiscountController::class, 'AddDiscount']);
 Route::post('/add-discount/{id}', [DiscountController::class, 'store']);
@@ -97,5 +97,4 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // أضف ->name('login') في نهاية السطر
 Route::get('/login', [LoginController::class, 'Login'])->name('login');
-
-Route::post('/login-user', [LoginController::class, 'Examine']);
+Route::post('/login-user', [LoginController::class, 'Examine'])->name('login-user');
