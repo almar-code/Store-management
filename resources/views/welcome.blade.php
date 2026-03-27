@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('Layouts.master')
 @section('link')
     <link href="assets/css/chart.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -238,3 +238,5 @@
 @section('jsfile')
     <script src="assets/js/chart.js"></script>
 @endsection
+   
+

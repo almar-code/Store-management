@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('Layouts.master')
 @section('content')
     <div class="main-content-wrapper" style="min-height: 100vh; direction: rtl;">
         <div class="container">
