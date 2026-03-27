@@ -150,10 +150,4 @@
             @endforeach
         </div>
     </div>
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 80d7182717030e9201aed0727822a6e20633f2df
 @endsection
