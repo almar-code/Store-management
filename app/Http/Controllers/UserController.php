@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Mail\SendUserCredentials;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
       public function AddUser(){
@@ -30,18 +31,23 @@ if ($existingUser) {
             'email' => 'required|max:255',
             'userAddress' => 'required|max:255',
         ]);
-        User::create([
+         $plainPassword = $request->password_hash;
+        $user = User::create([
             'full_name' => $request->userFullName,
             'username' => $request->userName,
             'password_hash' => Hash::make($request->password_hash), // تشفير كلمة السر
             'email' => $request->email,
             'address' => $request->userAddress,
         ]);
+        // إرسال الإيميل
+        Mail::to($user->email)->send(
+            new SendUserCredentials($user->username, $plainPassword)
+        );
             return redirect()->back()->with('success', 'تم إضافة المستخدم بنجاح');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
-            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المستخدم ');
+            // return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المستخدم ');
         }
     }
     public function edit($id)
