@@ -26,7 +26,7 @@ class PermissionController extends Controller
         try {
             $permissions = Permission::all();
             $userName = User::findOrFail($userID)->full_name;
-            return view('Users.AddPermission', compact('userName', 'userID', 'permissions'));
+            return view('Users.addPermission', compact('userName', 'userID', 'permissions'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'حدث خطأ أثناء جلب البيانات');
         }

@@ -44,5 +44,6 @@ trait CommonFunctionsTrait
      */
     public function translateText()
     {
+
     }
 }
