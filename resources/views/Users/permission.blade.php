@@ -1,8 +1,9 @@
 @extends('Layouts.master')
 @section('link')
-<link href="assets/css/order.css" rel="stylesheet">
-@endsection
+    <link href="{{ asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
 
+    <link href="{{ asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
+@endsection
 @section('content')
 <div class="container my-4 px-2 px-md-2" dir="rtl">
     <div class="container">
@@ -22,17 +23,22 @@
                 <i class="bi bi-arrow-clockwise" ></i>
 
             </a>
+            <i class="bi bi-question-circle text-turquoise fs-4" 
+            onclick="startTour()" 
+            style="cursor: pointer; margin-right: 10px;" 
+            title="مساعدة - Help">
+            </i>
         </div>
 
         <div class="table-container">
-            <table class="table">
+            <table class="table" data-intro="جدول صلاحيات المستخدمين : هنا يمكنك مراجعة وتدقيق الصلاحيات الممنوحة لكل موظف في النظام ." data-step="1">
                 <thead>
                     <tr>
                         <th>متسلسل</th>
                         <th>الاسم</th>
-                        <th>الصلاحية</th>
-                        <th>النشاط</th>
-                        <th>عمليات</th>
+                        <th data-intro="هذا العمود يوضح المسمى الوظيفي أو الصلاحيه التي يمتلكه المستخدم." data-step="2" >الصلاحية</th>
+                        <th data-intro="حالة الصلاحية: (🟢 نشط) يمتلك صلاحيه دخول (🔴 غير نشط) الصلاحية مجمدة مؤقتاً." data-step="3">النشاط</th>
+                        <th data-intro="العمليات : عند الضغط على الثلاث نقاط يمكنك تعديل صلاحيه المستخدم او يمكنك حذف الصلاحيه وابقاء المستخدم بدون صلاحيه ." data-step="4">عمليات</th>
                     </tr>
                 </thead>
                 <tbody>

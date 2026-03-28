@@ -1,6 +1,7 @@
 @extends('Layouts.master')
 @section('link')
-<link href="assets/css/order.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -22,6 +23,11 @@
                 <i class="bi bi-arrow-clockwise"  ></i>
 
             </a>
+            <i class="bi bi-question-circle text-turquoise fs-4" 
+            onclick="startTour()" 
+            style="cursor: pointer; margin-right: 10px;" 
+            title="مساعدة - Help">
+            </i>
         </div>
 
         <div class="table-container">
@@ -31,9 +37,9 @@
                         <th>متسلسل</th>
                         <th> الاعلان </th>
                         <th>الصوره </th>
-                        <th>الرابط </th>
-                        <th>النشاط </th>
-                        <th> الانتهاء </th>
+                        <th data-intro="رابط التوجيه: هنا تضع الرابط الذي تريد نقل العميل إليه؛ بمجرد أن يضغط العميل على صورة الإعلان في التطبيق، سيقوم النظام بفتحه فوراً ونقله إلى الصفحة المحددة (سواء كانت صفحة منتج معين، قسم خاص، أو عرض خارجي). تأكد من وضع الرابط كاملاً لضمان انتقال العميل بنجاح." data-step="1">الرابط </th>
+                        <th data-intro="حالة الظهور والتحكم: يمكنك الضغط مباشرة على الدائرة لتفعيل الإعلان (🟢) أو إيقافه (🔴)؛ الأخضر يظهر الاعلان للعملاء  والأحمر يخفيه من الواجهة." data-step="2">النشاط </th>
+                        <th data-intro="تاريخ الانتهاء: يوضح هذا التاريخ موعد توقف الإعلان تلقائياً عن الظهور، مما يساعدك على تنظيم حملاتك الإعلانية بدقة." data-step="3"> الانتهاء </th>
                         <th> العمليات  </th>
 
                     </tr>
@@ -41,16 +47,16 @@
                 <tbody>
                     @foreach ($ads as $adss)
                     <tr class="card-item">
-                        <td style="font-size: 10px">{{ $loop->iteration }}</td>
-                        <td class="card-title" style="font-size: 10px">{{ $adss->AdsName }}</td>
+                        <td class="fs-6 fs-md-5">{{ $loop->iteration }}</td>
+                        <td class="fw-bold lh-1 fs-md-5">{{ $adss->AdsName }}</td>
                         <td class="card-text">
                                     <img src="{{ asset('storage/uploads/Advertisement/'.$adss->AdsImage) }}" class="rounded-circle" width="50"
                                             height="50" style="object-fit: cover;">
                         </td>
-                        <td style="font-size: 10px">{{str_repeat('.', 5) . substr($adss->AdsLink, 0, 3)}}</td>
+                        <td class="text-muted lh-1 fs-md-5">{{str_repeat('.', 5) . substr($adss->AdsLink, 0, 3)}}</td>
 
                         <!-- النشاط -->
-                       <td data-intro="من هنا يمكنك التحكم في حاله الاعلان مفعل او غير مفعل من خلال الضغط على الدائر  " data-step="2">
+                       <td >
                         <a href="/update-ads/{{ $adss->ads_id }}">
                         <div style="
                         margin-top: 5px;
@@ -63,7 +69,7 @@
                         </a>
                     </td>   
                            
-                            <td style="font-size: 10px">{{$adss->expires_at}}</td>
+                            <td class="lh-1 fs-md-5">{{$adss->expires_at}}</td>
                             <td>
                                 <a class="text-danger "
                                     href="#"

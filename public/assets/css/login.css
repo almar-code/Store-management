@@ -204,3 +204,117 @@
     }
 
 }
+
+
+/* كلاس داله المساعده   Hellp */
+
+
+/* كلاس داله المساعده   Hellp */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+
+.nice-tour-custom {
+    font-family: 'Cairo', sans-serif !important;
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+    direction: rtl !important;
+}
+
+.introjs-tooltiptext {
+    font-weight: 700 !important;
+    color: #333 !important;
+    font-size: 15px !important;
+    padding: 20px 10px !important;
+    text-align: center !important;
+}
+
+/* ترتيب الأزرار: عكسنا الاتجاه بـ row-reverse لضبط السابق والتالي */
+.introjs-tooltipbuttons {
+    border-top: 1px solid #eee !important;
+    padding: 10px !important;
+    display: flex !important;
+    flex-direction: row-reverse !important; 
+    justify-content: center !important;
+    gap: 20px !important;
+}
+.tour-header {
+    background: #008870; /* لونك المفضل */
+    color: white;
+    padding: 10px;
+    border-radius: 10px 10px 5px 5px;
+    margin: -15px -15px 15px -15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.spin-icon {
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* القائمة */
+.tour-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tour-list li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.tour-list li:last-child {
+    border-bottom: none;
+}
+
+.tour-list li i {
+    font-size: 1.1rem;
+}
+
+.introjs-button {
+    font-family: 'Cairo', sans-serif !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    padding: 8px 25px !important;
+    font-size: 14px !important;
+    text-shadow: none !important;
+}
+
+/* زر التالي وتم */
+.introjs-nextbutton, .introjs-donebutton {
+    margin-left: 30px;
+    background-color: #008870 !important;
+    color: white !important;
+    border: 1px solid #008870 !important;
+}
+
+/* زر السابق */
+.introjs-prevbutton {
+    margin-left: 20px;
+    background-color: #ffffff !important;
+    color: #008870 !important;
+    border: 1px solid #008870 !important;
+}
+
+/* النقاط */
+.introjs-bullets ul li a.active {
+    background: #008870 !important;
+}
+
+/* حذف شريط التقدم نهائياً */
+.introjs-progress {
+    display: none !important;
+}
+.nice-highlight {
+    border: 2px solid #008870 !important;
+    box-shadow: 0 0 15px rgba(0, 136, 112, 0.3) !important;
+} 
+ 

@@ -92,7 +92,8 @@ if ($existingUser) {
 
     public function Users(){
         try {
-            $users =User::all();
+            $users = User::with('userPermissions')->get();
+            // $users =User::all();
             return view('Users.users', compact('users'));
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'حدث خطأ أثناء جلب المستخدمين');

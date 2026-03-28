@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('link')
-    <link href="assets/css/order.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
+<link href="{{ asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -25,13 +26,13 @@
             </a>
            <i class="bi bi-question-circle text-turquoise fs-4" 
             onclick="startTour()" 
-            style="cursor: pointer; margin-right: 15px;" 
+            style="cursor: pointer; margin-right: 10px;" 
             title="مساعدة - Help">
             </i>
         </div>
 
         <div class="table-container">
-            <table id="tour-table" class="table" data-intro="هذا الجدول يعرض كافة بيانات المستخدمين المسجلين" data-step="3">
+            <table id="tour-table" class="table" data-intro="جدول المستخدمين: الأسماء باللون الأخضر تعني أن المستخدم يمتلك صلاحيات وصول، بينما يمكنك إضافة صلاحيات للبقية عن طريق الضغط على الثلاث نقاط ." data-step="3">
                 <thead>
                     <tr>
                         <th>الرقم</th>
@@ -39,18 +40,25 @@
                         <th>الاسم</th>
                         <th>الايميل</th>
                         <th>العنوان</th>
-                        <th>العمليات</th>
+                        <th data-intro= " عمود العمليات : من هنا يمكنك تعديل المستخدم و اضافه صلاحيه للمستخدم اذا لم يكن لديه صلاحيه  او جذف المستخدم " data-step="4">العمليات</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
+                    @php
+                        // نتحقق مرة واحدة هل المستخدم لديه صلاحيات أم لا
+                        $hasPermissions = $user->userPermissions->isNotEmpty();
+                        // نحدد اسم الكلاس بناءً على الحالة
+                        $colorClass = $hasPermissions ? 'text-success fw-bold' : ''; 
+                    @endphp
                     <tr class="card-item">
-                        <td>{{$loop->iteration}}</td>
-                        <td class="card-title">{{$user->full_name}}</td>
-                        <td>{{$user->username}}</td>
-                        <td>{{ str_repeat('.', 5) . substr($user->email, 0, 3) }}</td>
-                        <td>{{$user->address}}</td>
-                        <td data-intro= " من هنا يمكنك تعديل المستخدم و اضافه صلاحيه  او جذف المستخدم " data-step="4">
+                        
+                        <td class="{{$colorClass }}" >{{$loop->iteration}}</td>
+                        <td class="card-title {{$colorClass }}" >{{$user->full_name}}</td>
+                        <td class="{{$colorClass }}">{{$user->username}}</td>
+                        <td class="{{$colorClass }}">{{ str_repeat('.', 5) . substr($user->email, 0, 3) }}</td>
+                        <td class="{{$colorClass }}">{{$user->address}}</td>
+                        <td>
                             <div class="dropdown">
                                 <button class="btn text-dark p-0 border-0 shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-three-dots-vertical fs-4"></i>
@@ -63,12 +71,15 @@
                                             <i class="bi bi-pencil-square text-success"></i>
                                         </a>
                                     </li>
+                                    @if($user->userPermissions->isEmpty())
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end" href="/addPermission/{{ $user->user_id }}">
                                             <span class="ms-2">إضافة صلاحية</span>
                                             <i class="bi bi-plus-circle text-primary"></i>
                                         </a>
                                     </li>
+                                    @endif
+                                    
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-danger font-weight-bold text-end" href="#" onclick="confirmDelete('/delete-user/{{ $user->user_id }}','حذف المستخدم ','هل أنت متأكد؟')">
@@ -86,18 +97,5 @@
         </div>
     </div>
 </div>
-<script>
-    function startTour() {
-        introJs().setOptions({
-            nextLabel: 'التالي',
-            prevLabel: 'السابق',
-            doneLabel: 'تم',
-            showProgress: true,
-            showBullets: true,
-            overlayOpacity: 0.5,
-            disableInteraction: false // السماح للمستخدم بالضغط على النقاط أثناء الشرح
-        }).start();
-    }
-</script>
 
 @endsection

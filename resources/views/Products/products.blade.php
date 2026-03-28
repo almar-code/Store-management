@@ -1,4 +1,7 @@
 @extends('Layouts.master')
+@section('link')
+    <link href="{{ asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
+@endsection
 @section('content')
     <div class="container my-4 " dir="rtl">
         <div class="container">
@@ -19,12 +22,20 @@
                     إضافة منتج
                     <i class="bi bi-plus-lg ms-2"></i>
                 </a>
+                <i class="bi bi-question-circle text-turquoise fs-4" 
+                    onclick="startTour()" 
+                    style="cursor: pointer; margin-right: 10px;" 
+                    title="مساعدة - Help">
+                </i>
             </div>
         </div>
 
         <div class="row g-0">
             @foreach ($products as $product)
-                <div class="col-12 col-lg-4 mt-3 card-item">
+                <div class="col-12 col-lg-4 mt-3 card-item" @if($loop->first) 
+            data-intro="بطاقة المنتج: تظهر لك هنا صورة المنتج، اسمه، وسعره بشكل سريع ومختصر." 
+            data-step="1" 
+         @endif>
                     <div class="card product-card text-dark h-100 shadow-sm mx-2">
                         <div class="row g-0 align-items-center px-3 py-2">
 
@@ -68,7 +79,29 @@
                                 </div>
                             </div>
 
-                            <div class="col-1 text-start align-self-start">
+                            <div class="col-1 text-start align-self-start"
+                             @if($loop->first) 
+                                        data-step="2"
+                                        data-position="buttom"
+                                        data-intro='
+                                        <div class="tour-header">
+                                            <i class="bi bi-gear-fill spin-icon"></i>
+                                            <span>مركز التحكم الاحترافي</span>
+                                        </div>
+                                        <div class="tour-content">
+                                            <p class="tour-desc">
+                                                كل خيار أدناه ينقلك إلى <b>صفحة مستقلة</b> لإدارة تفاصيل العباية بدقة:
+                                            </p>
+                                            <ul class="tour-list">
+                                                <li><i class="bi bi-pencil-square text-primary"></i> <span><b>تعديل المنتج:</b> صفحة لتغيير البيانات الأساسية ورفع <b>صورة الغلاف</b>.</span></li>
+                                                <li><i class="bi bi-palette text-success"></i> <span><b>ألوان المنتج:</b> صفحة لإضافة الألوان ورفع <b>ألبوم صور كامل</b> لكل لون.</span></li>
+                                                <li><i class="bi bi-rulers text-info"></i> <span><b>مقاسات المنتج:</b> صفحة مستقلة لضبط جدول المقاسات المتاحة.</span></li>
+                                                <li><i class="bi bi-tags text-warning"></i> <span><b>العروض:</b> صفحة التحكم في الخصومات وتحديد سعر العرض.</span></li>
+                                                <li class="delete-item"><i class="bi bi-trash3 text-danger"></i> <span><b>الحذف:</b> لإزالة العباية نهائياً من المتجر.</span></li>
+                                            </ul>
+                                        </div>'
+                                    @endif>
+  
                                 <div class="dropdown">
                                     <button class="btn text-dark p-0 border-0 shadow-none" type="button"
                                         data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">
