@@ -13,6 +13,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorsController;
 use App\Http\Controllers\AdsController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
@@ -92,9 +93,15 @@ Route::get('/delete-ads/{id}', [AdsController::class, 'destroy']);
 
 Route::get('customers', [CustomerController::class, 'Customers'])->middleware('check.permission:مدير المبيعات');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-
+// الفيديوهات
+Route::get('add_videoToProduct/{id}', [VideoController::class, 'AddVideoToProduct']);
+Route::get('add_video', [VideoController::class, 'AddVideo']);
+Route::post('/add-video/{productID?}', [VideoController::class, 'store'])->where('productID', '[0-9]+');
+Route::get('/videos', [VideoController::class, 'index'])->name('video.index');
+Route::get('/delete-video/{id}', [VideoController::class, 'destroy'])->name('video.delete');
 });
 
 // أضف ->name('login') في نهاية السطر
 Route::get('/login', [LoginController::class, 'Login'])->name('login');
 Route::post('/login-user', [LoginController::class, 'Examine'])->name('login-user');
+Route::post('/addsection',[SectionController::class,'store1']);// إضافة قسم
