@@ -110,6 +110,13 @@
                                                 <i class="bi bi-plus-circle text-turquoise"></i>
                                             </a>
                                         </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                                                href="/add_videoToProduct/{{ $product->p_id }}">
+                                                <span class="ms-2">اضافة فيديو</span>
+                                                <i class="bi bi-plus-circle text-turquoise"></i>
+                                            </a>
+                                        </li>
                                         @if (!isset($product->discount))
                                             <li>
                                                 <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"

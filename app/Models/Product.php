@@ -28,4 +28,9 @@ public function discount()
     return $this->hasOne(Discount::class,'p_id','p_id')
         ->where('end_date','>=',now());
 }
+public function colors()
+    {
+        return $this->hasMany(Color::class, 'p_id', 'p_id');
+    }
+    
 }
