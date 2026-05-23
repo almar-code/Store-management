@@ -8,6 +8,26 @@ use Illuminate\Http\Request;
 class SectionController extends Controller
 {
 
+    public function index()
+    {
+        try {
+            $sections = Category::inRandomOrder()->get();
+
+            return response()->json([
+                'status' => true,
+                'sections' => $sections
+            ], 200);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => false,
+                'message' => 'حدث خطأ أثناء جلب البيانات',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     // عرض الأقسام
     public function Sections()
     {
@@ -73,6 +93,38 @@ return redirect()->back()->with('error', $e->getMessage());
 
     }
 
+ public function store1(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required|max:255'
+        ]);
+
+        try {
+
+            /// ترجمة الاسم للإنجليزي
+            $tr = new GoogleTranslate('en');
+            // تعطيل التحقق من SSL (حل للمشكلة)
+        $tr->setOptions([
+            'verify' => false
+        ]);
+            $name_en = $tr->translate($request->name);
+
+            Category::create([
+                'cat_name' => $request->name,
+                'cat_name_en' => $name_en
+            ]);
+
+            return response()->json([
+        'message' => 'تم إضافة القسم بنجاح'
+    ]);
+        } catch (\Exception $e) {
+            return response()->json([
+        'message' => 'لم يتم إضافة القسم '
+    ]);
+        }
+
+    }
 
     // عند الضغط على تعديل
     public function edit($id)

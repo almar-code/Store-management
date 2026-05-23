@@ -1,6 +1,7 @@
 @extends('Layouts.master')
 @section('link')
-    <link href="assets/css/order.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
+
 @endsection
 @section('content')
     <div class="container my-4  px-2 px-md-2" dir="rtl">
