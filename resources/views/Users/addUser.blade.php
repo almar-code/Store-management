@@ -86,7 +86,7 @@
 
                         
                         <div class="form-floating mb-3">
-                            <input type="tel" class="form-control" id="email" name="email" placeholder="Subject" required=""
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Subject" required=""
                             @if (isset($edituser))
                             value="{{ $edituser->email }}"
                                 
@@ -114,7 +114,7 @@
                                         الرجاء اختيار عنوان المستخدم  
                                     </div>
                             @enderror
-                        </div>
+                        </div >
                         <div class="d-grid" style="direction: ltr">
                             @if (!isset($edituser))
                                     <button type="button" class="btn-submit" id="saveBtn" onclick="activateLoading('dataForm', 'saveBtn');">
