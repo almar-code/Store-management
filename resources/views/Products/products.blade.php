@@ -80,7 +80,7 @@
                             </div>
 
                             <div class="col-1 text-start align-self-start"
-                             @if($loop->first) 
+                             @if($loop->first ) 
                                         data-step="2"
                                         data-position="buttom"
                                         data-intro='
@@ -89,15 +89,15 @@
                                             <span>مركز التحكم الاحترافي</span>
                                         </div>
                                         <div class="tour-content">
-                                            <p class="tour-desc">
-                                                كل خيار أدناه ينقلك إلى <b>صفحة مستقلة</b> لإدارة تفاصيل العباية بدقة:
+                                            <p class="tour-desc text-end mb-3" style="line-height: 1.6; color: #555;">
+                                               لقد صممنا لك هذه القائمة لتسهل عليك إدارة منتجاتك في خطوات بسيطة. 
                                             </p>
+                                            
                                             <ul class="tour-list">
                                                 <li><i class="bi bi-pencil-square text-primary"></i> <span><b>تعديل المنتج:</b> صفحة لتغيير البيانات الأساسية ورفع <b>صورة الغلاف</b>.</span></li>
                                                 <li><i class="bi bi-palette text-success"></i> <span><b>ألوان المنتج:</b> صفحة لإضافة الألوان ورفع <b>ألبوم صور كامل</b> لكل لون.</span></li>
                                                 <li><i class="bi bi-rulers text-info"></i> <span><b>مقاسات المنتج:</b> صفحة مستقلة لضبط جدول المقاسات المتاحة.</span></li>
                                                 <li><i class="bi bi-tags text-warning"></i> <span><b>العروض:</b> صفحة التحكم في الخصومات وتحديد سعر العرض.</span></li>
-                                                <li class="delete-item"><i class="bi bi-trash3 text-danger"></i> <span><b>الحذف:</b> لإزالة العباية نهائياً من المتجر.</span></li>
                                             </ul>
                                         </div>'
                                     @endif>

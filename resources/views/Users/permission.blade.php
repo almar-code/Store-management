@@ -13,7 +13,7 @@
                 <div class="section-title" style="margin-bottom: 0px;">
                     <h3 style="font-size: 20px">قائمة <span class="orange-text">الصلاحيات</span></h3>
                 </div>
-            </div>
+            </div >
             <div class="search-input-container">
                 <i class="bi bi-search search-icon"></i>
                    <input type="text" class="search-input" placeholder="Search" id="sectionSearch">

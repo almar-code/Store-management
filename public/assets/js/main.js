@@ -376,11 +376,17 @@ function startTour() {
         nextLabel: 'التالي',
         prevLabel: 'السابق',
         doneLabel: 'تم',
-        showBullets: true,
-        showProgress: false, // تأكيد إخفاء شريط التقدم
         tooltipClass: 'nice-tour-custom',
-        highlightClass: 'nice-highlight'
+        highlightClass: 'nice-highlight',
+        exitOnOverlayClick: false,
+        showStepNumbers: false,
+        showBullets: true,
         
+        /* الإعدادات السرية للمكان */
+        autoPosition: false,       // منع القفز العشوائي
+        scrollToElement: true,    // النزول للعنصر
+        scrollPadding: 150,       // مسافة أمان قبل الفوتر
+        positionPrecedence: ["left", "bottom", "right", "top"]
     }).start();
 }
 

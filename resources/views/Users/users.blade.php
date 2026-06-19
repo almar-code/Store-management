@@ -13,7 +13,7 @@
                 <div class="section-title" style="margin-bottom: 0px;">
                     <h3 style="font-size: 20px">قائمة <span class="orange-text">المستخدمين</span></h3>
                 </div>
-            </div>
+            </div  >
 
             <div class="search-input-container" id="tour-search-box" data-intro="من هنا يمكنك البحث عن المستخدمين بالاسم بسرعة" data-step="1">
                 <i class="bi bi-search search-icon"></i>

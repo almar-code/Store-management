@@ -369,7 +369,7 @@
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
     @yield('jsfile')
-    <script src="{{ asset('assets/js/main.js')}}"></script>
+    <script src="{{ asset('assets/js/main.js')}}?v={{ time() }}"></script>
     @if (session('success'))
         <script>
             Swal.fire({

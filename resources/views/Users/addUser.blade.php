@@ -114,7 +114,7 @@
                                         الرجاء اختيار عنوان المستخدم  
                                     </div>
                             @enderror
-                        </div>
+                        </div >
                         <div class="d-grid" style="direction: ltr">
                             @if (!isset($edituser))
                                     <button type="button" class="btn-submit" id="saveBtn" onclick="activateLoading('dataForm', 'saveBtn');">
