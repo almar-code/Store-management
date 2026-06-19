@@ -215,6 +215,35 @@
                                 </li>
                             </ul>
                         </li>
+                         <li class="dropdown {{ !$isStoreManager ? 'locked-item' : '' }}">
+                            <a href="#">
+                                <div class = "toggle-dropdown divnav">
+                                <div>
+                                <span class="bi bi-box-seam nav-icon"></span>
+                                <span
+                                    class="{{ request()->is('addads') || request()->is('ads') ? 'active' : '' }}">الفيديوهات</span>
+                                </div>
+                                    <i class="bi bi-chevron-down "></i>
+                                    </div>
+                            </a>
+                           
+
+                            <ul>
+                                <li>
+                                    <a href="/add_video">
+                                       <div> <span class="bi bi-plus-circle sub-icon"></span>
+                                        إضافة فيديو</div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/videos">
+                                        <div><span class="bi bi-list-ul sub-icon"></span>
+                                        قائمة الفيديوهات</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
 
                         <li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">

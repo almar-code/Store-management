@@ -1,6 +1,6 @@
 @extends('Layouts.master')
 @section('link')
-    <link href="assets/css/chart.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/chart.css') }}?v={{ time() }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection
 @section('content')

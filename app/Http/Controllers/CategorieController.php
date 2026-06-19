@@ -11,7 +11,44 @@ use Illuminate\Support\Facades\Storage;
 
 class CategorieController extends Controller
 {
+public function index(Request $request)
+{
+    try {
+        // 1. استقبال الـ ID الخاص بالقسم الرئيسي إذا أرسله فلاتر
+        $categoryId = $request->query('category_id');
 
+        // 2. بناء الاستعلام برمجياً
+        $query = Subcategory::query();
+
+        if ($categoryId) {
+            // إذا تم إرسال المعرف، نجلب الفئات التابعة لهذا القسم فقط
+            $query->where('cat_id', $categoryId); 
+        } else {
+            // إذا لم يتم الإرسال، نتركها عشوائية كما كانت في كودك الأصلي
+            $query->inRandomOrder();
+        }
+
+        $subcategories = $query->get()->map(function ($subcategory) {
+            // دمج رابط الصورة الأساسي للسيرفر
+            if ($subcategory->subcat_image) {
+                $subcategory->subcat_image = asset('storage/uploads/subcategory/' . $subcategory->subcat_image);
+            }
+            return $subcategory;
+        });
+
+        return response()->json([
+            'status' => true,
+            'subcategories' => $subcategories
+        ], 200);
+
+    } catch (\Exception $e){
+        return response()->json([
+            'status' => false,
+            'message' => 'حدث خطأ أثناء جلب البيانات',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
     public function categorieManagement(){
         try {
            $Subcategory = Subcategory::with('category')->get();
@@ -19,11 +56,8 @@ class CategorieController extends Controller
            
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'حدث خطأ أثناء جلب الفئات');
-            
         }
     }
-
-
     public function AddCategorie(){
         try {
             $categories = Category::all();
