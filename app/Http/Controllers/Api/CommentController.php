@@ -24,24 +24,12 @@ class CommentController extends Controller
     $data = $comments->map(function ($comment) {
 
         return [
-
             'id' => $comment->id,
-
-            'commentText' =>
-                $comment->comment_text,
-
-            'customerName' =>
-                $comment->customer->name ?? '',
-
-            'customerImage' =>
-                $comment->customer->profile_image,
-
-            'videoId' =>
-                $comment->video_id,
-
-            'createdAt' =>
-                $comment->created_at
-                    ->toDateTimeString(),
+            'commentText' =>$comment->comment_text,
+            'customerName' =>$comment->customer->name ?? '',
+            'customerImage' =>$comment->customer->profile_image,
+            'videoId' =>$comment->video_id,
+            'createdAt' =>$comment->created_at->toDateTimeString(),
         ];
     });
 
@@ -70,23 +58,11 @@ class CommentController extends Controller
    return response()->json([
 
     'id' => $comment->id,
-
-    'commentText' =>
-        $comment->comment_text,
-
-    'customerName' =>
-        $comment->customer->name,
-
-    'customerImage' =>
-        $comment->customer->profile_image,
-
-    'videoId' =>
-        $comment->video_id,
-
-    'createdAt' =>
-        $comment->created_at
-            ->toDateTimeString(),
-
+    'commentText' =>$comment->comment_text,
+    'customerName' =>$comment->customer->name,
+    'customerImage' =>$comment->customer->profile_image,
+    'videoId' =>$comment->video_id,
+    'createdAt' =>$comment->created_at->toDateTimeString(),
 ], 201);
     }
 }

@@ -13,7 +13,6 @@ return new class extends Migration
     {
        Schema::create('order_items', function (Blueprint $table) {
     $table->bigIncrements('order_item_id');
-
     $table->unsignedBigInteger('order_id');
     $table->unsignedBigInteger('p_id');
 

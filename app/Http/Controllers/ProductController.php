@@ -9,59 +9,11 @@ use App\Models\Size;
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Discount;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 class ProductController extends Controller
 {
-   public function getProducts(Request $request)
-{
-    // 1. استقبال المعرفات من الـ Query Parameters (بما فيها آيدي المنتج)
-    $subcatId = $request->query('subCatId');
-    $categoryId = $request->query('category_id');
-    $productId = $request->query('product_id'); // 🌟 استقبال رقم المنتج المستهدف
-    $seed = $request->query('seed', time());
-    $isDiscount = filter_var($request->query('is_discount'), FILTER_VALIDATE_BOOLEAN);    // 2. بدء بناء الاستعلام مع العلاقات الأساسية للألوان والخصم
-    $query = Product::with(['colors', 'discount']);
-    if ($isDiscount) {
-        $query->whereHas('discount', function ($subQuery) {
-            $subQuery->where('end_date', '>=', now());
-        });
-    }
-    // 3. تطبيق الفلترة بناءً على الأولويات:
-    if ($subcatId) {
-        $query->where('subcat_id', $subcatId);
-    } elseif ($categoryId) {
-        $query->whereIn('subcat_id', function ($subQuery) use ($categoryId) {
-            $subQuery->select('subcat_id') 
-                     ->from('subcategories')
-                     ->where('cat_id', $categoryId);
-        });
-    }
-
-    // 4. 🌟 السحر هنا: إذا تم إرسال رقم منتج، نضعه أولاً في الصدارة دائماً
-    if ($productId) {
-        // يتم التحقق: إذا كان الآيدي يساوي الـ productId يأخذ القيمة 1 (يرتب أولاً)، والباقي يأخذ 0
-        $query->orderByRaw("p_id = ? DESC", [$productId]); // ⚠️ استبدل p_id باسم عمود المعرف الأساسي في جدولك إذا كان مختلفاً
-    }
-
-    // 5. الترتيب العشوائي لبقية المنتجات بناءً على الـ Seed
-    $query->inRandomOrder($seed);
-
-    // 6. جلب المنتجات على دفعات
-    $products = $query->paginate(2); 
-
-    // 7. إرجاع استجابة الـ JSON المتوافقة تماماً مع موديل فلاتر الحالي
-    return response()->json([
-        'status' => true,
-        'message' => 'Products fetched successfully',
-        'data' => $products->items(), 
-        'meta' => [
-            'current_page' => $products->currentPage(),
-            'last_page' => $products->lastPage(),
-            'has_more' => $products->hasMorePages(),
-            'seed' => (int)$seed,
-        ]
-    ], 200);
-}
     // عرض المنتجات
     public function Products()
     {
@@ -193,7 +145,17 @@ class ProductController extends Controller
                     'p_id' => $product->p_id
                 ]);
             }
+//             Http::post('http://localhost:5678/webhook-test/1a67ce17-d07a-4209-a83f-154206fc390e', [
 
+//     'p_name' => $product->p_name,
+//     'phons' => [
+//     "733357396",
+//     "779271679",
+//     "733357396"
+//   ],
+//     'p_price' => $product->p_price,
+//     'p_description' => $product->p_description,
+// ]);
 
 
 

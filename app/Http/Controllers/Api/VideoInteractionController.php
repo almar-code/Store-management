@@ -12,6 +12,7 @@ class VideoInteractionController extends Controller
     public function toggleLike(Request $request, $id)
     {
         try {
+            
             // 1. البحث عن السجل الخاص بالفيديو في جدول الإحصائيات، وإذا لم يكن موجوداً سيقوم بإنشائه تلقائياً
             $stat = VideoStat::firstOrCreate(
                 ['video_id' => $id],
