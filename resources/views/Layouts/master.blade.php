@@ -12,9 +12,9 @@
 
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
-    <link href="{{ asset('assets/img/logo.png') }}" rel="apple-touch-icon">
 
+    <link href="{{ secure_asset('assets/img/logo.png') }}" rel="icon">
+    <link href="{{ secure_asset('assets/img/logo.png') }}" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -22,48 +22,37 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
-
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap"
         rel="stylesheet">
 
 
     <!-- Vendor CSS -->
-<link href="{{ asset('assets/img/logo.png') }}?v={{ time() }}" rel="icon">
-<link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}?v={{ time() }}" rel="stylesheet">
-<link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}?v={{ time() }}" rel="stylesheet">
-<link href="{{ asset('assets/vendor/aos/aos.css') }}?v={{ time() }}" rel="stylesheet">
-<link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}?v={{ time() }}" rel="stylesheet">
-<link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}?v={{ time() }}" rel="stylesheet">
-
+    <link href="{{ secure_asset('assets/img/logo.png') }}?v={{ time() }}" rel="icon">
+    <link href="{{ secure_asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/vendor/aos/aos.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/vendor/glightbox/css/glightbox.min.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/vendor/swiper/swiper-bundle.min.css') }}?v={{ time() }}" rel="stylesheet">
 
     <!-- Main CSS -->
-
-    <link href="{{ asset('assets/css/main.css') }}?v={{ time() }}" rel="stylesheet">
-<link href="{{ asset('assets/css/card.css') }}?v={{ time() }}" rel="stylesheet">
-
-
-
+    <link href="{{ secure_asset('assets/css/main.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/css/card.css') }}?v={{ time() }}" rel="stylesheet">
 
     @yield('link')
 
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
-
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <!-- ربط المكتبة -->
-<link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
-<script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/introjs.min.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/introjs.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js"></script>
 </head>
 
 <style>
@@ -398,7 +387,8 @@
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
     @yield('jsfile')
-    <script src="{{ asset('assets/js/main.js')}}"></script>
+
+    <script src="{{ asset('assets/js/main.js')}}?v={{ time() }}"></script>
     @if (session('success'))
         <script>
             Swal.fire({

@@ -295,6 +295,7 @@ function activateLoading(formId, btnId) {
     const form = document.getElementById(formId);
 
     if (btn && form) {
+<<<<<<< HEAD
         btn.addEventListener('click', function (e) {
             // التحقق إذا كان الفورم شغال (بمعنى أن الحقول المطلوبة مليئة)
             if (form.checkValidity()) {
@@ -312,6 +313,21 @@ function activateLoading(formId, btnId) {
     }
 }
 
+=======
+        // التحقق من صحة البيانات مباشرة بدون انتظار ضغطة ثانية
+        if (form.checkValidity()) {
+            // 1. تغيير شكل الزر
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 10px;"></i>جار المعالجه...';
+            btn.disabled = true;
+
+            // 2. إرسال الفورم
+            form.submit();
+        } else {
+            // إظهار تنبيهات النواقص
+            form.reportValidity();
+        }
+    }
+}
 function confirmDelete(url, title = "هل أنت متأكد؟", text = "لن تستطيع استرجاع هذا العنصر بعد الحذف") {
 
   Swal.fire({
@@ -373,16 +389,25 @@ function previewImage(event) {
   }
 }
 
+
+//  زر المساعده Hellp
 function startTour() {
-        introJs().setOptions({
-            nextLabel: 'التالي',
-            prevLabel: 'السابق',
-            doneLabel: 'تم',
-            showProgress: true,
-            showBullets: true,
-            overlayOpacity: 0.5,
-            disableInteraction: false // السماح للمستخدم بالضغط على النقاط أثناء الشرح
-        }).start();
+    introJs().setOptions({
+        nextLabel: 'التالي',
+        prevLabel: 'السابق',
+        doneLabel: 'تم',
+        tooltipClass: 'nice-tour-custom',
+        highlightClass: 'nice-highlight',
+        exitOnOverlayClick: false,
+        showStepNumbers: false,
+        showBullets: true,
+        
+        /* الإعدادات السرية للمكان */
+        autoPosition: false,       // منع القفز العشوائي
+        scrollToElement: true,    // النزول للعنصر
+        scrollPadding: 150,       // مسافة أمان قبل الفوتر
+        positionPrecedence: ["left", "bottom", "right", "top"]
+    }).start();
 }
 
 

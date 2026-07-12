@@ -1,7 +1,8 @@
 @extends('Layouts.master')
 
 @section('link')
-   <link href="{{ asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
+
+   <link href="{{ secure_asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
     
 @endsection
 
