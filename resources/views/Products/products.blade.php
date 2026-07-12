@@ -1,6 +1,6 @@
 @extends('Layouts.master')
 @section('link')
-    <link href="{{ asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
 @section('content')
     <div class="container my-4 " dir="rtl">
