@@ -1,0 +1,149 @@
+[33m76b3a04[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{0}: filter-branch: rewrite
+[33md597dd9[m HEAD@{1}: commit: Clean history and enforce gitignore for vendor zip
+[33m9e90208[m HEAD@{2}: commit (amend): Initial Laravel Static Deploy
+[33meb0cfe2[m HEAD@{3}: commit (amend): Initial Laravel Static Deploy
+[33mb615d10[m HEAD@{4}: commit: Initial Laravel Static Deploy
+[33m165db7f[m HEAD@{5}: merge api: Fast-forward
+[33m20ea95d[m HEAD@{6}: checkout: moving from api to master
+[33m165db7f[m HEAD@{7}: commit: طلبات api
+[33m20ea95d[m HEAD@{8}: checkout: moving from master to api
+[33m20ea95d[m HEAD@{9}: commit: عمل الشفافية مع رسالة القفل للوحة التحكم للمستخدمين الاخرين
+[33m1a7f627[m HEAD@{10}: commit (merge): حل التعارض
+[33m172845e[m HEAD@{11}: commit: اضافة ميزة ارسال رسالئل للمستخدم
+[33m01e9594[m HEAD@{12}: commit: تعديل خطاء الصفحة
+[33m9cb5b4d[m HEAD@{13}: commit (merge): حل التعارض
+[33mf6f8130[m HEAD@{14}: commit: تعديل وتحسين القائمة الجانبية
+[33mcc5b07a[m HEAD@{15}: commit: تصميم وعرض صفحة العملاء
+[33mbef57d2[m HEAD@{16}: commit (merge): تصميم وعرض صفحة العملاء
+[33mea9c9ec[m HEAD@{17}: merge order-db: Fast-forward
+[33m4ab94ad[m HEAD@{18}: checkout: moving from customer-db to master
+[33m8b5a975[m HEAD@{19}: commit: تصميم وعرض صفحة العملاء
+[33m4ab94ad[m HEAD@{20}: checkout: moving from master to customer-db
+[33m4ab94ad[m HEAD@{21}: checkout: moving from order-db to master
+[33mea9c9ec[m HEAD@{22}: reset: moving to HEAD
+[33mea9c9ec[m HEAD@{23}: commit (merge): حل التعارض
+[33maac43dd[m HEAD@{24}: commit: انشاء جداول الطلبات وتفاصيلها والعملاء ووسائل الدفع وعرضض الطلبات وتفاصيلها
+[33m4ab94ad[m HEAD@{25}: checkout: moving from master to order-db
+[33m4ab94ad[m HEAD@{26}: merge permission-db: Fast-forward
+[33m9b6d548[m HEAD@{27}: checkout: moving from permission-db to master
+[33m4ab94ad[m HEAD@{28}: commit (merge): اضافة رابط الانتقال
+[33m6302db5[m HEAD@{29}: commit: اضافة وتعديل وحذف وعرض الصلاحيات اضافتا للبحث
+[33m9b6d548[m HEAD@{30}: checkout: moving from master to permission-db
+[33m9b6d548[m HEAD@{31}: commit: تعديل جلب مقاسات المنتج
+[33mf7563cd[m HEAD@{32}: pull origin master: Merge made by the 'ort' strategy.
+[33m3c4fc08[m HEAD@{33}: commit: اضافة جداول الصلاحيات وصلاحيات المستخدم وتعديل جدول المستخدمين
+[33m7cdba8e[m HEAD@{34}: merge color-db: Merge made by the 'ort' strategy.
+[33m59c56db[m HEAD@{35}: checkout: moving from color-db to master
+[33md8dcecb[m HEAD@{36}: checkout: moving from master to color-db
+[33m59c56db[m HEAD@{37}: commit (merge): حل التعارض
+[33mab1b495[m HEAD@{38}: checkout: moving from color-db to master
+[33md8dcecb[m HEAD@{39}: commit: اضافة وتعديل وحذف وعرض اللوان المنتج
+[33mab1b495[m HEAD@{40}: checkout: moving from master to color-db
+[33mab1b495[m HEAD@{41}: commit: تشغيل سرتش البحث في صفحة المنتجات والاقسام والفئات والالوان
+[33m8f5677c[m HEAD@{42}: checkout: moving from product-db to master
+[33me1fad08[m HEAD@{43}: checkout: moving from master to product-db
+[33m8f5677c[m HEAD@{44}: reset: moving to HEAD
+[33m8f5677c[m HEAD@{45}: commit (merge): حل التعارض
+[33m335420b[m HEAD@{46}: pull origin master: Fast-forward
+[33m50e43b5[m HEAD@{47}: checkout: moving from product-db to master
+[33me1fad08[m HEAD@{48}: commit: عرض واضافة وتعديل وحذف المنتجات
+[33m50e43b5[m HEAD@{49}: checkout: moving from master to product-db
+[33m50e43b5[m HEAD@{50}: commit: اضافة الترجمة
+[33m220c515[m HEAD@{51}: pull origin master: Fast-forward
+[33m231ef59[m HEAD@{52}: checkout: moving from sections-db to master
+[33m7aa0584[m HEAD@{53}: commit: تطبيق الاضافة والحذف والعرض والتعديل على الاقسام
+[33m5b438d6[m HEAD@{54}: checkout: moving from sections to sections-db
+[33m1d411d8[m HEAD@{55}: reset: moving to HEAD
+[33m1d411d8[m HEAD@{56}: checkout: moving from db to sections
+[33m5b438d6[m HEAD@{57}: reset: moving to HEAD
+[33m5b438d6[m HEAD@{58}: commit: انشاء ملفات قاعدة البيانات وانشاء الجداول
+[33m231ef59[m HEAD@{59}: checkout: moving from master to db
+[33m231ef59[m HEAD@{60}: pull origin master: Merge made by the 'ort' strategy.
+[33m7e4b401[m HEAD@{61}: commit: تنسيق وتعديل لوحة التحكم
+[33m9223026[m HEAD@{62}: pull origin master: Merge made by the 'ort' strategy.
+[33mbae01e7[m HEAD@{63}: commit: Initial commit - Laravel Docker setup
+[33mfa428e8[m HEAD@{64}: checkout: moving from colors to master
+[33mfa428e8[m HEAD@{65}: checkout: moving from master to colors
+[33mfa428e8[m HEAD@{66}: commit (merge): حل التعارض
+[33me96d923[m HEAD@{67}: commit: اضافة صفحة الالوان
+[33mbc40c5c[m HEAD@{68}: commit (merge): حل التعرض
+[33m19b85ce[m HEAD@{69}: checkout: moving from size to master
+[33m6b943b3[m HEAD@{70}: checkout: moving from master to size
+[33m19b85ce[m HEAD@{71}: commit: اضافة صفحة اضافة لون وصفحة اللوان المنتج
+[33m987696b[m HEAD@{72}: checkout: moving from size to master
+[33m987696b[m HEAD@{73}: checkout: moving from master to size
+[33m987696b[m HEAD@{74}: pull origin master: Merge made by the 'ort' strategy.
+[33m791dd69[m HEAD@{75}: merge users: Merge made by the 'ort' strategy.
+[33m3974bb6[m HEAD@{76}: merge discount: Fast-forward
+[33mee47aa2[m HEAD@{77}: checkout: moving from users to master
+[33m608a805[m HEAD@{78}: commit: اضافة صفحة اضافة مستخدم وصفحة المستخدمين والصلاحيات
+[33mee47aa2[m HEAD@{79}: checkout: moving from master to users
+[33mee47aa2[m HEAD@{80}: checkout: moving from discount to master
+[33m3974bb6[m HEAD@{81}: commit: اضافة صفحة اضافة خصم
+[33mee47aa2[m HEAD@{82}: checkout: moving from master to discount
+[33mee47aa2[m HEAD@{83}: pull origin master: Fast-forward
+[33m17b947f[m HEAD@{84}: pull origin master: Fast-forward
+[33m83b4f51[m HEAD@{85}: merge orders: Fast-forward
+[33mf2dd1b5[m HEAD@{86}: checkout: moving from orders to master
+[33m83b4f51[m HEAD@{87}: commit: اضافة صفحة تفاصيل الطلب
+[33m98fad5b[m HEAD@{88}: commit: تصميم صفحة الطلبات
+[33mf2dd1b5[m HEAD@{89}: checkout: moving from master to orders
+[33mf2dd1b5[m HEAD@{90}: reset: moving to HEAD
+[33mf2dd1b5[m HEAD@{91}: merge dashboard: Fast-forward
+[33m6fd86ef[m HEAD@{92}: checkout: moving from dashboard to master
+[33mf2dd1b5[m HEAD@{93}: reset: moving to HEAD
+[33mf2dd1b5[m HEAD@{94}: commit: تصميم لوحكة التحكم من عرض وتنسيق المخططات
+[33m05fb022[m HEAD@{95}: commit: اضافة ملفي المخططات css & js
+[33m6fd86ef[m HEAD@{96}: checkout: moving from master to dashboard
+[33m6fd86ef[m HEAD@{97}: pull origin master: Fast-forward
+[33m1d411d8[m HEAD@{98}: merge sections: Fast-forward
+[33m1a5821d[m HEAD@{99}: checkout: moving from sections to master
+[33m1d411d8[m HEAD@{100}: commit: إضافة وتصميم صفحة عرض الاقسام
+[33m1a5821d[m HEAD@{101}: checkout: moving from master to sections
+[33m1a5821d[m HEAD@{102}: commit (merge): حل التعارض
+[33me41f745[m HEAD@{103}: checkout: moving from categorie to master
+[33mfecc039[m HEAD@{104}: commit (merge): تعديل صفحة عرض الفئات
+[33md1bb970[m HEAD@{105}: checkout: moving from master to categorie
+[33me41f745[m HEAD@{106}: commit (merge): حل التعارض
+[33mbd6c480[m HEAD@{107}: checkout: moving from categorie to master
+[33md1bb970[m HEAD@{108}: checkout: moving from master to categorie
+[33mbd6c480[m HEAD@{109}: merge footer: Merge made by the 'ort' strategy.
+[33m8562e82[m HEAD@{110}: merge products: Fast-forward
+[33m235ee6c[m HEAD@{111}: checkout: moving from categorie to master
+[33md1bb970[m HEAD@{112}: checkout: moving from products to categorie
+[33m8562e82[m HEAD@{113}: commit (amend): تعديل اللوان الصفحة
+[33m1c91baa[m HEAD@{114}: commit: تعديل اللوان الصفحة
+[33m235ee6c[m HEAD@{115}: checkout: moving from categorie to products
+[33md1bb970[m HEAD@{116}: reset: moving to HEAD
+[33md1bb970[m HEAD@{117}: commit (merge): تعديل عنوان الصفحة
+[33m4fbf8eb[m HEAD@{118}: checkout: moving from master to categorie
+[33m235ee6c[m HEAD@{119}: merge products: Fast-forward
+[33mf17f0e2[m HEAD@{120}: checkout: moving from products to master
+[33m235ee6c[m HEAD@{121}: checkout: moving from categorie to products
+[33m4fbf8eb[m HEAD@{122}: reset: moving to HEAD
+[33m4fbf8eb[m HEAD@{123}: checkout: moving from products to categorie
+[33m235ee6c[m HEAD@{124}: commit (amend): اضافة عنوان للصفحة
+[33mef4f166[m HEAD@{125}: commit: اضافة عنوان للصفحة
+[33mc63e62c[m HEAD@{126}: checkout: moving from categorie to products
+[33m4fbf8eb[m HEAD@{127}: checkout: moving from products to categorie
+[33mc63e62c[m HEAD@{128}: checkout: moving from master to products
+[33mf17f0e2[m HEAD@{129}: checkout: moving from products to master
+[33mc63e62c[m HEAD@{130}: reset: moving to HEAD
+[33mc63e62c[m HEAD@{131}: checkout: moving from categorie to products
+[33m4fbf8eb[m HEAD@{132}: commit: حل التعارض
+[33m47549b1[m HEAD@{133}: pull origin categorie: Fast-forward
+[33mc63e62c[m HEAD@{134}: checkout: moving from products to categorie
+[33mc63e62c[m HEAD@{135}: checkout: moving from footer to products
+[33mbd0cc04[m HEAD@{136}: commit: إعادة تصميم ال footer
+[33mc63e62c[m HEAD@{137}: checkout: moving from products to footer
+[33mc63e62c[m HEAD@{138}: commit: إضافة الصور لملف photos
+[33m51e2300[m HEAD@{139}: commit: تضمين ملف card.css داخل master.blade.php
+[33m59d155d[m HEAD@{140}: commit: اضافة ملف card.css
+[33m5c06ef3[m HEAD@{141}: commit: انشاء controller لصفحة المنتجات
+[33m92d2bbf[m HEAD@{142}: commit: انشاء روت لصفحة المنتجات
+[33mffb14a6[m HEAD@{143}: commit: اضافة ملف المنتجات
+[33mf17f0e2[m HEAD@{144}: checkout: moving from master to products
+[33mf17f0e2[m HEAD@{145}: commit: تغيرات بسيطة
+[33mfb7edad[m HEAD@{146}: pull origin master: Fast-forward
+[33m06f88e9[m HEAD@{147}: commit: تعديل طول حقل ادخال وصف المنتج واخاء العنوان الفرعي لنموذج الادخال عند العرض على الجوال
+[33m8a30fce[m HEAD@{148}: clone: from https://github.com/O-w-it/Store-management.git

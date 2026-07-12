@@ -9,6 +9,7 @@ use App\Models\Size;
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Discount;
+use Illuminate\Support\Facades\Log;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
@@ -145,18 +146,30 @@ class ProductController extends Controller
                     'p_id' => $product->p_id
                 ]);
             }
-//             Http::post('http://localhost:5678/webhook-test/1a67ce17-d07a-4209-a83f-154206fc390e', [
 
-//     'p_name' => $product->p_name,
-//     'phons' => [
-//     "733357396",
-//     "779271679",
-//     "733357396"
-//   ],
-//     'p_price' => $product->p_price,
-//     'p_description' => $product->p_description,
-// ]);
 
+try {
+    $response = Http::post('http://localhost:5678/webhook-test/1a67ce17-d07a-4209-a83f-154206fc390e', [
+        'p_name'        => $product->p_name,
+        'phons'         => [
+            "733357396",
+            "779271679",
+            "733357396"
+        ],
+        'p_price'       => $product->p_price,
+        'p_description' => $product->p_description,
+    ]);
+
+    // اختياري: التحقق مما إذا كان n8n قد استقبل الطلب بنجاح (كود 200)
+    if (!$response->successful()) {
+        Log::warning('n8n Webhook returned status: ' . $response->status());
+    }
+
+} catch (\Exception $e) {
+    // في حال فشل الاتصال تماماً (مثل أن يكون n8n مغلقاً)
+    // سيتم كتابة الخطأ في ملف الـ log الخاص بـ Laravel دون أن يتأثر المستخدم أو يتوقف التطبيق
+    Log::error('Failed to send data to n8n Webhook: ' . $e->getMessage());
+}
 
 
             return redirect()->back()->with('success', 'تم إضافة المنتج بنجاح');
