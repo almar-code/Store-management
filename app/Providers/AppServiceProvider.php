@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
    
     public function boot(): void
 {
+    // إجبار لارافل على تحويل جميع الروابط والنماذج إلى https في بيئة الإنتاج
+    if (config('app.env') === 'production') {
+        URL::forceScheme('https');
+    }
+
+    // مشاركة الصلاحيات مع جميع ملفات الـ Blade
     View::composer('*', function ($view) {
         // قيم افتراضية لكي لا ينهار الموقع للزوار غير المسجلين
         $isAdmin = false;
