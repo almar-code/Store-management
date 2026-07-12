@@ -21,8 +21,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
 {
     // إجبار لارافل على تحويل جميع الروابط والنماذج إلى https في بيئة الإنتاج
-    if (config('app.env') === 'production') {
-        URL::forceScheme('https');
+    if (config('app.env') === 'production' || env('APP_ENV') === 'production') {
+        \Illuminate\Support\Facades\URL::forceScheme('https');
     }
 
     // مشاركة الصلاحيات مع جميع ملفات الـ Blade
