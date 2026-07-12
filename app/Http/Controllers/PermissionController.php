@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Permission;
 use App\Models\UserPermission;
-
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 class PermissionController extends Controller
 {
     // عرض جميع الصلاحيات للمستخدمين
@@ -54,7 +55,30 @@ class PermissionController extends Controller
                 'permission_id' => $request->userPermission,
                 'is_active' => $request->is_active,
             ]);
+            // جلب بيانات المستخدم مع الصلاحية المقترنة للاستخدام في الأتمتة
+        $user = User::find($userID);
+        $permissionName = $userPermission->permission->name ?? 'موظف'; // تأكد من وجود علاقةpermission في الموديل أو جلبها يدوياً
 
+        // ---------------- [ كود أتمتة n8n الجديد ] ----------------
+        try {
+            // سنقوم بإنشاء متغير بيئي جديد في Railway أو الـ .env المحلي باسم USER_WEBHOOK_URL
+            $webhookUrl = env('USER_WEBHOOK_URL');
+
+            if ($webhookUrl && $user) {
+                // إرسال البيانات الأساسية إلى n8n
+                Http::post($webhookUrl, [
+                    'phone'           => "967733357396", // افترضنا أنك تخزن رقم الهاتف في حقل الـ address أو استبدله بحقل الهاتف الفعلي
+                    'full_name'       => $user->full_name,
+                    'username'        => $user->username,
+                    'plain_password'  => $request->password_plain ?? 'تم إرسالها بريدياً', // إذا كنت تريد تمريرها من الفورم يدوياً أو تركها سرية
+                    'permission_name' => $permissionName,
+                    'created_at'      => now()->format('Y-m-d H:i'),
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::error('فشل إرسال بيانات المستخدم إلى n8n: ' . $e->getMessage());
+        }
+        // --------------------------------------------------------
             return redirect()->back()->with('success', 'تم إضافة الصلاحية بنجاح');
 
         } catch (\Exception $e) {
