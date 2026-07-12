@@ -295,25 +295,7 @@ function activateLoading(formId, btnId) {
     const form = document.getElementById(formId);
 
     if (btn && form) {
-<<<<<<< HEAD
-        btn.addEventListener('click', function (e) {
-            // التحقق إذا كان الفورم شغال (بمعنى أن الحقول المطلوبة مليئة)
-            if (form.checkValidity()) {
-                // تغيير شكل الزر فوراً
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                btn.disabled = true;
-                
-                // إرسال الفورم
-                form.submit();
-            } else {
-                // إذا في حقول ناقصة، المتصفح بيظهر تنبيهاته العادية
-                form.reportValidity();
-            }
-        });
-    }
-}
 
-=======
         // التحقق من صحة البيانات مباشرة بدون انتظار ضغطة ثانية
         if (form.checkValidity()) {
             // 1. تغيير شكل الزر
