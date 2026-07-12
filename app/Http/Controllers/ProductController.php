@@ -149,25 +149,33 @@ class ProductController extends Controller
 
 
 try {
-    $response = Http::post('http://localhost:5678/webhook-test/1a67ce17-d07a-4209-a83f-154206fc390e', [
-        'p_name'        => $product->p_name,
-        'phons'         => [
-            "733357396",
-            "779271679",
-            "733357396"
-        ],
-        'p_price'       => $product->p_price,
-        'p_description' => $product->p_description,
-    ]);
+    // جلب رابط الـ Webhook المخزن في متغيرات البيئة على Railway
+    $webhookUrl = env('N8N_WEBHOOK_URL');
 
-    // اختياري: التحقق مما إذا كان n8n قد استقبل الطلب بنجاح (كود 200)
-    if (!$response->successful()) {
-        Log::warning('n8n Webhook returned status: ' . $response->status());
+    // التحقق من أن الرابط موجود وليس فارغاً قبل إرسال الطلب
+    if ($webhookUrl) {
+        $response = Http::post($webhookUrl, [
+            'p_name'        => $product->p_name,
+            'phons'         => [
+                "967733357396", // إضافة مفتاح اليمن الدولي لضمان قبول الرقم في UltraMsg
+                "967779271679",
+                "967733357396"
+            ],
+            'p_price'       => $product->p_price,
+            'p_description' => $product->p_description,
+        ]);
+
+        // التحقق مما إذا كان n8n قد استقبل الطلب بنجاح (كود 200)
+        if (!$response->successful()) {
+            Log::warning('n8n Webhook returned status: ' . $response->status());
+        }
+    } else {
+        Log::warning('n8n Webhook URL is not defined in environment variables.');
     }
 
 } catch (\Exception $e) {
-    // في حال فشل الاتصال تماماً (مثل أن يكون n8n مغلقاً)
-    // سيتم كتابة الخطأ في ملف الـ log الخاص بـ Laravel دون أن يتأثر المستخدم أو يتوقف التطبيق
+    // في حال فشل الاتصال تماماً (مثل مشكلة في الشبكة أو توقف السيرفر)
+    // سيتم كتابة الخطأ في ملف الـ log الخاص بـ Laravel دون أن يتوقف التطبيق عن العمل
     Log::error('Failed to send data to n8n Webhook: ' . $e->getMessage());
 }
 
