@@ -13,9 +13,6 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         
-        // 🛡️ حل مشكلة الـ Proxy في الاستضافات السحابية ليقرأ الـ https تلقائياً
-        $middleware->trustProxies(at: '*');
-
         // 🌟 1. تفعيل الـ CORS بشكل صريح ومستمر لكل الطلبات (بما فيها الصور)
         $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
 
