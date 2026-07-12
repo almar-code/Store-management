@@ -92,6 +92,7 @@ if ($existingUser) {
 
     public function Users(){
         try {
+
             $users = User::with('userPermissions')->get();
             // $users =User::all();
             return view('Users.users', compact('users'));

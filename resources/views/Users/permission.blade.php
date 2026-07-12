@@ -1,5 +1,6 @@
 @extends('Layouts.master')
 @section('link')
+
     <link href="{{ secure_asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
@@ -12,6 +13,7 @@
                 <div class="section-title" style="margin-bottom: 0px;">
                     <h3 style="font-size: 20px">قائمة <span class="orange-text">الصلاحيات</span></h3>
                 </div>
+
             </div >
             <div class="search-input-container">
                 <i class="bi bi-search search-icon"></i>
@@ -22,6 +24,7 @@
                 <i class="bi bi-arrow-clockwise" ></i>
 
             </a>
+
             <i class="bi bi-question-circle text-turquoise fs-4" 
             onclick="startTour()" 
             style="cursor: pointer; margin-right: 10px;" 
@@ -35,6 +38,7 @@
                     <tr>
                         <th>متسلسل</th>
                         <th>الاسم</th>
+
                         <th data-intro="هذا العمود يوضح المسمى الوظيفي أو الصلاحيه التي يمتلكه المستخدم." data-step="2" >الصلاحية</th>
                         <th data-intro="حالة الصلاحية: (🟢 نشط) يمتلك صلاحيه دخول (🔴 غير نشط) الصلاحية مجمدة مؤقتاً." data-step="3">النشاط</th>
                         <th data-intro="العمليات : عند الضغط على الثلاث نقاط يمكنك تعديل صلاحيه المستخدم او يمكنك حذف الصلاحيه وابقاء المستخدم بدون صلاحيه ." data-step="4">عمليات</th>

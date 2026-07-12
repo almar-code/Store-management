@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('link')
+
     <link href="{{ secure_asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
@@ -13,6 +14,7 @@
                 <div class="section-title" style="margin-bottom: 0px;">
                     <h3 style="font-size: 20px">قائمة <span class="orange-text">المستخدمين</span></h3>
                 </div>
+
             </div  >
 
             <div class="search-input-container" id="tour-search-box" data-intro="من هنا يمكنك البحث عن المستخدمين بالاسم بسرعة" data-step="1">
@@ -26,12 +28,14 @@
             </a>
            <i class="bi bi-question-circle text-turquoise fs-4" 
             onclick="startTour()" 
+
             style="cursor: pointer; margin-right: 10px;" 
             title="مساعدة - Help">
             </i>
         </div>
 
         <div class="table-container">
+
             <table id="tour-table" class="table" data-intro="جدول المستخدمين: الأسماء باللون الأخضر تعني أن المستخدم يمتلك صلاحيات وصول، بينما يمكنك إضافة صلاحيات للبقية عن طريق الضغط على الثلاث نقاط ." data-step="3">
                 <thead>
                     <tr>
@@ -40,11 +44,13 @@
                         <th>الاسم</th>
                         <th>الايميل</th>
                         <th>العنوان</th>
+
                         <th data-intro= " عمود العمليات : من هنا يمكنك تعديل المستخدم و اضافه صلاحيه للمستخدم اذا لم يكن لديه صلاحيه  او جذف المستخدم " data-step="4">العمليات</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
+
                     @php
                         // نتحقق مرة واحدة هل المستخدم لديه صلاحيات أم لا
                         $hasPermissions = $user->userPermissions->isNotEmpty();
@@ -71,6 +77,7 @@
                                             <i class="bi bi-pencil-square text-success"></i>
                                         </a>
                                     </li>
+
                                     @if($user->userPermissions->isEmpty())
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end" href="/addPermission/{{ $user->user_id }}">
@@ -79,7 +86,6 @@
                                         </a>
                                     </li>
                                     @endif
-                                    
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-danger font-weight-bold text-end" href="#" onclick="confirmDelete('/delete-user/{{ $user->user_id }}','حذف المستخدم ','هل أنت متأكد؟')">
@@ -97,5 +103,4 @@
         </div>
     </div>
 </div>
-
 @endsection

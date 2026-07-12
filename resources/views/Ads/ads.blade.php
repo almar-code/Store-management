@@ -1,5 +1,6 @@
 @extends('Layouts.master')
 @section('link')
+
     <link href="{{ secure_asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
@@ -23,6 +24,7 @@
                 <i class="bi bi-arrow-clockwise"  ></i>
 
             </a>
+
             <i class="bi bi-question-circle text-turquoise fs-4" 
             onclick="startTour()" 
             style="cursor: pointer; margin-right: 10px;" 
@@ -34,6 +36,7 @@
             <table class="table">
                 <thead>
                     <tr>
+
                         <th>متسلسل</th >
                         <th> الاعلان </th>
                         <th>الصوره </th>
@@ -47,12 +50,14 @@
                 <tbody>
                     @foreach ($ads as $adss)
                     <tr class="card-item">
+
                         <td class="fs-6 fs-md-5">{{ $loop->iteration }}</td>
                         <td class="fw-bold lh-1 fs-md-5">{{ $adss->AdsName }}</td>
                         <td class="card-text">
                                     <img src="{{ asset('storage/uploads/Advertisement/'.$adss->AdsImage) }}" class="rounded-circle" width="50"
                                             height="50" style="object-fit: cover;">
                         </td>
+
                         <td class="text-muted lh-1 fs-md-5">{{str_repeat('.', 5) . substr($adss->AdsLink, 0, 3)}}</td>
 
                         <!-- النشاط -->
@@ -68,7 +73,7 @@
                         " title="{{ $adss->is_active ? 'الاعلان نشط' : 'الاعلان غير نشط' }}"></div>
                         </a>
                     </td>   
-                           
+                          
                             <td class="lh-1 fs-md-5">{{$adss->expires_at}}</td>
                             <td>
                                 <a class="text-danger "

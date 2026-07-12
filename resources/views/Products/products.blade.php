@@ -1,4 +1,5 @@
 @extends('Layouts.master')
+
 @section('link')
     <link href="{{ secure_asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
@@ -22,6 +23,7 @@
                     إضافة منتج
                     <i class="bi bi-plus-lg ms-2"></i>
                 </a>
+
                 <i class="bi bi-question-circle text-turquoise fs-4" 
                     onclick="startTour()" 
                     style="cursor: pointer; margin-right: 10px;" 
@@ -78,6 +80,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="col-1 text-start align-self-start"
                              @if($loop->first ) 

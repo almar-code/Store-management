@@ -86,6 +86,7 @@
 
                         
                         <div class="form-floating mb-3">
+
                             <input type="email" class="form-control" id="email" name="email" placeholder="Subject" required=""
                             @if (isset($edituser))
                             value="{{ $edituser->email }}"
@@ -114,6 +115,7 @@
                                         الرجاء اختيار عنوان المستخدم  
                                     </div>
                             @enderror
+
                         </div >
                         <div class="d-grid" style="direction: ltr">
                             @if (!isset($edituser))

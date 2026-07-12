@@ -10,7 +10,9 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
+
     <!-- Favicons -->
+
     <link href="{{ secure_asset('assets/img/logo.png') }}" rel="icon">
     <link href="{{ secure_asset('assets/img/logo.png') }}" rel="apple-touch-icon">
 
@@ -23,6 +25,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap"
         rel="stylesheet">
+
 
     <!-- Vendor CSS -->
     <link href="{{ secure_asset('assets/img/logo.png') }}?v={{ time() }}" rel="icon">
@@ -384,6 +387,7 @@
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
     @yield('jsfile')
+
     <script src="{{ asset('assets/js/main.js')}}?v={{ time() }}"></script>
     @if (session('success'))
         <script>

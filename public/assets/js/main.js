@@ -295,6 +295,7 @@ function activateLoading(formId, btnId) {
     const form = document.getElementById(formId);
 
     if (btn && form) {
+
         // التحقق من صحة البيانات مباشرة بدون انتظار ضغطة ثانية
         if (form.checkValidity()) {
             // 1. تغيير شكل الزر
@@ -369,6 +370,7 @@ function previewImage(event) {
     reader.readAsDataURL(file);
   }
 }
+
 
 //  زر المساعده Hellp
 function startTour() {
