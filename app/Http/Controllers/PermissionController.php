@@ -71,7 +71,7 @@ class PermissionController extends Controller
                     'phone'           => $user->address, // افترضنا أنك تخزن رقم الهاتف في حقل الـ address أو استبدله بحقل الهاتف الفعلي
                     'full_name'       => $user->full_name,
                     'username'        => $user->username,
-                    'plain_password'  => $request->password_plain ?? 'تم إرسالها بريدياً', // إذا كنت تريد تمريرها من الفورم يدوياً أو تركها سرية
+                    'plain_password'  =>  'تواصل مع مدير النظام ليجلب لك كلمة السر 779271679', // إذا كنت تريد تمريرها من الفورم يدوياً أو تركها سرية
                     'permission_name' => $permissionName,
                     'created_at'      => now()->format('Y-m-d H:i'),
                 ]);
