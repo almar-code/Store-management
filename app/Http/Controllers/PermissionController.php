@@ -63,7 +63,7 @@ class PermissionController extends Controller
         // ---------------- [ كود أتمتة n8n الجديد ] ----------------
         try {
             // سنقوم بإنشاء متغير بيئي جديد في Railway أو الـ .env المحلي باسم USER_WEBHOOK_URL
-            $webhookUrl = env('USER_WEBHOOK_URL');
+            $webhookUrl = 'https://n8n-production-7bdd.up.railway.app/webhook/welcome-new-user-webhook';
 
             if ($webhookUrl && $user) {
                 // إرسال البيانات الأساسية إلى n8n
