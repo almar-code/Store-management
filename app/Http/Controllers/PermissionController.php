@@ -50,14 +50,15 @@ class PermissionController extends Controller
                 return redirect()->back()->with('error', 'الصلاحية موجودة مسبقاً لهذا المستخدم');
             }
 
-            UserPermission::create([
+            $userPermission =UserPermission::create([
                 'user_id' => $userID,
                 'permission_id' => $request->userPermission,
                 'is_active' => $request->is_active,
             ]);
             // جلب بيانات المستخدم مع الصلاحية المقترنة للاستخدام في الأتمتة
+            $userPermission->load('permission');
         $user = User::find($userID);
-        $permissionName = $userPermission->permission->name ?? 'موظف'; // تأكد من وجود علاقةpermission في الموديل أو جلبها يدوياً
+        $permissionName = $userPermission->permission->permission_name ?? 'موظف'; // تأكد من وجود علاقةpermission في الموديل أو جلبها يدوياً
 
         // ---------------- [ كود أتمتة n8n الجديد ] ----------------
         try {
@@ -67,7 +68,7 @@ class PermissionController extends Controller
             if ($webhookUrl && $user) {
                 // إرسال البيانات الأساسية إلى n8n
                 Http::post($webhookUrl, [
-                    'phone'           => "967733357396", // افترضنا أنك تخزن رقم الهاتف في حقل الـ address أو استبدله بحقل الهاتف الفعلي
+                    'phone'           => $user->address, // افترضنا أنك تخزن رقم الهاتف في حقل الـ address أو استبدله بحقل الهاتف الفعلي
                     'full_name'       => $user->full_name,
                     'username'        => $user->username,
                     'plain_password'  => $request->password_plain ?? 'تم إرسالها بريدياً', // إذا كنت تريد تمريرها من الفورم يدوياً أو تركها سرية

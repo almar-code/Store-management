@@ -11,7 +11,6 @@ class UserPermission extends Model
     
      protected $table = 'user_permissions'; // اسم الجدول
     public $timestamps = true; // إذا كان لديك created_at / updated_at
-    protected $primaryKey = null; // لأنه مفتاح مركب
     public $incrementing = false;
     protected $fillable = ['user_id', 'permission_id', 'is_active'];
 
