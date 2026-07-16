@@ -110,12 +110,42 @@ class VideoController extends Controller
                 $videoFile->move(public_path('storage/uploads/videos'), $videoName);
 
                 // 3. تخزين البيانات في قاعدة البيانات
-                Video::create([
+                $video = Video::create([
                     'video_path' => $videoName,
                     'product_id' => $productID, // سيأخذ القيمة إذا وُجدت أو يظل null
                 ]);
 
-                return redirect()->back()->with('success', 'تم إضافة الفيديو بنجاح');
+                // --- بداية كود الأتمتة وإرسال البيانات إلى n8n ---
+                try {
+                    // بناء رابط الفيديو المباشر كما هو في الـ API
+                    $videoUrl = rtrim(config('app.url'), '/') . '/storage/uploads/videos/' . $videoName;
+
+                    // جلب اسم المنتج إذا كان الفيديو مرتبطاً بمنتج، وإلا نعتبره فيديو عام
+                    $productName = 'فيديو عام';
+                    if ($productID) {
+                        $product = Product::find($productID);
+                        if ($product) {
+                            $productName = $product->p_name;
+                        }
+                    }
+
+                    // تجهيز الكابشن (الوصف) للريل
+                    $caption = "🎬 وصلنا حديثاً: " . $productName . " ✨\n\n";
+                    $caption .= "تصفحوا متجرنا الآن للمزيد من التفاصيل والطلب! 🛍️";
+
+                    // إرسال الطلب إلى n8n (باستخدام رابط الـ Test حالياً)
+                    \Illuminate\Support\Facades\Http::timeout(5)->post('https://n8n-production-7bdd.up.railway.app/webhook-test/Instagram-reel', [
+                        'video_url' => $videoUrl,
+                        'caption'   => $caption
+                    ]);
+
+                } catch (\Throwable $webhookException) {
+                    // نضع هذا داخل catch مستقلة حتى لو فشل الاتصال بـ n8n لأي سبب، لا يتعطل حفظ الفيديو في متجرك
+                    \Illuminate\Support\Log::error('n8n Webhook Error: ' . $webhookException->getMessage());
+                }
+                // --- نهاية كود الأتمتة ---
+
+                return redirect()->back()->with('success', 'تم إضافة الفيديو بنجاح وجاري إرساله للانستجرام');
             }
 
             return redirect()->back()->with('error', 'الرجاء اختيار ملف فيديو');
