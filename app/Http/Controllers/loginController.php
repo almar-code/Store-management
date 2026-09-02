@@ -25,6 +25,13 @@ class LoginController extends Controller
 
             // المطابقة اليدوية: كلمة السر من الفورم مقابل password_hash من القاعدة
             if ($user && Hash::check($request->password, $user->password_hash)) {
+            // التحقق من حالة المستخدم في جدول user_permissions
+                $userPermission = $user->userPermissions()->where('is_active', 1)->first();
+
+                if (!$userPermission) {
+                    return back()->with('error', 'حسابك غير نشط، يرجى التواصل مع الإدارة')->withInput();
+                }
+
                 // تسجيل الدخول في النظام
                 Auth::login($user);
                 $request->session()->regenerate();

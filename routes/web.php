@@ -14,6 +14,7 @@ use App\Http\Controllers\ColorsController;
 use App\Http\Controllers\AdsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
@@ -49,7 +50,7 @@ Route::post('/order/update-status/{id}', [OrdersController::class,'updateStatus'
 
 
 Route::get('addDiscount', [DiscountController::class, 'AddDiscount']);
-Route::get('Discounts', [DiscountController::class, 'Discounts']);
+Route::get('discounts', [DiscountController::class, 'index']);
 
 Route::get('addPermission/{id}', [PermissionController::class, 'AddPermission'])->middleware('check.permission:مدير المتجر');
 Route::get('permission', [PermissionController::class, 'Permissions'])->middleware('check.permission:مدير المتجر');
@@ -99,6 +100,21 @@ Route::get('add_video', [VideoController::class, 'AddVideo']);
 Route::post('/add-video/{productID?}', [VideoController::class, 'store'])->where('productID', '[0-9]+');
 Route::get('/videos', [VideoController::class, 'index'])->name('video.index');
 Route::get('/delete-video/{id}', [VideoController::class, 'destroy'])->name('video.delete');
+// التقارير
+
+Route::prefix('reports')->group(function () {
+    // الصفحة الرئيسية للتقارير
+    Route::get('/', [ReportController::class, 'index'])->name('reports.index');
+    
+    // صفحة التقرير المخصص
+    Route::get('/custom', [ReportController::class, 'custom'])->name('reports.custom');
+    
+    // صفحة التقارير الجاهزة
+    Route::get('/ready', [ReportController::class, 'ready'])->name('reports.ready');
+Route::post('/generate', [ReportController::class, 'generate'])->name('report.generate');
+
+});
+
 });
 
 // أضف ->name('login') في نهاية السطر
