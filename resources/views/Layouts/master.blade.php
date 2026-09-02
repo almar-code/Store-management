@@ -28,6 +28,17 @@
 
 
     <!-- Vendor CSS -->
+    <link href="{{ asset('assets/img/logo.png') }}?v={{ time() }}" rel="icon">
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}?v={{ time() }}" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link href="{{ asset('assets/css/main.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/card.css') }}?v={{ time() }}" rel="stylesheet">
+
     <link href="{{ secure_asset('assets/img/logo.png') }}?v={{ time() }}" rel="icon">
     <link href="{{ secure_asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}?v={{ time() }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}?v={{ time() }}" rel="stylesheet">
@@ -94,7 +105,7 @@
                                 <div>
                                 <span class="bi bi-box-seam nav-icon"></span>
                                 <span
-                                    class="{{ request()->is('addproduct') || request()->is('products') ? 'active' : '' }}">المنتجات</span>
+                                    class="{{ request()->is('addproduct') || request()->is('products')|| request()->is('discounts') ? 'active' : '' }}">المنتجات</span>
                                 </div>
                                     <i class="bi bi-chevron-down "></i>
                                     </div>
@@ -109,6 +120,11 @@
                                 <li>
                                     <a href="/products" class="{{ request()->is('products') ? 'active' : '' }}">
                                         <div><span class="bi bi-list-ul sub-icon"></span>قائمة المنتجات</div>
+                                    </a>
+                                </li>
+                                 <li>
+                                    <a href="/discounts" class="{{ request()->is('discounts') ? 'active' : '' }}">
+                                        <div><span class="bi bi-list-ul sub-icon"></span>قائمة الخصومات</div>
                                     </a>
                                 </li>
                             </ul>
@@ -284,7 +300,34 @@
                                 العملاء</div>
                             </a>
                         </li>
-
+<li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">
+    <a href="#">
+        <div class="toggle-dropdown divnav">
+            <div>
+                <span class="bi bi-file-earmark-text nav-icon"></span>
+                <span class="{{ request()->is('reports*') ? 'active' : '' }}">التقارير</span>
+            </div>
+            <i class="bi bi-chevron-down"></i>
+        </div>
+    </a>
+    <ul>
+        <li>
+            <a href="/reports/custom" class="{{ request()->is('reports/custom') ? 'active' : '' }}">
+                <div> <span class="bi bi-pencil-square sub-icon"></span> تقرير مخصص</div>
+            </a>
+        </li>
+        <li>
+            <a href="/reports/ready" class="{{ request()->is('reports/ready') ? 'active' : '' }}">
+                <div> <span class="bi bi-clipboard-check sub-icon"></span> تقارير جاهزة</div>
+            </a>
+        </li>
+        <li>
+            <a href="/reports" class="{{ request()->is('reports') && !request()->is('reports/*') ? 'active' : '' }}">
+                <div> <span class="bi bi-list-ul sub-icon"></span> قائمة التقارير</div>
+            </a>
+        </li>
+    </ul>
+</li>
 
                         <li class="dropdown">
                             <a href="#" onclick="confirmDelete('/logout','خروج  ','هل أنت متأكد من تسجيل الخروج ؟')">

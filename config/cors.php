@@ -11,7 +11,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*'], // أو يمكنك وضع الرابط المحلي للمتصفح مثل ['http://localhost:52450'] حسب منفذ فلاتر ويب لديك
 
     'allowed_origins_patterns' => [],
 
@@ -21,5 +21,5 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true, // ضعها true لضمان قبول الكوكيز والجلسات والتوكنز عبر المتصفح
 ];

@@ -20,6 +20,25 @@ class DiscountController extends Controller
             return redirect()->back()->with('error', 'حدث خطأ أثناء جلب المنتج المتعلق بالخصم');
         }
     }
+    public function index()
+{
+    try {
+        // جلب المنتجات التي تحتوي على خصم ساري المفعول فقط
+        $products = Product::whereHas('discount', function ($query) {
+            $query->where('end_date', '>=', Carbon::today());
+        })
+        ->with(['discount' => function ($query) {
+            // تحميل بيانات الخصم الفعال مع المنتج
+            $query->where('end_date', '>=', Carbon::today());
+        }])
+        ->get();
+
+        return view('Products.products', compact('products'));
+
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'حدث خطأ أثناء جلب المنتجات المخفضة');
+    }
+}
 
     public function store(Request $request, $id)
         {

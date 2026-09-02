@@ -83,11 +83,11 @@ class SectionController extends Controller
                 'cat_name_en' => $name_en
             ]);
 
-            return redirect()->back()->with('success', 'تم إضافة القسم بنجاح');
+            return redirect()->back()->with('success', 'تم الإضافة  بنجاح');
 
         } catch (\Exception $e) {
-return redirect()->back()->with('error', $e->getMessage());
-            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة القسم');
+// return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('error', 'حدث خطأ أثناء الإضافة ');
 
         }
 
@@ -116,11 +116,11 @@ return redirect()->back()->with('error', $e->getMessage());
             ]);
 
             return response()->json([
-        'message' => 'تم إضافة القسم بنجاح'
+        'message' => 'تم الإضافة  بنجاح'
     ]);
         } catch (\Exception $e) {
             return response()->json([
-        'message' => 'لم يتم إضافة القسم '
+        'message' => 'لم تتم عملية الإضافة  '
     ]);
         }
 
@@ -185,7 +185,7 @@ return redirect()->back()->with('error', $e->getMessage());
 
             $section->delete();
 
-            return redirect()->back()->with('success', 'تم حذف القسم');
+            return redirect()->back()->with('success', 'تم حذف بنجاح');
 
         } catch (\Exception $e) {
 

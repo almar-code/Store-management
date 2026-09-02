@@ -40,14 +40,14 @@ if ($existingUser) {
             'address' => $request->userAddress,
         ]);
         // إرسال الإيميل
-        Mail::to($user->email)->send(
-            new SendUserCredentials($user->username, $plainPassword)
-        );
+        // Mail::to($user->email)->send(
+        //     new SendUserCredentials($user->username, $plainPassword)
+        // );
             return redirect()->back()->with('success', 'تم إضافة المستخدم بنجاح');
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
-            // return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المستخدم ');
+            // return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المستخدم ');
         }
     }
     public function edit($id)
@@ -83,7 +83,7 @@ if ($existingUser) {
                 return redirect('/users')->with('success', 'تم تعديل المستخدم بنجاح');
 
             } catch (\Throwable $th) {
-                return redirect('/users')->with('success', 'حدث خطاء اثناء  تعديل المستخدم ');
+                return redirect('/users')->with('error', 'حدث خطاء اثناء  تعديل المستخدم ');
                 
             }
         }
@@ -104,11 +104,11 @@ if ($existingUser) {
     public function destroy($id)
     {
         try {
-            $user =User::findOrFail($id);
+            $user =User::findسOrFail($id);
             $user->delete();
             return redirect()->back()->with('success', 'تم حذف المستخدم ');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('success', 'حدث خطاء اثناء  حذف المستخدم ');
+            return redirect()->back()->with('error', 'حدث خطاء اثناء  حذف المستخدم ');
         }
     }
 
