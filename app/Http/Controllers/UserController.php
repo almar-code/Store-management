@@ -15,42 +15,48 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'حدث خطأ أثناء فتح الصفحة');    
         }
     }
-    public function store(Request $request)
-    {
-        
-        try {
-            $existingUser = User::where('email', $request->email)->first();
-if ($existingUser) {
-    return back()->with('error', 'البريد الإلكتروني مستخدم من قبل');
-}
+ public function store(Request $request)
+{
+    try {
 
-             $request->validate([
+        $request->validate([
             'userFullName' => 'required|max:255',
             'userName' => 'required|max:255',
-            'password_hash' =>  'required|max:255',
-            'email' => 'required|max:255',
+            'password_hash' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|max:20',
             'userAddress' => 'required|max:255',
         ]);
-         $plainPassword = $request->password_hash;
+
+        if (User::where('email', $request->email)->exists()) {
+            return back()->withInput()->with('error', 'البريد الإلكتروني مستخدم من قبل');
+        }
+
+        if (User::where('username', $request->userName)->exists()) {
+            return back()->withInput()->with('error', 'اسم المستخدم مستخدم من قبل');
+        }
+
+        if (User::where('phone', $request->phone)->exists()) {
+            return back()->withInput()->with('error', 'رقم الهاتف مستخدم من قبل');
+        }
+
         $user = User::create([
             'full_name' => $request->userFullName,
             'username' => $request->userName,
-            'password_hash' => Hash::make($request->password_hash), // تشفير كلمة السر
+            'password_hash' => Hash::make($request->password_hash),
             'email' => $request->email,
+            'phone' => $request->phone,
             'address' => $request->userAddress,
         ]);
-        // إرسال الإيميل
-        // Mail::to($user->email)->send(
-        //     new SendUserCredentials($user->username, $plainPassword)
-        // );
-            return redirect()->back()->with('success', 'تم إضافة المستخدم بنجاح');
 
-        } catch (\Exception $e) {
-            // return redirect()->back()->with('error', $e->getMessage());
-            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المستخدم ');
-        }
+        return redirect()->back()->with('success', 'تم إضافة المستخدم بنجاح');
+
+    } catch (\Exception $e) {
+
+        return redirect()->back()->withInput()
+            ->with('error', 'حدث خطأ أثناء إضافة المستخدم');
     }
-    public function edit($id)
+}    public function edit($id)
     {
         try {
 
@@ -73,6 +79,7 @@ if ($existingUser) {
                 $user->full_name = $request->userFullName;
                 $user->username = $request->userName;
                 $user->email = $request->email;
+                $user->phone = $request->phone;
                 $user->address = $request->userAddress;
 
                 // إذا كتب كلمة سر جديدة
@@ -104,7 +111,7 @@ if ($existingUser) {
     public function destroy($id)
     {
         try {
-            $user =User::findسOrFail($id);
+            $user =User::findOrFail($id);
             $user->delete();
             return redirect()->back()->with('success', 'تم حذف المستخدم ');
         } catch (\Throwable $th) {

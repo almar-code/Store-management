@@ -81,6 +81,11 @@
             saveBtn.style.cursor = 'not-allowed';
         });
     }
+     // .تعطيل سهم الرجوع للخلف   
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
 </script>
 </body>
 

@@ -15,6 +15,8 @@ use App\Http\Controllers\AdsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ProductPerformanceController;
+
 use Illuminate\Http\Request;
 Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
@@ -114,10 +116,11 @@ Route::prefix('reports')->group(function () {
 Route::post('/generate', [ReportController::class, 'generate'])->name('report.generate');
 
 });
+Route::get('/product-performance',[ProductPerformanceController::class, 'index'])->name('product-performance');
+
 
 });
 
 // أضف ->name('login') في نهاية السطر
 Route::get('/login', [LoginController::class, 'Login'])->name('login');
 Route::post('/login-user', [LoginController::class, 'Examine'])->name('login-user');
-Route::post('/addsection',[SectionController::class,'store1']);// إضافة قسم

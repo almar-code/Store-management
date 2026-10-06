@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Subcategory;
 use App\Models\Category;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use Illuminate\Support\Facades\Storage;
 
 

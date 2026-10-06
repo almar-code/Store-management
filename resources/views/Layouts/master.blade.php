@@ -105,7 +105,7 @@
                                 <div>
                                 <span class="bi bi-box-seam nav-icon"></span>
                                 <span
-                                    class="{{ request()->is('addproduct') || request()->is('products')|| request()->is('discounts') ? 'active' : '' }}">المنتجات</span>
+                                    class="{{ request()->is('addproduct') || request()->is('products')|| request()->is('discounts') || request()->is('product-performance') ? 'active' : '' }}">المنتجات</span>
                                 </div>
                                     <i class="bi bi-chevron-down "></i>
                                     </div>
@@ -125,6 +125,11 @@
                                  <li>
                                     <a href="/discounts" class="{{ request()->is('discounts') ? 'active' : '' }}">
                                         <div><span class="bi bi-list-ul sub-icon"></span>قائمة الخصومات</div>
+                                    </a>
+                                </li>
+                                 <li>
+                                    <a href="/product-performance" class="{{ request()->is('product-performance') ? 'active' : '' }}">
+                                        <div><span class="bi bi-list-ul sub-icon"></span>اداء المنتجات</div>
                                     </a>
                                 </li>
                             </ul>
@@ -465,8 +470,43 @@
                     popup: 'compact-alert'
                 }
             })
+            
         </script>
+        
     @endif
+    <script>
+@if(session('duplicate_product'))
+
+Swal.fire({
+    icon: 'warning',
+    title: 'المنتج موجود مسبقًا',
+    text: 'هل تريد المتابعة وإضافة المنتج رغم وجود نفس الاسم؟',
+    width: '350px',
+    showCancelButton: true,
+    confirmButtonText: 'نعم، أضف المنتج',
+    cancelButtonText: 'إلغاء',
+    confirmButtonColor: '#008870',
+    cancelButtonColor: '#dc3545'
+}).then((result) => {
+
+    if (result.isConfirmed) {
+
+        let form = document.querySelector('form');
+
+        let input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'allow_duplicate';
+        input.value = '1';
+
+        form.appendChild(input);
+
+        form.submit();
+    }
+
+});
+
+@endif
+</script>
 </body>
 
 </html>

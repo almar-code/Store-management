@@ -1,16 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use Stichoza\GoogleTranslate\GoogleTranslate;
+
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Services\TranslationService;
 
 class SectionController extends Controller
 {
-
+    // عرض الأقسام بصيغة JSON
     public function index()
     {
         try {
+
             $sections = Category::inRandomOrder()->get();
 
             return response()->json([
@@ -28,6 +30,7 @@ class SectionController extends Controller
         }
     }
 
+
     // عرض الأقسام
     public function Sections()
     {
@@ -39,8 +42,8 @@ class SectionController extends Controller
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'حدث خطأ أثناء جلب الأقسام');
-
+            return redirect()->back()
+                ->with('error', 'حدث خطأ أثناء جلب الأقسام');
         }
     }
 
@@ -54,8 +57,8 @@ class SectionController extends Controller
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'حدث خطأ أثناء فتح الصفحة');
-
+            return redirect()->back()
+                ->with('error', 'حدث خطأ أثناء فتح الصفحة');
         }
     }
 
@@ -63,68 +66,52 @@ class SectionController extends Controller
     // حفظ القسم
     public function store(Request $request)
     {
-
         $request->validate([
             'sectionName' => 'required|max:255'
         ]);
 
         try {
 
-            /// ترجمة الاسم للإنجليزي
-            $tr = new GoogleTranslate('en');
-            // تعطيل التحقق من SSL (حل للمشكلة)
-        $tr->setOptions([
-            'verify' => false
-        ]);
-            $name_en = $tr->translate($request->sectionName);
+            // التحقق من وجود القسم مسبقًا
+            $exists = Category::where(
+                'cat_name',
+                $request->sectionName
+            )->exists();
 
+            if ($exists) {
+
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'القسم موجود مسبقًا');
+            }
+
+
+            // ترجمة اسم القسم
+            // إذا فشلت الترجمة يتم إرجاع الاسم العربي تلقائيًا
+            $name_en = TranslationService::translate(
+                $request->sectionName
+            );
+
+
+            // إنشاء القسم
             Category::create([
                 'cat_name' => $request->sectionName,
                 'cat_name_en' => $name_en
             ]);
 
-            return redirect()->back()->with('success', 'تم الإضافة  بنجاح');
+
+            return redirect()->back()
+                ->with('success', 'تم الإضافة بنجاح');
+
 
         } catch (\Exception $e) {
-// return redirect()->back()->with('error', $e->getMessage());
-            return redirect()->back()->with('error', 'حدث خطأ أثناء الإضافة ');
 
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'حدث خطأ أثناء الإضافة');
         }
-
     }
 
- public function store1(Request $request)
-    {
-
-        $request->validate([
-            'name' => 'required|max:255'
-        ]);
-
-        try {
-
-            /// ترجمة الاسم للإنجليزي
-            $tr = new GoogleTranslate('en');
-            // تعطيل التحقق من SSL (حل للمشكلة)
-        $tr->setOptions([
-            'verify' => false
-        ]);
-            $name_en = $tr->translate($request->name);
-
-            Category::create([
-                'cat_name' => $request->name,
-                'cat_name_en' => $name_en
-            ]);
-
-            return response()->json([
-        'message' => 'تم الإضافة  بنجاح'
-    ]);
-        } catch (\Exception $e) {
-            return response()->json([
-        'message' => 'لم تتم عملية الإضافة  '
-    ]);
-        }
-
-    }
 
     // عند الضغط على تعديل
     public function edit($id)
@@ -134,13 +121,16 @@ class SectionController extends Controller
             // جلب القسم المطلوب تعديله
             $editSection = Category::findOrFail($id);
 
-            // فتح صفحة الفورم مع البيانات
-            return view('Sections.addsection', compact('editSection'));
+            // فتح صفحة التعديل مع البيانات
+            return view(
+                'Sections.addsection',
+                compact('editSection')
+            );
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'القسم غير موجود');
-
+            return redirect()->back()
+                ->with('error', 'القسم غير موجود');
         }
     }
 
@@ -154,24 +144,53 @@ class SectionController extends Controller
 
         try {
 
+            // جلب القسم
             $section = Category::findOrFail($id);
-            // ترجمة الاسم للإنجليزي
-            $tr = new GoogleTranslate('en');
-             $tr->setOptions([
-            'verify' => false
-        ]);
-            $name_en = $tr->translate($request->sectionName);
+
+
+            // التحقق من وجود نفس الاسم في قسم آخر
+            $exists = Category::where(
+                'cat_name',
+                $request->sectionName
+            )
+            ->where(
+                'cat_id',
+                '!=',
+                $id
+            )
+            ->exists();
+
+
+            if ($exists) {
+
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'القسم موجود مسبقًا');
+            }
+
+
+            // ترجمة اسم القسم
+            // إذا فشلت الترجمة يتم استخدام الاسم العربي
+            $name_en = TranslationService::translate(
+                $request->sectionName
+            );
+
+
+            // تحديث القسم
             $section->update([
                 'cat_name' => $request->sectionName,
                 'cat_name_en' => $name_en
             ]);
 
-            return redirect('/sections')->with('success', 'تم التعديل بنجاح');
+
+            return redirect('/sections')
+                ->with('success', 'تم التعديل بنجاح');
+
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'حدث خطأ أثناء التعديل');
-
+            return redirect()->back()
+                ->with('error', 'حدث خطأ أثناء التعديل');
         }
     }
 
@@ -181,17 +200,21 @@ class SectionController extends Controller
     {
         try {
 
+            // جلب القسم
             $section = Category::findOrFail($id);
 
+            // حذف القسم
             $section->delete();
 
-            return redirect()->back()->with('success', 'تم حذف بنجاح');
+
+            return redirect()->back()
+                ->with('success', 'تم حذف القسم بنجاح');
+
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'حدث خطأ أثناء الحذف');
-
+            return redirect()->back()
+                ->with('error', 'حدث خطأ أثناء الحذف');
         }
     }
-
 }

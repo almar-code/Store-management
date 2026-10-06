@@ -49,4 +49,18 @@ public function latestVideo()
     // سيعود بأحدث فيديو مضاف، وإذا لم يوجد سيرجع null تلقائياً
     return $this->hasOne(Video::class, 'product_id', 'p_id')->latest('video_id');
 }
+public function comments()
+{
+    return $this->hasMany(ProductComment::class, 'p_id', 'p_id');
+}
+
+public function orderItems()
+{
+    return $this->hasMany(OrderItem::class, 'p_id', 'p_id');
+}
+
+public function videos()
+{
+    return $this->hasMany(Video::class, 'product_id', 'p_id');
+}
 }
