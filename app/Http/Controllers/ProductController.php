@@ -1,18 +1,19 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use App\Models\Product;
 use App\Models\Color;
 use App\Models\ProductImage;
 use App\Models\Size;
 use App\Models\Subcategory;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Discount;
 use Illuminate\Support\Facades\Log;
-use App\Models\Customer;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use App\Services\TranslationService;
+
 class ProductController extends Controller
 {
     // عرض المنتجات
@@ -20,14 +21,18 @@ class ProductController extends Controller
     {
         try {
 
-             $products = Product::with(['discount' => function ($query) {
-            $query->where('end_date', '>=', Carbon::today());}])->get();
+            $products = Product::with([
+                'discount' => function ($query) {
+                    $query->where('end_date', '>=', Carbon::today());
+                }
+            ])->get();
+
             return view('Products.products', compact('products'));
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'حدث خطأ أثناء جلب المنتجات');
-
+            return redirect()->back()
+                ->with('error', 'حدث خطأ أثناء جلب المنتجات');
         }
     }
 
@@ -36,14 +41,18 @@ class ProductController extends Controller
     public function AddProduct()
     {
         try {
+
             $subCategories = Subcategory::all();
 
-            return view('Products.addproduct', compact('subCategories'));
+            return view(
+                'Products.addproduct',
+                compact('subCategories')
+            );
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'حدث خطأ أثناء فتح الصفحة');
-
+            return redirect()->back()
+                ->with('error', 'حدث خطأ أثناء فتح الصفحة');
         }
     }
 
@@ -51,96 +60,111 @@ class ProductController extends Controller
     // حفظ المنتج
     public function store(Request $request)
     {
-        try {
-            $p_imageName = null;
-
-            // التحقق من الحقول
-            $request->validate([
-                'productName' => 'required|string|max:255',
-                'productPrice' => 'required|numeric',
-                'productImages.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
-            ]);
-
-
-
-            //  الترجمة
-
-            $tr = new GoogleTranslate('en');
-             $tr->setOptions([
-            'verify' => false
+        $request->validate([
+            'productName' => 'required|string|max:255',
+            'productPrice' => 'required|numeric',
+            'productImages.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
-            // ترجمة النصوص
-            $productNameEn = $tr->translate($request->productName);
-            $productDescriptionEn = $tr->translate($request->productDescription);
+
+        try {
+
+            $exists = Product::where(
+                'p_name',
+                $request->productName
+            )->exists();
+
+            if ($exists && !$request->boolean('allow_duplicate')) {
+
+                return redirect()->back()
+                    ->withInput()
+                    ->with('duplicate_product', true);
+            }
+
+
+            // الترجمة
+            $productNameEn = TranslationService::translate(
+                $request->productName
+            );
+
+            $productDescriptionEn = TranslationService::translate(
+                $request->productDescription ?? ''
+            );
+
             $colorNameEn = '';
-            if ($request->filled('colorName')) { // يتحقق إذا الحقل ليس فارغ
-                $colorNameEn = $tr->translate($request->colorName);
+
+            if ($request->filled('colorName')) {
+
+                $colorNameEn = TranslationService::translate(
+                    $request->colorName
+                );
             }
 
 
             // حفظ المنتج
             $product = Product::create([
-
                 'p_name' => $request->productName,
                 'p_name_en' => $productNameEn,
-
                 'p_description' => $request->productDescription,
                 'p_description_en' => $productDescriptionEn,
-
                 'p_price' => $request->productPrice,
                 'p_image' => null,
                 'subcat_id' => $request->productSubcategory
-
             ]);
-
 
 
             // حفظ اللون
             $color = Color::create([
-
                 'color_name' => $request->colorName,
                 'color_name_en' => $colorNameEn,
-
                 'color_code' => $request->productColor,
-
                 'p_id' => $product->p_id
-
             ]);
 
 
             // رفع الصور
+            $p_imageName = null;
+
             if ($request->hasFile('productImages')) {
-                $images = $request->file('productImages');
 
-                foreach ($images as $index => $image) {
-                    // إنشاء اسم فريد للصورة
-                    $imageName = time() . '_' . rand(1, 10000) . '.' . $image->getClientOriginalExtension();
+                foreach ($request->file('productImages') as $index => $image) {
 
-                    // التعديل هنا: الرفع المباشر لمجلد public
-                    $destinationPath = public_path('storage/uploads/products');
-                    $image->move($destinationPath, $imageName);
+                    $imageName =
+                        time() . '_' .
+                        rand(1, 10000) . '.' .
+                        $image->getClientOriginalExtension();
 
-                    // حفظ اسم الصورة في جدول الصور
+                    $destinationPath =
+                        public_path('storage/uploads/products');
+
+                    $image->move(
+                        $destinationPath,
+                        $imageName
+                    );
+
                     ProductImage::create([
                         'img_url' => $imageName,
                         'color_id' => $color->color_id
                     ]);
 
-                    // تعيين أول صورة كصورة رئيسية للمنتج
                     if ($index == 0) {
                         $p_imageName = $imageName;
                     }
                 }
             }
 
-            if (isset($p_imageName)) {
+
+            // تعيين الصورة الرئيسية
+            if ($p_imageName) {
+
                 $product->update([
                     'p_image' => $p_imageName
                 ]);
             }
 
+
             // حفظ المقاس
             if ($request->filled('productSize')) {
+
                 Size::create([
                     'size_name' => $request->productSize,
                     'p_id' => $product->p_id
@@ -148,87 +172,131 @@ class ProductController extends Controller
             }
 
 
-try {
-    // جلب رابط الـ Webhook المخزن في متغيرات البيئة على Railway
-    $webhookUrl = env('N8N_WEBHOOK_URL');
+            // إرسال بيانات المنتج إلى n8n
+            try {
 
-    // التحقق من أن الرابط موجود وليس فارغاً قبل إرسال الطلب
-    if ($webhookUrl) {
-        $response = Http::post($webhookUrl, [
-            'p_name'        => $product->p_name,
-            'phons'         => [
-                "967733357396", // إضافة مفتاح اليمن الدولي لضمان قبول الرقم في UltraMsg
-                "967779271679",
-                "967733357396"
-            ],
-            'p_price'       => $product->p_price,
-            'p_description' => $product->p_description,
-        ]);
+                $webhookUrl = env('N8N_WEBHOOK_URL');
 
-        // التحقق مما إذا كان n8n قد استقبل الطلب بنجاح (كود 200)
-        if (!$response->successful()) {
-            Log::warning('n8n Webhook returned status: ' . $response->status());
-        }
-    } else {
-        Log::warning('n8n Webhook URL is not defined in environment variables.');
-    }
+                if ($webhookUrl) {
 
-} catch (\Exception $e) {
-    // في حال فشل الاتصال تماماً (مثل مشكلة في الشبكة أو توقف السيرفر)
-    // سيتم كتابة الخطأ في ملف الـ log الخاص بـ Laravel دون أن يتوقف التطبيق عن العمل
-    Log::error('Failed to send data to n8n Webhook: ' . $e->getMessage());
-}
+                    $response = Http::post($webhookUrl, [
+                        'p_name' => $product->p_name,
+                        'phons' => [
+                            "967733357396",
+                            "967779271679",
+                            "967733357396"
+                        ],
+                        'p_price' => $product->p_price,
+                        'p_description' => $product->p_description,
+                    ]);
+
+                    if (!$response->successful()) {
+
+                        Log::warning(
+                            'n8n Webhook returned status: ' .
+                            $response->status()
+                        );
+                    }
+
+                } else {
+
+                    Log::warning(
+                        'N8N_WEBHOOK_URL is not defined.'
+                    );
+                }
+
+            } catch (\Exception $e) {
+
+                Log::error(
+                    'Failed to send data to n8n: ' .
+                    $e->getMessage()
+                );
+            }
 
 
-            return redirect()->back()->with('success', 'تم إضافة المنتج بنجاح');
+            return redirect()->back()
+                ->with('success', 'تم إضافة المنتج بنجاح');
+
 
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة المنتج')->withInput();
-            
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'حدث خطأ أثناء إضافة المنتج');
         }
-
     }
 
 
-    // عند الضغط على تعديل
+    // تعديل المنتج
     public function edit($id)
     {
         try {
 
-            // جلب المنتج المطلوب تعديله
-            $editProduct = Product::with('subcategory')->findOrFail($id);
+            $editProduct = Product::with('subcategory')
+                ->findOrFail($id);
+
             $subCategories = Subcategory::all();
 
-            // فتح صفحة الفورم مع البيانات
-            return view('Products.addproduct', compact('editProduct', 'subCategories'));
+            return view(
+                'Products.addproduct',
+                compact('editProduct', 'subCategories')
+            );
+
         } catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'المنتج غير موجود');
-
+            return redirect()->back()
+                ->with('error', 'المنتج غير موجود');
         }
     }
 
 
-    // تحديث البيانات
+    // تحديث المنتج
     public function update(Request $request, $id)
     {
         $request->validate([
             'productName' => 'required|max:255',
             'productPrice' => 'required|numeric',
-            'productSubcategory' => 'required|exists:subcategories,subcat_id',
+            'productSubcategory' =>
+                'required|exists:subcategories,subcat_id',
         ]);
 
         try {
+
             $product = Product::findOrFail($id);
 
-            // ترجمة للإنجليزية
-            $tr = new GoogleTranslate('en');
-            $tr->setOptions(['verify' => false]);
-            $name_en = $tr->translate($request->productName);
-            $productDescriptionEn = $tr->translate($request->productDescription);
 
-            // تحديث بيانات المنتج النصية
+            // التحقق من اسم المنتج في منتج آخر
+            $exists = Product::where(
+                'p_name',
+                $request->productName
+            )
+            ->where(
+                'p_id',
+                '!=',
+                $id
+            )
+            ->exists();
+
+
+            if ($exists && !$request->boolean('allow_duplicate')) {
+
+                return redirect()->back()
+                    ->withInput()
+                    ->with('duplicate_product', true);
+            }
+
+
+            // الترجمة
+            $name_en = TranslationService::translate(
+                $request->productName
+            );
+
+            $productDescriptionEn = TranslationService::translate(
+                $request->productDescription ?? ''
+            );
+
+
+            // تحديث بيانات المنتج
             $product->p_name = $request->productName;
             $product->p_name_en = $name_en;
             $product->p_price = $request->productPrice;
@@ -236,53 +304,93 @@ try {
             $product->p_description_en = $productDescriptionEn;
             $product->subcat_id = $request->productSubcategory;
 
-            // معالجة رفع الصور (إذا اختار المستخدم صوراً جديدة)
-            if ($request->hasFile('productImages')) {
-                $images = $request->file('productImages');
-                $image = is_array($images) ? $images[0] : $images; // التأكد من جلب أول صورة
 
-                // 1. حذف الصورة القديمة من المجلد (باستخدام المسار المباشر)
-                $oldImagePath = public_path('storage/uploads/products/' . $product->p_image);
-                if (!empty($product->p_image) && \File::exists($oldImagePath)) {
-                    \File::delete($oldImagePath);
+            // رفع صورة جديدة
+            if ($request->hasFile('productImages')) {
+
+                $images = $request->file('productImages');
+
+                $image = is_array($images)
+                    ? $images[0]
+                    : $images;
+
+
+                // حذف الصورة القديمة
+                if (!empty($product->p_image)) {
+
+                    $oldImagePath = public_path(
+                        'storage/uploads/products/' .
+                        $product->p_image
+                    );
+
+                    if (\File::exists($oldImagePath)) {
+                        \File::delete($oldImagePath);
+                    }
                 }
 
-                // 2. تجهيز الصورة الجديدة
-                $imageName = time() . '_' . $image->getClientOriginalName();
 
-                // 3. رفع الصورة الجديدة باستخدام move (يعمل في اللوكل والاستضافة)
-                $image->move(public_path('storage/uploads/products'), $imageName);
+                // حفظ الصورة الجديدة
+                $imageName =
+                    time() . '_' .
+                    $image->getClientOriginalName();
 
-                // 4. تحديث اسم الصورة في الكائن
+                $image->move(
+                    public_path('storage/uploads/products'),
+                    $imageName
+                );
+
                 $product->p_image = $imageName;
             }
 
+
             $product->save();
 
-            return redirect('/products')->with('success', 'تم التعديل بنجاح');
+
+            return redirect('/products')
+                ->with('success', 'تم التعديل بنجاح');
+
 
         } catch (\Exception $e) {
-            // نصيحة: يمكنك استخدام return $e->getMessage(); هنا إذا أردت اكتشاف أي خطأ أثناء التجربة
-            return redirect()->back()->with('error', 'حدث خطأ أثناء التعديل');
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'حدث خطأ أثناء التعديل');
         }
     }
+
+
     // حذف المنتج
-   public function destroy($id)
+    public function destroy($id)
     {
         try {
+
             $product = Product::findOrFail($id);
-            // 1. تحديد مسار الصورة الرئيسية للمنتج
-            $imagePath = public_path('storage/uploads/products/' . $product->p_image);
-            // 2. حذف ملف الصورة من المجلد (يعمل في اللوكل والاستضافة)
-            // أضفنا \ قبل File لتفادي خطأ Class Not Found
-            if (!empty($product->p_image) && \File::exists($imagePath)) {
+
+            $imagePath = public_path(
+                'storage/uploads/products/' .
+                $product->p_image
+            );
+
+            if (
+                !empty($product->p_image) &&
+                \File::exists($imagePath)
+            ) {
+
                 \File::delete($imagePath);
             }
+
+
             $product->delete();
-            return redirect()->back()->with('success', 'تم حذف المنتج وصورته بنجاح');
+
+
+            return redirect()->back()
+                ->with('success', 'تم حذف المنتج وصورته بنجاح');
+
+
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'حدث خطأ أثناء الحذف');
+
+            return redirect()->back()
+                ->with('error', 'حدث خطأ أثناء الحذف');
         }
     }
-
 }

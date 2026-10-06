@@ -14,4 +14,5 @@ class Category extends Model
         'cat_name',
         'cat_name_en'
     ];
+    
 }

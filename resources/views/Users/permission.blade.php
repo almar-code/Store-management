@@ -65,35 +65,38 @@
 
 
                         <!-- العمليات -->
-                          <td>
-                                    <div class="dropdown">
-                                        <button class="btn text-dark p-0 border-0 shadow-none " type="button"
-                                            data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                                            <i class="bi bi-three-dots-vertical fs-4"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-start shadow border-light">
-                                            <li>
-                                                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                                                    href="/edit-permission/{{ $permission->user_id }}/{{ $permission->permission_id }}">
-                                                    <span class="ms-2">تعديل</span>
-                                                    <i class="bi bi-pencil-square text-turquoise"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-danger font-weight-bold text-end"
-                                                    href="#"
-                                                onclick="confirmDelete('/delete-permission/{{ $permission->user_id }}/{{ $permission->permission_id }}','حذف صلاحية','هل أنت متأكد من حذف هذا الصلاحية')">
-                                                    
-                                                    <span class="ms-2">حذف الصلاحية</span>
-                                                    <i class="bi bi-trash"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
+                         <td>
+    @if($permission->user->role !== 'admin')
+        <div class="dropdown">
+            <button class="btn text-dark p-0 border-0 shadow-none" type="button"
+                data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical fs-4"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-start shadow border-light">
+                <li>
+                    <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                        href="/edit-permission/{{ $permission->user_id }}/{{ $permission->permission_id }}">
+                        <span class="ms-2">تعديل</span>
+                        <i class="bi bi-pencil-square text-turquoise"></i>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-danger font-weight-bold text-end"
+                        href="#"
+                        onclick="confirmDelete('/delete-permission/{{ $permission->user_id }}/{{ $permission->permission_id }}','حذف صلاحية','هل أنت متأكد من حذف هذه الصلاحية؟')">
+                        <span class="ms-2">حذف الصلاحية</span>
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    @else
+        <span class="badge bg-secondary">غير قابل للتعديل</span>
+    @endif
+</td>
 
                     </tr>
                     @endforeach

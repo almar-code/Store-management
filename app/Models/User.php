@@ -18,6 +18,7 @@ class User extends Authenticatable
     'full_name',
     'email',
     'address',
+     'phone',
     'password_hash', // هذا موجود في قاعدة البيانات ✔
 ];
 

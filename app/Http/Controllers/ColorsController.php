@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use App\Models\Product;
 use App\Models\Color;
 use Illuminate\Http\Request;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
+use App\Services\TranslationService;
 class ColorsController extends Controller
 {
     /**
@@ -25,16 +25,14 @@ class ColorsController extends Controller
             $request->validate([
                 'productImages.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
             ]);
-            $tr = new GoogleTranslate('en');
-             $tr->setOptions([
-            'verify' => false
-        ]);
 
             // ترجمة النصوص
             $colorNameEn = '';
             $colorName = '';
             if ($request->filled('colorName')) { // يتحقق إذا الحقل ليس فارغ
-                $colorNameEn = $tr->translate($request->colorName);
+                $colorNameEn =  TranslationService::translate(
+                $request->productName
+            );
                 $colorName = $request->colorName;
             }                // حفظ اللون
             $color = Color::create([
@@ -117,16 +115,14 @@ class ColorsController extends Controller
     {
         try {
             $color = Color::findOrFail($colorID);
-            $tr = new GoogleTranslate('en');
-             $tr->setOptions([
-            'verify' => false
-        ]);
 
             // ترجمة الاسم
             $colorNameEn = '';
             $colorName = '';
             if ($request->filled('colorName')) {
-                $colorNameEn = $tr->translate($request->colorName);
+                $colorNameEn = TranslationService::translate(
+                $request->productName
+            );
                 $colorName = $request->colorName;
             }
 
