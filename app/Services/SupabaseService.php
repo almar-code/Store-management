@@ -21,69 +21,29 @@ class SupabaseService
             'services.supabase.secret_key'
         );
 
-        if (
-            empty($this->url) ||
-            empty($this->secretKey)
-        ) {
+        if (empty($this->url) || empty($this->secretKey)) {
             throw new RuntimeException(
                 'Supabase configuration is missing.'
             );
         }
     }
 
-    /**
-     * Get users from Supabase Auth.
-     */
-    public function getUsers(
-        int $page = 1,
-        int $perPage = 100
-    ): array {
+    public function getUserById(string $userId): ?array
+    {
         $response = Http::withHeaders([
             'apikey' => $this->secretKey,
             'Authorization' => 'Bearer ' . $this->secretKey,
         ])->get(
-            $this->url . '/auth/v1/admin/users',
-            [
-                'page' => $page,
-                'per_page' => $perPage,
-            ]
+            $this->url . '/auth/v1/admin/users/' . $userId
         );
 
-        if ($response->failed()) {
-            throw new RuntimeException(
-                'Supabase users request failed: ' .
-                $response->body()
-            );
+        if ($response->status() === 404) {
+            return null;
         }
 
-        return $response->json('users', []);
-    }
-
-    /**
-     * Get profiles from Supabase.
-     */
-    public function getProfiles(
-        int $offset = 0,
-        int $limit = 1000
-    ): array {
-        $response = Http::withHeaders([
-            'apikey' => $this->secretKey,
-            'Authorization' => 'Bearer ' . $this->secretKey,
-        ])
-        ->withHeaders([
-            'Range' => "{$offset}-" . ($offset + $limit - 1),
-        ])
-        ->get(
-            $this->url . '/rest/v1/profiles',
-            [
-                'select' => 'id,user_name,phone_number,avatar_url',
-                'order' => 'id.asc',
-            ]
-        );
-
         if ($response->failed()) {
             throw new RuntimeException(
-                'Supabase profiles request failed: ' .
+                'Supabase user request failed: ' .
                 $response->body()
             );
         }
