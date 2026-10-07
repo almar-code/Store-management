@@ -36,3 +36,6 @@ Route::get('/cart', [CartController::class, 'index']);          // لعرض مح
 Route::post('/cart/add', [CartController::class, 'store']);       // لإضافة منتج جديد للسلة
 Route::put('/cart/update/{id}', [CartController::class, 'update']); // لتعديل الكمية بداخل السلة
 Route::delete('/cart/delete/{id}', [CartController::class, 'destroy']); // لحذف صنف من السلة
+
+
+Route::post('/webhooks/supabase/profile', [CustomerController::class, 'handleSupabaseWebhook']);
