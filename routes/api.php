@@ -18,7 +18,7 @@ use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\VideoInteractionController;
 use App\Http\Controllers\Api\CartController;
-
+use App\Http\Controllers\Api\SupabaseWebhookController;
 use Illuminate\Http\Request;
 Route::get('/sections', [SectionController::class, 'index']);
 Route::get('/categories', [CategorieController::class, 'index']);
@@ -38,4 +38,7 @@ Route::put('/cart/update/{id}', [CartController::class, 'update']); // لتعد�
 Route::delete('/cart/delete/{id}', [CartController::class, 'destroy']); // لحذف صنف من السلة
 
 
-Route::post('/webhooks/supabase/profile', [CustomerController::class, 'handleSupabaseWebhook']);
+Route::post('/webhooks/supabase/profile', [
+    SupabaseWebhookController::class,
+    'profileUpdated',
+]);
