@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use App\Services\TranslationService;
+use App\Jobs\QueueNewProductNotifications;
 
 class ProductController extends Controller
 {
@@ -212,6 +213,9 @@ class ProductController extends Controller
                     $e->getMessage()
                 );
             }
+            QueueNewProductNotifications::dispatch(
+                $product->p_id
+            );
 
 
             return redirect()->back()
