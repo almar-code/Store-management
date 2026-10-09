@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use App\Services\TranslationService;
 use App\Jobs\QueueNewProductNotifications;
-
+use App\Jobs\SendNewProductEmails;
 class ProductController extends Controller
 {
     // عرض المنتجات
@@ -171,7 +171,7 @@ class ProductController extends Controller
                     'p_id' => $product->p_id
                 ]);
             }
-            QueueNewProductNotifications::dispatch($product->p_id);
+            SendNewProductEmails::dispatch($product->p_id);
 
             // إرسال بيانات المنتج إلى n8n
             try {

@@ -12,28 +12,32 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendNewProductEmail implements ShouldQueue
+class SendNewProductEmails implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries = 3;
-
     public function __construct(
-        public int $productId,
-        public int $customerId
+        public int $productId
     ) {}
 
     public function handle(): void
     {
         $product = Product::find($this->productId);
-        $customer = Customer::find($this->customerId);
 
-        if (!$product || !$customer || !$customer->email) {
+        if (!$product) {
             return;
         }
 
-        Mail::to($customer->email)->send(
-            new NewProductNotification($product)
-        );
+        Customer::query()
+            ->whereNotNull('email')
+            ->where('email', '!=', '')
+            ->select('customer_id', 'email')
+            ->chunkById(100, function ($customers) use ($product) {
+                foreach ($customers as $customer) {
+                    Mail::to($customer->email)->send(
+                        new NewProductNotification($product)
+                    );
+                }
+            }, 'customer_id');
     }
 }
