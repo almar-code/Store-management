@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Services\WhatsAppService;
 class UserController extends Controller
 {
       public function AddUser(){
@@ -16,7 +15,7 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'حدث خطأ أثناء فتح الصفحة');    
         }
     }
- public function store(Request $request, WhatsAppService $whatsAppService)
+ public function store(Request $request)
     {
         try {
             // Step 1: التحقق من البيانات المدخلة
@@ -52,21 +51,7 @@ class UserController extends Controller
                 'address'       => $request->userAddress,
             ]);
 
-            // Step 4: صياغة رسالة الواتساب الترحيبية
-            $plainPassword = $request->password_hash; // كلمة المرور قبل التشفير
-            
-            $message  = "مرحباً بك {$request->userFullName} 👋\n\n";
-            $message .= "تم إنشاء حسابك في المنصة بنجاح.\n";
-            $message .= "---------------------------\n";
-            $message .= "👤 اسم المستخدم: {$request->userName}\n";
-            $message .= "🔑 كلمة المرور: {$plainPassword}\n";
-            $message .= "---------------------------\n";
-            $message .= "يرجى الاحتفاظ بهذه البيانات وتغيير كلمة المرور بعد التسجيل الأول.";
-
-            // Step 5: إرسال الرسالة
-            $whatsAppService->sendMessage($request->phone, $message);
-
-            return redirect()->back()->with('success', 'تم إضافة المستخدم بنجاح وإرسال بيانات الحساب عبر الواتساب');
+            return redirect()->back()->with('success', 'تم إضافة المستخدم بنجاح');
 
             } catch (\Exception $e) {
                 return redirect()->back()->withInput()

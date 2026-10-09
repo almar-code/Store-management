@@ -26,12 +26,24 @@
                             <div class="d-flex align-items-center">
 
                                 {{-- قسم الصورة مع التحقق --}}
-                                <div class="image-holder ms-3">
+                               <div class="image-holder ms-3">
                                     <div class="p-1 bg-white rounded-circle border shadow-sm">
-                                        @if($customer->profile_image && file_exists(public_path('storage/uploads/subcategory/'.$customer->profile_image)))
-                                            <img src="{{ asset('storage/uploads/subcategory/'.$customer->profile_image) }}" class="rounded-circle" width="55" height="55" style="object-fit: cover;">
+                                        @if(!empty($customer->profile_image))
+                                            @php
+                                                $img = $customer->profile_image;
+
+                                                // 1. إذا كانت القيمة مخزنة كرابط كامل مسبقاً
+                                                // if (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) {
+                                                //     $supabaseUrl = $img;
+                                                // } else {
+                                                //     // 2. تنظيف اسم الملف في حال كان يحتوي على كلمة avatars/ في بدايته
+                                                //     $cleanImg = ltrim(str_replace('avatars/', '', $img), '/');
+                                                //     $supabaseUrl = "https://vwhumdnzaljjpuwvtdbo.supabase.co/storage/v1/object/public/avatars/" . $cleanImg;
+                                                // }
+                                            @endphp
+
+                                            <img src="{{ $img }}" class="rounded-circle" width="55" height="55" style="object-fit: cover;" alt="Profile">
                                         @else
-                                            {{-- أيقونة المستخدم الافتراضية --}}
                                             <div class="rounded-circle d-flex align-items-center justify-content-center bg-light" style="width: 55px; height: 55px;">
                                                 <i class="bi bi-person-fill text-secondary" style="font-size: 25px;"></i>
                                             </div>
