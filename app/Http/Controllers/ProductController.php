@@ -171,7 +171,7 @@ class ProductController extends Controller
                     'p_id' => $product->p_id
                 ]);
             }
-
+            QueueNewProductNotifications::dispatch($product->p_id);
 
             // إرسال بيانات المنتج إلى n8n
             try {
@@ -213,9 +213,7 @@ class ProductController extends Controller
                     $e->getMessage()
                 );
             }
-            QueueNewProductNotifications::dispatch(
-                $product->p_id
-            );
+           
 
 
             return redirect()->back()
