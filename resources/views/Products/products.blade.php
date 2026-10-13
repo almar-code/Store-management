@@ -172,6 +172,23 @@
                                                 </a>
                                             </li>
                                         @endif
+                                        <!-- خيار 1: إضافة إعلان خاص بالمنتج -->
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                                                href="/create-ad/{{ $product->p_id }}">
+                                                <span class="ms-2">إضافة إعلان للمنتج</span>
+                                                <i class="bi bi-megaphone text-turquoise"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- خيار 2: إضافة المنتج لعرض عام (الجدول الوسيط) -->
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                                                href="/assign-general-ad/{{ $product->p_id }}">
+                                                <span class="ms-2">إضافة المنتج لعرض عام</span>
+                                                <i class="bi bi-tag text-turquoise"></i>
+                                            </a>
+                                        </li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>

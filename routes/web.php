@@ -87,11 +87,45 @@ Route::get('/edit-color/{id}', [ColorsController::class, 'edit']);
 Route::get('colors/{id}', [ColorsController::class, 'Colors']);
 Route::get('/delete-color/{id}',[ColorsController::class,'destroy']);
 
-Route::get('addads', [AdsController::class, 'AddAds'])->middleware('check.permission:مدير المخزن');
-Route::post('/add-ads', [AdsController::class, 'store'])->middleware('check.permission:مدير المخزن');
-Route::get('/ads', [AdsController::class, 'Ads']);
-Route::get('/update-ads/{id}', [AdsController::class, 'update']);
-Route::get('/delete-ads/{id}', [AdsController::class, 'destroy']);
+// Route::get('addads', [AdsController::class, 'AddAds'])->middleware('check.permission:مدير المخزن');
+// Route::post('/add-ads', [AdsController::class, 'store'])->middleware('check.permission:مدير المخزن');
+// Route::get('/ads', [AdsController::class, 'Ads']);
+// Route::get('/update-ads/{id}', [AdsController::class, 'update']);
+// Route::get('/delete-ads/{id}', [AdsController::class, 'destroy']);
+
+// -------------------------------------------------------------------------
+// نظام إدارة الإعلانات (العادية وبرابط)
+// -------------------------------------------------------------------------
+Route::get('/ads', [adsController::class, 'Ads']);                             // عرض قائمة الإعلانات
+Route::get('/add-ads', [adsController::class, 'AddAds']);                       // صفحة إضافة إعلان عادي
+Route::get('/add-ads-link', [adsController::class, 'AddAdsLink']);              // صفحة إضافة إعلان برابط
+Route::post('/add-ads', [adsController::class, 'store']);                       // حفظ الإعلان الجديد (عادي أو برابط)
+Route::get('/update-ads/{id}', [adsController::class, 'update']);               // تبديل حالة الإعلان (نشط / غير نشط)
+Route::get('/delete-ads/{id}', [adsController::class, 'destroy']);              // حذف الإعلان وصورته نهائياً
+
+
+// -------------------------------------------------------------------------
+// ربط الإعلانات بالمنتجات والعروض العامة (من صفحة المنتجات)
+// -------------------------------------------------------------------------
+
+// 1. إعلان خاص بمنتج معين (نوع product)
+Route::get('/create-ad/{id}', [adsController::class, 'createProductAd']);
+Route::post('/create-ad/{id}', [adsController::class, 'storeProductAd']);
+
+// 2. إضافة المنتج إلى عرض عام (عبر الجدول الوسيط advertisement_product)
+Route::get('/assign-general-ad/{id}', [adsController::class, 'assignGeneralAdForm']);
+Route::post('/assign-general-ad/{id}', [adsController::class, 'storeGeneralAdAssignment']);
+
+
+// -------------------------------------------------------------------------
+// إدارة المنتجات المرتبطة بالإعلانات العامة (زر العين في قائمة الإعلانات)
+// -------------------------------------------------------------------------
+
+// عرض المنتجات المرتبطة بإعلان عام معين
+Route::get('/ads/{id}/products', [adsController::class, 'showGeneralAdProducts']);
+
+// إزالة منتج معين من العرض العام (الجدول الوسيط)
+Route::get('/ads/{adsId}/products/{productId}/remove', [adsController::class, 'removeProductFromGeneralAd']);
 
 
 Route::get('customers', [CustomerController::class, 'Customers'])->middleware('check.permission:مدير المبيعات');

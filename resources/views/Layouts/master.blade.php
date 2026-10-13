@@ -195,32 +195,31 @@
                             </ul>
                         </li>
 
-
                         <li class="dropdown {{ !$isStoreManager ? 'locked-item' : '' }}">
                             <a href="#">
-                                <div class = "toggle-dropdown divnav">
-                                <div>
-                                <span class="bi bi-box-seam nav-icon"></span>
-                                <span
-                                    class="{{ request()->is('addads') || request()->is('ads') ? 'active' : '' }}">الإعلانات</span>
-                                </div>
-                                    <i class="bi bi-chevron-down "></i>
+                                <div class="toggle-dropdown divnav">
+                                    <div>
+                                        <span class="bi bi-box-seam nav-icon"></span>
+                                        <span class="{{ request()->is('add-ads-link') || request()->is('add-ads') || request()->is('ads') ? 'active' : '' }}">الإعلانات</span>
                                     </div>
+                                    <i class="bi bi-chevron-down"></i>
+                                </div>
                             </a>
-                           
-
+                            
                             <ul>
                                 <li>
-                                    <a href="/addads">
-                                       <div> <span class="bi bi-plus-circle sub-icon"></span>
-                                        إضافة إعلان</div>
+                                    <a href="/add-ads-link">
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان برابط</div>
                                     </a>
                                 </li>
-
+                                <li>
+                                    <a href="/add-ads">
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان</div>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="/ads">
-                                        <div><span class="bi bi-list-ul sub-icon"></span>
-                                        قائمة الإعلانات</div>
+                                        <div><span class="bi bi-list-ul sub-icon"></span>قائمة الإعلانات</div>
                                     </a>
                                 </li>
                             </ul>
