@@ -2,7 +2,9 @@
 
 @section('link')
     <link href="{{ secure_asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
 
 @section('content')
