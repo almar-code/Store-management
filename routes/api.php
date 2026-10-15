@@ -26,7 +26,13 @@ use App\Http\Controllers\Api\StripeWebhookController;
 use App\Http\Controllers\Api\ManualPaymentController;
 use App\Http\Controllers\Api\OrderController;
 use Illuminate\Http\Request;
+
+
 use App\Http\Controllers\Api\AdvertisementController;
+use App\Http\Controllers\Api\ProductCommentController;
+use App\Http\Controllers\Api\CustomerSyncController;
+use App\Http\Controllers\Api\AdvertisementController;
+
 
 
 Route::get('/sections', [SectionController::class, 'index']);
@@ -58,6 +64,14 @@ Route::get('/get-ads', [AdvertisementController::class, 'getAds']);
 
 // روت جلب المنتجات المرتبطة بإعلان عام محدد مع اسم الإعلان
 Route::get('/ads/{id}/products', [AdvertisementController::class, 'getGeneralAdProducts']);
+
+Route::get('/products/{p_id}/comments', [ProductCommentController::class, 'getProductComments']);
+Route::post('/product-comments', [ProductCommentController::class, 'store']);
+Route::delete('/product-comments/{comment_id}', [ProductCommentController::class, 'destroy']);
+
+
+Route::post('/customers/sync-supabase', [CustomerSyncController::class, 'getCustomerIdBySupabase']);
+
 Route::patch('user-addresses/{id}/set-default', [UserAddressController::class, 'setDefault']);
 Route::apiResource('user-addresses', UserAddressController::class);
 Route::prefix('payments')->group(function () {
