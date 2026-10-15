@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Advertisement;
 
 class Product extends Model
 {
@@ -63,4 +64,15 @@ public function videos()
 {
     return $this->hasMany(Video::class, 'product_id', 'p_id');
 }
+
+public function generalAdvertisements()
+{
+    return $this->belongsToMany(
+        Advertisement::class,
+        'advertisement_product',
+        'p_id',
+        'ads_id'
+    )->withTimestamps();
+}
+
 }

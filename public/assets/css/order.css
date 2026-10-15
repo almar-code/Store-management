@@ -181,6 +181,12 @@ tbody td {
 }
 
 
+/* @media (max-width: 768px) {
+
+    
+
+} */
+
 @media (max-width: 768px) {
 
     .order-grid {
@@ -193,5 +199,32 @@ tbody td {
         align-items: flex-end;
         gap: 10px;
     }
+    /* تصغير المسافات بين خلايا الجدول على الهاتف */
+    tbody td, thead th {
+        padding: 4px 3px !important;
+        font-size: 11px !important;
+    }
 
+    /* تصغير حجم الصور الدائرية داخل الجدول لتعمل بشكل متناسق */
+    tbody td img {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    /* تصغير الحزم (Badges) والنصوص لتتناسب مع الشاشات الضيقة */
+    .badge {
+        font-size: 10px !important;
+        padding: 3px 5px !important;
+    }
+
+    /* تقليص مسافات الحاوية العامة للجدول */
+    .table-container {
+        padding: 0 !important;
+        margin: 10px auto !important;
+    }
+
+    /* تصغير حجم أيقونات العمليات والحذف */
+    tbody td i.bi {
+        font-size: 14px !important;
+    }
 }
