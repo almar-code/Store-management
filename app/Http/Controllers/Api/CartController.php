@@ -23,12 +23,26 @@ class CartController extends Controller
             return response()->json(['status' => false, 'message' => $validator->errors()->first()], 420);
         }
 
-        // جلب سجلات السلة مع العلاقات المتداخلة المتطابقة مع كود فلاتر
-        $cartItems = DB::table('carts')
+        // 1. جلب السلة الخاصة بالعميل من جدول carts
+        $cart = DB::table('carts')
             ->where('customer_id', $request->customer_id)
-            ->get();
+            ->first();
 
-        // سنقوم بتركيب مصفوفة البيانات يدوياً أو عبر علاقات الـ Eloquent لضمان تطابق الهيكل تماماً
+        // إذا لم يكن لدى العميل سلة بعد، نعيد مصفوفة فارغة
+        if (!$cart) {
+            return response()->json([
+                'status' => true,
+                'message' => 'تم جلب محتويات السلة بنجاح',
+                'data' => []
+            ], 200);
+        }
+
+        // 2. جلب عناصر السلة المرتبطة بـ cart_id من جدول cart_items
+        $cartItems = DB::table('cart_items')
+            ->where('cart_id', $cart->cart_id)
+            ->get();   
+
+        // تركيب مصفوفة البيانات بنفس الهيكل السابق لتتطابق مع فلاتر تماماً
         $formattedCart = $cartItems->map(function ($item) {
             // جلب المنتج الأساسي
             $product = DB::table('products')->where('p_id', $item->product_id)->first();
@@ -48,7 +62,7 @@ class CartController extends Controller
                 : [];
 
             return [
-                'cart_id' => $item->cart_id, // افترضنا أن المفتاح الأساسي لجدول السلة هو cart_id
+                'cart_id' => $item->cart_item_id, // نُرجع cart_item_id هنا لكي يعمل التعديل والحذف في فلاتر بناءً على معرف العنصر
                 'product_id' => $item->product_id,
                 'p_name' => $product ? $product->p_name : '',
                 'p_name_en' => $product ? $product->p_name_en : null,
@@ -69,7 +83,7 @@ class CartController extends Controller
                 'discount' => $discount ? [
                     'discount_id' => $discount->discount_id,
                     'discount_perce' => $discount->discount_perce,
-                    'end_date' => $discount->updated_at, // أو الحقل المتوفر لديك للمدة
+                    'end_date' => $discount->updated_at,
                 ] : null,
             ];
         });
@@ -99,9 +113,22 @@ class CartController extends Controller
             return response()->json(['status' => false, 'message' => $validator->errors()->first()], 420);
         }
 
-        // التحقق مما إذا كان نفس العميل قد أضاف نفس المنتج بنفس اللون والمقاس مسبقاً
-        $existingItem = DB::table('carts')
-            ->where('customer_id', $request->customer_id)
+        // 1. البحث عن سلة العميل أو إنشاء واحدة إن لمש تكن موجودة
+        $cart = DB::table('carts')->where('customer_id', $request->customer_id)->first();
+
+        if (!$cart) {
+            $cartId = DB::table('carts')->insertGetId([
+                'customer_id' => $request->customer_id,
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]);
+        } else {
+            $cartId = $cart->cart_id;
+        }
+
+        // 2. التحقق مما إذا كان نفس العميل قد أضاف نفس المنتج بنفس اللون والمقاس مسبقاً في cart_items
+        $existingItem = DB::table('cart_items')
+            ->where('cart_id', $cartId)
             ->where('product_id', $request->product_id)
             ->where('color_id', $request->color_id)
             ->where('size_id', $request->size_id)
@@ -109,8 +136,8 @@ class CartController extends Controller
 
         if ($existingItem) {
             // إذا كان موجوداً، نزيد الكمية فقط
-            DB::table('carts')
-                ->where('cart_id', $existingItem->cart_id)
+            DB::table('cart_items')
+                ->where('cart_item_id', $existingItem->cart_item_id)
                 ->increment('quantity', $request->quantity);
 
             return response()->json([
@@ -119,9 +146,9 @@ class CartController extends Controller
             ], 200);
         }
 
-        // إذا كان منتجاً جديداً بخصائصه، نقوم بإضافته
-        DB::table('carts')->insert([
-            'customer_id' => $request->customer_id,
+        // إذا كان منتجاً جديداً بخصائصه، نقوم بإضافته لجدول cart_items
+        DB::table('cart_items')->insert([
+            'cart_id'     => $cartId,
             'product_id'  => $request->product_id,
             'color_id'    => $request->color_id,
             'size_id'     => $request->size_id,
@@ -150,8 +177,9 @@ class CartController extends Controller
             return response()->json(['status' => false, 'message' => $validator->errors()->first()], 420);
         }
 
-        $updated = DB::table('carts')
-            ->where('cart_id', $id)
+        // التحديث يتم بناءً على cart_item_id الخاص بالعنصر في جدول cart_items
+        $updated = DB::table('cart_items')
+            ->where('cart_item_id', $id)
             ->update([
                 'quantity' => $request->quantity,
                 'updated_at' => now()
@@ -173,7 +201,8 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        $deleted = DB::table('carts')->where('cart_id', $id)->delete();
+        // الحذف يتم بناءً على cart_item_id من جدول cart_items
+        $deleted = DB::table('cart_items')->where('cart_item_id', $id)->delete();
 
         if ($deleted) {
             return response()->json([
@@ -186,7 +215,7 @@ class CartController extends Controller
     }
 
     /**
-     * دالة عرض عنصر واحد (غير مستخدمة حالياً بناءً على الراوتات التفصيلية الخاصة بك)
+     * دالة عرض عنصر واحد
      */
     public function show(string $id)
     {

@@ -1,0 +1,14 @@
+{
+    "cairo": {
+        "normal": "cairo_normal_98656b50ce6c44789e95207360b6f846"
+    },
+    "parastoo": {
+        "normal": "parastoo_normal_174f25e9e23e032b11f36acfbd7b5219"
+    },
+    "dejavu sans": {
+        "bold": "D:\\laravel\\Store-management\\vendor\\dompdf\\dompdf\/lib\/fonts\/DejaVuSans-Bold",
+        "bold_italic": "D:\\laravel\\Store-management\\vendor\\dompdf\\dompdf\/lib\/fonts\/DejaVuSans-BoldOblique",
+        "italic": "D:\\laravel\\Store-management\\vendor\\dompdf\\dompdf\/lib\/fonts\/DejaVuSans-Oblique",
+        "normal": "dejavu_sans_normal_174f25e9e23e032b11f36acfbd7b5219"
+    }
+}
