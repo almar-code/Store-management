@@ -20,6 +20,12 @@ use App\Http\Controllers\Api\VideoInteractionController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\SupabaseWebhookController;
 use Illuminate\Http\Request;
+
+use App\Http\Controllers\Api\AdvertisementController;
+use App\Http\Controllers\Api\ProductCommentController;
+use App\Http\Controllers\Api\CustomerSyncController;
+
+
 Route::get('/sections', [SectionController::class, 'index']);
 Route::get('/categories', [CategorieController::class, 'index']);
 Route::get('/get-all-videos', [VideoController::class, 'getVideosApi']);
@@ -41,4 +47,19 @@ Route::delete('/cart/delete/{id}', [CartController::class, 'destroy']); // لح�
 Route::post('/webhooks/supabase/profile', [
     SupabaseWebhookController::class,
     'profileUpdated',
+
 ]);
+
+
+// روت جلب جميع الإعلانات النشطة
+Route::get('/get-ads', [AdvertisementController::class, 'getAds']);
+
+// روت جلب المنتجات المرتبطة بإعلان عام محدد مع اسم الإعلان
+Route::get('/ads/{id}/products', [AdvertisementController::class, 'getGeneralAdProducts']);
+
+Route::get('/products/{p_id}/comments', [ProductCommentController::class, 'getProductComments']);
+Route::post('/product-comments', [ProductCommentController::class, 'store']);
+Route::delete('/product-comments/{comment_id}', [ProductCommentController::class, 'destroy']);
+
+
+Route::post('/customers/sync-supabase', [CustomerSyncController::class, 'getCustomerIdBySupabase']);
