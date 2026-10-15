@@ -27,6 +27,8 @@ class ProductController extends Controller
     
     // اعتماد قيم افتراضية منطقية (false)
     $isDiscount = filter_var($request->query('is_discount'), FILTER_VALIDATE_BOOLEAN) ?? false; 
+// استقبال آيدي الإعلان كقيمة صحيحة (Integer) بغض النظر عن طريقة إرساله
+    $adsId = $request->query('adsId') ?? null;
     $isFavorite = filter_var($request->query('is_favorite'), FILTER_VALIDATE_BOOLEAN) ?? false; 
 
     // 2. بدء بناء الاستعلام الأساسي النظيف
@@ -35,6 +37,11 @@ class ProductController extends Controller
     'sizes:size_id,size_name,p_id', // جلب المقاسات (حدد الأعمدة التي تريدها للحفاظ على الأداء)
     'colors.images',               // 🌟 جلب الصور المتداخلة التابعة لكل لون بالتحديد (Nested Relation)
     'discount',
+    'generalAdvertisements' => function ($query) {
+        // تحديد الأعمدة المطلوبة فقط لتحسين الأداء (رقم الإعلان، الاسم، والمدة أو تاريخ الانتهاء)
+        // تأكد من أسماء الأعمدة في جدول الإعلانات لديك (مثلاً ads_id, ads_title, duration أو end_date)
+        $query->select('advertisement.ads_id', 'advertisement.AdsName', 'advertisement.expires_at');
+    },
 ]);
 $query->addSelect([
     'video_id' => \App\Models\Video::select('video_id')
@@ -57,6 +64,12 @@ if ($customerId) {
         
         $query->whereDate('created_at', $date); 
     }
+        if ($adsId != null) {
+        $query->whereHas('generalAdvertisements', function ($subQuery) use ($adsId) {
+            $subQuery->where('advertisement_product.ads_id', $adsId);
+        });
+    }
+
 
     // 🌟 ثانياً: الفلترة الآمنة والذكية للمفضلات باستخدام whereHas
     if ($isFavorite) {

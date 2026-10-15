@@ -10,6 +10,13 @@ use App\Models\Payment;
 class Order extends Model
 {
     protected $primaryKey = 'order_id';
+    protected $fillable = [
+    'customer_id',
+    'address_id',
+    'total_price',
+    'status',
+    'payment_status',
+];
    public function customer()
 {
     return $this->belongsTo(Customer::class,'customer_id');
@@ -23,8 +30,10 @@ class Order extends Model
 public function address() {
     return $this->belongsTo(CustomerAddress::class, 'address_id', 'address_id');
 }
- public function items() {
-        return $this->hasMany(OrderItem::class,'order_id');
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id', 'order_id');
     }
 
     public function payment() {

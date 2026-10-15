@@ -1,18 +1,25 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class CustomerAddress extends Model
 {
-  protected $primaryKey = 'customer_id';
+    use HasFactory;
+   
+    protected $table = 'customer_addresses';
+    protected $primaryKey = 'address_id';
 
     protected $fillable = [
-        'supabase_id',
-        'name',
-        'email',
-        'phone'
+        'customer_id',
+        'title',
+        'country',
+        'city',
+        'street',
+        'building',
+        'postal_code',
+        'is_default',
     ];
 
     public function addresses()
