@@ -46,6 +46,7 @@ Route::get('/products', [ProductController::class, 'getProducts']);
 Route::post('customer/favorites/toggle', [FavoriteController::class, 'toggleFavorite']);
 Route::get('customer/favorites/count', [FavoriteController::class, 'getFavoriteCount']);
 // 🛒 مسارات السلة منفصلة بالتفصيل
+Route::post('/cart/get-or-create', [CartController::class, 'getOrCreateCart']);
 Route::get('/cart', [CartController::class, 'index']);          // لعرض محتويات السلة
 Route::post('/cart/add', [CartController::class, 'store']);       // لإضافة منتج جديد للسلة
 Route::put('/cart/update/{id}', [CartController::class, 'update']); // لتعديل الكمية بداخل السلة
