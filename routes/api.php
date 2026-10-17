@@ -31,7 +31,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\AdvertisementController;
 use App\Http\Controllers\Api\ProductCommentController;
 use App\Http\Controllers\Api\CustomerSyncController;
-use App\Http\Controllers\Api\AdvertisementController;
 
 
 
