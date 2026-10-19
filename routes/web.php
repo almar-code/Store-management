@@ -16,6 +16,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductPerformanceController;
+use App\Http\Controllers\StorePaymentAccountController;
 
 use Illuminate\Http\Request;
 Route::middleware(['auth'])->group(function () {
@@ -152,6 +153,14 @@ Route::post('/generate', [ReportController::class, 'generate'])->name('report.ge
 });
 Route::get('/product-performance',[ProductPerformanceController::class, 'index'])->name('product-performance');
 
+// حسابات الدفع
+Route::get('store_payment_accounts', [StorePaymentAccountController::class, 'index'])->middleware('check.permission:مدير المتجر');
+Route::get('addStorePaymentAccount', [StorePaymentAccountController::class, 'create'])->middleware('check.permission:مدير المتجر');
+Route::post('/add-store-payment-account', [StorePaymentAccountController::class, 'store']);
+Route::get('/edit-store-payment-account/{id}', [StorePaymentAccountController::class, 'edit']);
+Route::post('/update-store-payment-account/{id}', [StorePaymentAccountController::class, 'update']);
+Route::get('/update-account/{id}', [StorePaymentAccountController::class, 'updateactive']);
+Route::get('/delete-store-payment-account/{id}', [StorePaymentAccountController::class, 'destroy']);
 
 });
 
