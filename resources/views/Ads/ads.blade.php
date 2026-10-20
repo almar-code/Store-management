@@ -51,11 +51,11 @@
                     @foreach ($ads as $adss)
                     <tr class="card-item">
                         <td class="fs-6 fs-md-5">{{ $loop->iteration }}</td>
-                        <td class="fw-bold lh-1 fs-md-5">{{ $adss->AdsName }}</td>
-                        <td class="card-text">
+                        <td class="fw-bold lh-1 fs-md-5 card-title">{{ $adss->AdsName }}</td>
+                        <td class="card-title">
                             <img src="{{ asset('storage/uploads/Advertisement/'.$adss->AdsImage) }}" class="rounded-circle" width="50" height="50" style="object-fit: cover;">
                         </td>
-                        <td>
+                        <td >
                             @if($adss->type == 'image') <span class="badge bg-secondary">إعلان خاص</span>
                             @elseif($adss->type == 'general') <span class="badge bg-success">إعلان عام</span>
                             @elseif($adss->type == 'link') <span class="badge bg-warning">إعلان برابط</span>
@@ -82,18 +82,32 @@
                             {{ is_object($adss->expires_at) ? $adss->expires_at->toDateString() : $adss->expires_at }}
                         </td>
                         <td>
-                            
+                            <div class="dropdown">
+                                <button class="btn text-dark p-0 border-0 shadow-none" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical fs-4"></i>
+                                </button>
 
-                            <a class="text-danger" href="#" onclick="confirmDelete('/delete-ads/{{$adss->ads_id}}','حذف الاعلان','هل أنت متأكد من حذف هذا الاعلان')">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                            {{-- <div style="width: "></div> --}}
-                            <!-- زر العين يظهر فقط للإعلانات العامة (general) -->
-                            @if($adss->type == 'general')
-                                <a href="/ads/{{ $adss->ads_id }}/products" class="text-turquoise me-2" title="عرض المنتجات المرتبطة">
-                                    <i class="bi bi-eye fs-5"></i>
-                                </a>
-                            @endif
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-light">
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-danger font-weight-bold text-end"
+                                            href="#" onclick="confirmDelete('/delete-ads/{{$adss->ads_id}}','حذف الاعلان','هل أنت متأكد من حذف هذا الاعلان')">
+                                            <span class="ms-2">حذف الاعلان</span>
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </li>
+
+                                    @if($adss->type == 'general')
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                                                href="/ads/{{ $adss->ads_id }}/products" title="عرض المنتجات المرتبطة">
+                                                <span class="ms-2">عرض المنتجات</span>
+                                                <i class="bi bi-eye fs-5 text-turquoise"></i>
+                                            </a>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

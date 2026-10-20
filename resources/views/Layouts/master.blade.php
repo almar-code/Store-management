@@ -290,6 +290,32 @@
                                 </li>
                             </ul>
                         </li>
+                       <li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">
+                            <a href="#" >
+                                <div class = "toggle-dropdown divnav">
+                                    <div>
+                                        <span class="bi bi-wallet2 nav-icon"></span>
+                                        <span class="{{ request()->is('addStorePaymentAccount') || request()->is('store_payment_accounts') || request()->is('edit-store-payment-account/*') ? 'active' : '' }}">حسابات الدفع</span>
+                                    </div>
+                                    <i class="bi bi-chevron-down "></i>
+                                </div>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/addStorePaymentAccount" class="{{ request()->is('addStorePaymentAccount') ? 'active' : '' }}">
+                                    <div> <span class="bi bi-plus-circle sub-icon"></span>
+                                        إضافة حساب دفع</div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/store_payment_accounts" class="{{ request()->is('store_payment_accounts') ? 'active' : '' }}">
+                                    <div> <span class="bi bi-wallet sub-icon"></span>
+                                        قائمة حسابات الدفع</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
 
                         <li class="dropdown {{ !$isSalesManager ? 'locked-item' : '' }}">
