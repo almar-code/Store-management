@@ -119,7 +119,7 @@
 
                     <tbody>
 
-                        @foreach ($order->items as $item)
+                        @foreach ($order->orderItems as $item)
                             <tr>
 
                                 <td>{{ $item->order_item_id }}</td>
@@ -152,7 +152,7 @@
                     <label>إجمالي الكمية</label>
 
                     <span>
-                        {{ $order->items->sum('quantity') }}
+                        {{ $order->orderItems->sum('quantity') }}
                     </span>
 
                 </div>
@@ -163,7 +163,7 @@
 
                     <span class="total-price">
 
-                        {{ $order->items->sum(function ($item) {
+                        {{ $order->orderItems->sum(function ($item) {
                             return $item->price * $item->quantity;
                         }) }}
 

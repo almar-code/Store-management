@@ -123,4 +123,40 @@ if ($customerId) {
     ], 200);
 }
 
+public function getAllProductsWithoutConditions(Request $request)
+{
+    try {
+        $products = Product::with([
+            'sizes:size_id,size_name,p_id',
+            'colors.images',
+            'discount',
+            // جلب الفئة مع تحديد الأعمدة المطلوبة بما فيها الأسماء الجديدة
+            'subcategory:subcat_id,cat_id,subcat_name,subcat_name_en',
+            // جلب القسم الأساسي التابع للفئة مع الأعمدة المطلوبة
+            'subcategory.category:cat_id,cat_name,cat_name_en',
+            'generalAdvertisements' => function ($query) {
+                $query->select('advertisement.ads_id', 'advertisement.AdsName', 'advertisement.expires_at');
+            }
+        ])
+        ->addSelect([
+            'video_id' => \App\Models\Video::select('video_id')
+                ->whereColumn('product_id', 'products.p_id')
+                ->latest('video_id')
+                ->limit(1)
+        ])
+        ->get(); // جلب جميع المنتجات دفعة واحدة بدون ترقيم أو خلط
+
+        return response()->json([
+            'status' => true,
+            'message' => 'All products fetched successfully without conditions',
+            'data' => $products
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ], 500);
+    }
+}
 }
