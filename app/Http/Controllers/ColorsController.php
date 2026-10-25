@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
 use App\Services\TranslationService;
+use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Google\Cloud\Vision\V1\Image;
+use App\Jobs\ProcessImageWithGoogleVision;
 class ColorsController extends Controller
 {
     /**
@@ -29,52 +32,57 @@ class ColorsController extends Controller
             // ترجمة النصوص
             $colorNameEn = '';
             $colorName = '';
-            if ($request->filled('colorName')) { // يتحقق إذا الحقل ليس فارغ
-                $colorNameEn =  TranslationService::translate(
-                $request->productName
-            );
+            if ($request->filled('colorName')) { 
+                $colorNameEn = TranslationService::translate(
+                    $request->colorName // تم تصحيحها من productName إلى colorName
+                );
                 $colorName = $request->colorName;
-            }                // حفظ اللون
-            $color = Color::create([
+            }
 
+            // حفظ اللون
+            $color = Color::create([
                 'color_name' => $colorName,
                 'color_name_en' => $colorNameEn,
-
                 'color_code' => $request->productColor,
-
                 'p_id' => $productID
-
             ]);
+
+            $firstImagePath = null;
+
             // رفع الصور
             if ($request->hasFile('productImages')) {
-
                 $images = $request->file('productImages');
 
                 foreach ($images as $index => $image) {
-
                     // إنشاء اسم فريد للصورة
                     $imageName = time() . '_' . rand(1, 10000) . '.' . $image->extension();
 
                     // تخزين الصورة داخل storage/app/public/uploads/products
                     $image->storeAs('uploads/products', $imageName, 'public');
-                    // حفظ اسم الصورة فقط في جدول الصور
+                    
+                    // حفظ اسم الصورة في جدول الصور
                     ProductImage::create([
                         'img_url' => $imageName,
                         'color_id' => $color->color_id
                     ]);
 
+                    // 🌟 الاحتفاظ بمسار أول صورة فقط لإرسالها لـ Google Vision
+                    if ($index === 0) {
+                        $firstImagePath = storage_path('app/public/uploads/products/' . $imageName);
+                    }
                 }
-
             }
 
+            // 🌟 إرسال أول صورة لمعالجة Google Vision في الخلفية (أو بشكل غير متزامن)
+            if ($firstImagePath && file_exists($firstImagePath)) {
+                // يمكنك استخدام Laravel Job هنا، أو دالة مساعدة تعمل في الخلفية
+                ProcessImageWithGoogleVision::dispatch($color->color_id, $firstImagePath);
+            }
 
             return redirect()->back()->with('success', 'تم إضافة اللون بنجاح');
 
         } catch (\Exception $e) {
-            // return redirect()->back()->with('error', $e->getMessage());
-
-            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة اللون');
-
+            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة اللون: ' . $e->getMessage());
         }
     }
     public function Colors($productID)

@@ -17,7 +17,7 @@ class OrdersController extends Controller
         $orders = Order::with([
             'customer',
             'address',
-            'items.product',
+            'orderItems.product',
             'payment.method'
         ])
         ->latest()
@@ -37,7 +37,7 @@ class OrdersController extends Controller
         $order = Order::with([
             'customer',
             'address',
-            'items.product',
+            'orderItems.product',
             'payment.method'
         ])->findOrFail($orderID);
 
