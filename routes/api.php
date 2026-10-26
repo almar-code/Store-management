@@ -32,6 +32,7 @@ use App\Http\Controllers\Api\AdvertisementController;
 use App\Http\Controllers\Api\ProductCommentController;
 use App\Http\Controllers\Api\CustomerSyncController;
 
+use App\Http\Controllers\Api\VisualSearchController;
 
 
 Route::get('/sections', [SectionController::class, 'index']);
@@ -43,6 +44,7 @@ Route::post('/videos/{id}/save', [VideoInteractionController::class, 'toggleSave
 Route::get('/videos/{id}/comments', [CommentController::class, 'getComments']);
 Route::post('/videos/comments/{id}', [CommentController::class, 'storeComment']);
 Route::get('/products', [ProductController::class, 'getProducts']);
+Route::get('/products/all-unfiltered', [ProductController::class, 'getAllProductsWithoutConditions']);
 Route::post('customer/favorites/toggle', [FavoriteController::class, 'toggleFavorite']);
 Route::get('customer/favorites/count', [FavoriteController::class, 'getFavoriteCount']);
 // 🛒 مسارات السلة منفصلة بالتفصيل
@@ -103,3 +105,5 @@ Route::get('/orders/{customerId}', [OrderController::class, 'getUserOrders']);
 // إلغاء طلب محدد بواسطة رقم الطلب
 Route::post('/orders/cancel/{orderId}', [OrderController::class, 'cancelOrder']);
 Route::get('/orders/{id}/invoice', [OrderController::class, 'generateInvoice']);
+
+Route::post('/products/visual-search', [VisualSearchController::class, 'getVisualSearchProducts']);

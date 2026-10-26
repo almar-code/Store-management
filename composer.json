@@ -8,6 +8,8 @@
     "require": {
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.1",
+        "google/apiclient": "^2.20",
+        "google/cloud-vision": "^2.3",
         "intervention/image": "^2.7",
         "khaled.alshamaa/ar-php": "^7.0",
         "laravel/framework": "^12.0",

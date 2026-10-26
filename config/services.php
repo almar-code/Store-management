@@ -52,6 +52,17 @@ return [
     ),
     'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
 ],
+'gemini' => [
+    'key' => env('GEMINI_API_KEY'),
+    'embedding_model' => env(
+        'GEMINI_EMBEDDING_MODEL',
+        'gemini-embedding-2'
+    ),
+    'vision_model' => env(
+        'GEMINI_VISION_MODEL',
+        'gemini-2.5-flash'
+    ),
+],
     
 
 ];
