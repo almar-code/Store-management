@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ProductComment;
 use Illuminate\Http\Request;
+use App\Services\TranslationService;
 
 class ProductCommentController extends Controller
 {
@@ -33,12 +34,16 @@ class ProductCommentController extends Controller
             'stars'       => 'required|numeric',
             'sentiment'   => 'nullable|string', 
         ]);
+         // الترجمة
+            $commenten = TranslationService::translate(
+                $request->comment_en
+            );
 
         ProductComment::create([
             'customer_id' => $request->customer_id,
             'p_id'        => $request->p_id,
             'comment_ar'  => $request->comment_ar,
-            'comment_en'  => $request->comment_en,
+            'comment_en'  => $request->commenten,
             'stars'       => $request->stars,
             'sentiment'   => $request->sentiment, 
         ]);
