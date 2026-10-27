@@ -18,15 +18,14 @@ class ProductComment extends Model
         'comment_ar',
         'comment_en',
         'stars',
+        'sentiment', 
     ];
 
-   public function customer()
-{
-    return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
-}
-    
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
+    }
 
-    // ربط العلاقة مع جدول المنتجات
     public function product()
     {
         return $this->belongsTo(Product::class, 'p_id', 'p_id');

@@ -23,22 +23,24 @@ class ProductCommentController extends Controller
     }
 
     // إضافة تعليق وإعادة القائمة المحدثة مباشرة
-    public function store(Request $request)
+   public function store(Request $request)
     {
         $request->validate([
             'customer_id' => 'required|integer',
-            'p_id' => 'required|integer',
-            'comment_ar' => 'required|string',
-            'comment_en' => 'required|string',
-            'stars' => 'required|numeric',
+            'p_id'        => 'required|integer',
+            'comment_ar'  => 'required|string',
+            'comment_en'  => 'required|string',
+            'stars'       => 'required|numeric',
+            'sentiment'   => 'nullable|string', 
         ]);
 
         ProductComment::create([
             'customer_id' => $request->customer_id,
-            'p_id' => $request->p_id,
-            'comment_ar' => $request->comment_ar,
-            'comment_en' => $request->comment_en,
-            'stars' => $request->stars,
+            'p_id'        => $request->p_id,
+            'comment_ar'  => $request->comment_ar,
+            'comment_en'  => $request->comment_en,
+            'stars'       => $request->stars,
+            'sentiment'   => $request->sentiment, 
         ]);
 
         $comments = ProductComment::where('p_id', $request->p_id)
@@ -47,9 +49,9 @@ class ProductCommentController extends Controller
             ->get();
 
         return response()->json([
-            'status' => true,
+            'status'  => true,
             'message' => 'تم إضافة التعليق بنجاح',
-            'data' => $comments
+            'data'    => $comments
         ], 201);
     }
 
