@@ -78,4 +78,59 @@ class VideoInteractionController extends Controller
             'saves_count' => $stat->saves_count
         ], 200);
     }
+
+    public function uploadVideo(Request $request)
+    {
+        $request->validate([
+            'video_file' => 'required|mimes:mp4,mov,ogg,qt|max:51200',
+        ]);
+
+        try {
+            // 1. تخزين الفيديو في المجلد فقط (بدون قاعدة البيانات)
+            $videoFile = $request->file('video_file');
+            $videoName = time() . '_' . $videoFile->getClientOriginalName();
+
+            $destinationPath = public_path('storage/uploads/videos');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $videoFile->move($destinationPath, $videoName);
+
+            // 2. إرسال الفيديو إلى إنستجرام عبر n8n
+            $instagramSent = false;
+            try {
+                $videoUrl = rtrim(config('app.url'), '/') . '/storage/uploads/videos/' . $videoName;
+
+                $caption  = "🎬 وصلنا حديثاً ✨\n\n";
+                $caption .= "تصفحوا متجرنا الآن للمزيد من التفاصيل والطلب! 🛍️";
+
+                $response = \Illuminate\Support\Facades\Http::timeout(5)->post(
+                    'https://almar33.app.n8n.cloud/webhook/Instagram-reel',
+                    [
+                        'video_url' => $videoUrl,
+                        'caption'   => $caption,
+                    ]
+                );
+
+                $instagramSent = $response->successful();
+            } catch (\Throwable $webhookException) {
+                \Illuminate\Support\Facades\Log::error('n8n Instagram Webhook Error: ' . $webhookException->getMessage());
+            }
+
+            // 3. الرد إلى n8n
+            return response()->json([
+                'success'        => true,
+                'message'        => 'تم رفع الفيديو بنجاح',
+                'video_name'     => $videoName,
+                'instagram_sent' => $instagramSent,
+            ]);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'فشل رفع الفيديو: ' . $th->getMessage(),
+            ], 500);
+        }
+    }
+
 }

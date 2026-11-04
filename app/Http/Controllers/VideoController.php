@@ -134,7 +134,7 @@ class VideoController extends Controller
                     $caption .= "تصفحوا متجرنا الآن للمزيد من التفاصيل والطلب! 🛍️";
 
                     // إرسال الطلب إلى n8n (باستخدام رابط الـ Test حالياً)
-                    \Illuminate\Support\Facades\Http::timeout(5)->post('https://almar33.app.n8n.cloud/webhook-test/Instagram-reel', [
+                    \Illuminate\Support\Facades\Http::timeout(5)->post('https://almar33.app.n8n.cloud/webhook-test/Instagram', [
                         'video_url' => $videoUrl,
                         'caption'   => $caption
                     ]);
