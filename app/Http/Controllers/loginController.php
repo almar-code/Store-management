@@ -47,6 +47,50 @@ class LoginController extends Controller
             return back()->with('error', 'حدث خطأ غير متوقع في النظام');
         }
     }
+    
+    public function VerifyTelegramUser(Request $request)
+    {
+        $validated = $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $user = User::where('username', $validated['username'])->first();
+
+        if (!$user || !Hash::check($validated['password'], $user->password_hash)) {
+            return response()->json([
+                'success' => false,
+                'authenticated' => false,
+                'message' => 'اسم المستخدم أو كلمة المرور غير صحيحة',
+            ], 401);
+        }
+
+        $permissions = $user->userPermissions()
+            ->with('permission')
+            ->get()
+            ->map(function ($userPermission) {
+                return [
+                    'permission_name' => $userPermission->permission->permission_name ?? null,
+                    'is_active' => (bool) $userPermission->is_active,
+                    'status' => $userPermission->is_active ? 'نشطة' : 'غير نشطة',
+                ];
+            })
+            ->filter(fn($permission) => $permission['permission_name'] !== null)
+            ->values();
+
+        $hasActivePermission = $permissions->contains('is_active', true);
+
+        return response()->json([
+            'success' => true,
+            'authenticated' => $hasActivePermission,
+            'username' => $user->username,
+            'permissions' => $permissions,
+            'message' => $hasActivePermission
+                ? 'تم التحقق من المستخدم بنجاح'
+                : 'الحساب غير نشط، لا توجد صلاحيات نشطة',
+        ], $hasActivePermission ? 200 : 403);
+    }
+
 
     public function logout(Request $request)
     {

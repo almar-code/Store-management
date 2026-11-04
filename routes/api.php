@@ -27,7 +27,6 @@ use App\Http\Controllers\Api\ManualPaymentController;
 use App\Http\Controllers\Api\OrderController;
 use Illuminate\Http\Request;
 
-
 use App\Http\Controllers\Api\AdvertisementController;
 use App\Http\Controllers\Api\ProductCommentController;
 use App\Http\Controllers\Api\CustomerSyncController;
@@ -107,3 +106,5 @@ Route::post('/orders/cancel/{orderId}', [OrderController::class, 'cancelOrder'])
 Route::get('/orders/{id}/invoice', [OrderController::class, 'generateInvoice']);
 
 Route::post('/products/visual-search', [VisualSearchController::class, 'getVisualSearchProducts']);
+Route::post('/upload-product-image', [ProductController::class, 'uploadProductImage']);
+Route::post('/upload-video', [VideoInteractionController::class, 'uploadVideo']);

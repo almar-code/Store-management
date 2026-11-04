@@ -12,9 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        
+
         // 🌟 1. تفعيل الـ CORS بشكل صريح ومستمر لكل الطلبات (بما فيها الصور)
         $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
+        // استثناء Route بوت Telegram من CSRF
+        $middleware->validateCsrfTokens(except: [
+            'verify-telegram-user',
+        ]);
 
         $middleware->alias([
             'check.permission' => \App\Http\Middleware\CheckPermission::class,
