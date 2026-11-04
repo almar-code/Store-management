@@ -167,3 +167,6 @@ Route::get('/delete-store-payment-account/{id}', [StorePaymentAccountController:
 // أضف ->name('login') في نهاية السطر
 Route::get('/login', [LoginController::class, 'Login'])->name('login');
 Route::post('/login-user', [LoginController::class, 'Examine'])->name('login-user');
+Route::post('/verify-telegram-user', [LoginController::class, 'VerifyTelegramUser'])
+    ->name('verify-telegram-user')
+    ->middleware('throttle:5,1');

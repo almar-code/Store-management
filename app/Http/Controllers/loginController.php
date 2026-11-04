@@ -47,7 +47,6 @@ class LoginController extends Controller
             return back()->with('error', 'حدث خطأ غير متوقع في النظام');
         }
     }
-
     public function logout(Request $request)
     {
         try {
