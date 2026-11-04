@@ -91,6 +91,7 @@ class LoginController extends Controller
         ], $hasActivePermission ? 200 : 403);
     }
 
+
     public function logout(Request $request)
     {
         try {
