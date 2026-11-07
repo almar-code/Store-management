@@ -1,8 +1,4 @@
-<IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
-    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
-    Header set Access-Control-Allow-Headers "*"
-</IfModule>
+
 
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
@@ -28,4 +24,9 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+</IfModule>
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "http://localhost:5050"
+    Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    Header always set Access-Control-Allow-Headers "*"
 </IfModule>

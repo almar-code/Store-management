@@ -14,8 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         
         // 🌟 1. تفعيل الـ CORS بشكل صريح ومستمر لكل الطلبات (بما فيها الصور)
-        $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
-
         $middleware->alias([
             'check.permission' => \App\Http\Middleware\CheckPermission::class,
         ]);
@@ -23,3 +21,4 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
+    

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ProductComment;
 use Illuminate\Http\Request;
-
+use App\Services\ProductStatService;
 class ProductCommentController extends Controller
 {
     // جلب التعليقات مع بيانات العميل (الاسم والصورة)
@@ -40,6 +40,11 @@ class ProductCommentController extends Controller
             'comment_en' => $request->comment_en,
             'stars' => $request->stars,
         ]);
+        ProductStatService::recordComment(
+    (int) $request->p_id,
+    $request->sentiment,
+    (int) $request->stars
+);
 
         $comments = ProductComment::where('p_id', $request->p_id)
             ->with('customer:customer_id,name,profile_image')
