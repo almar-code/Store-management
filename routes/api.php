@@ -31,7 +31,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\AdvertisementController;
 use App\Http\Controllers\Api\ProductCommentController;
 use App\Http\Controllers\Api\CustomerSyncController;
-
+use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\VisualSearchController;
 
 
@@ -107,3 +107,6 @@ Route::post('/orders/cancel/{orderId}', [OrderController::class, 'cancelOrder'])
 Route::get('/orders/{id}/invoice', [OrderController::class, 'generateInvoice']);
 
 Route::post('/products/visual-search', [VisualSearchController::class, 'getVisualSearchProducts']);
+
+// تقديم الصور مع CORS لدعم Flutter Web
+Route::get('/media/{path}', [MediaController::class, 'show'])->where('path', '.*');
