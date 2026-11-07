@@ -8,13 +8,13 @@
             <div class="section-title">
                 <h3>
                     @if (!isset($editsize))
-                        Add 
+                        اضافة 
                     @endif
                     @if (isset($editsize))
-                        update 
+                        تعديل 
                     @endif
                     
-                <span class="orange-text">size</span></h3>
+                <span class="orange-text">مقاس</span></h3>
             </div>
         </div>
         <div class="container my-5" style="direction: rtl; text-align: right">
@@ -52,15 +52,32 @@
                             <input type="hidden" name="product_id" value="{{ $editsize->product->p_id ?? '' }}">
                             <label for="productName">المنتج   </label>
                         </div>
-
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="size_name" name="size_name" placeholder="Full Name" 
-                            @if (isset($editsize))
-                            value="{{ $editsize->size_name ?? 'uu' }}"
-                            @endif
-                            required="">
-                            <label for="size_name">المقاس  </label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="size_name"
+                                name="size_name"
+                                list="sizes_list"
+                                placeholder="المقاس"
+                                value="{{ old('size_name', $editsize->size_name ?? '') }}"
+                                required
+                                autocomplete="off"
+                            >
+
+                            <datalist id="sizes_list">
+                                <option value="50">
+                                <option value="52">
+                                <option value="54">
+                                <option value="56">
+                                <option value="58">
+                                <option value="60">
+                                <option value="62">
+                            </datalist>
+
+                            <label for="size_name">المقاس</label>
                         </div>
+
                         @error('size_name')
                             <div class="form-error">
                                 <i class="bi bi-exclamation-circle"></i>
