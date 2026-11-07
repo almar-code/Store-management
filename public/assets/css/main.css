@@ -3439,3 +3439,9 @@ section,
   color: black;
   font-weight: bold;
 }
+/* عكس ترتيب عناصر القائمة في الكمبيوتر فقط: الرئيسية تصبح أول عنصر من اليمين */
+@media (min-width: 1200px) {
+    .navmenu > ul {
+        flex-direction: row-reverse;
+    }
+}
