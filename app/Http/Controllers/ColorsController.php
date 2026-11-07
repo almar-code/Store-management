@@ -1,90 +1,158 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Product;
 use App\Models\Color;
 use Illuminate\Http\Request;
 use App\Models\ProductImage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use App\Services\TranslationService;
-use Google\Cloud\Vision\V1\ImageAnnotatorClient;
-use Google\Cloud\Vision\V1\Image;
 use App\Jobs\ProcessImageWithGoogleVision;
+
 class ColorsController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
+    // مجلد صور المنتجات داخل قرص public
+    public const IMAGE_DIR = 'uploads/products';
+
     public function AddColor($productID)
     {
         $productName = Product::findOrFail($productID)->p_name;
+        $colors = ProductController::COLORS;
 
-        return view('Colors.addColor', compact('productName', 'productID'));
+        return view('Colors.addColor', compact('productName', 'productID', 'colors'));
     }
+
     public function store(Request $request, $productID)
     {
+        $request->validate([
+            'productImages' => 'required|array|min:1',
+            'productImages.*' => 'image|mimes:jpg,jpeg,png|max:4096',
+        ]);
+
+        $savedImages = [];
+
+        DB::beginTransaction();
+
         try {
-            // التحقق من الحقول
-            $request->validate([
-                'productImages.*' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+            $result = $this->saveColor(
+                $request->file('productImages', []),
+                $productID,
+                $request->colorName,
+                $request->productColor
+            );
+
+            $savedImages = $result['images'];
+
+            DB::commit();
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            foreach ($savedImages as $imageName) {
+                self::deleteImageFile($imageName);
+            }
+
+            Log::error('Add color failed', [
+                'product_id' => $productID,
+                'error' => $e->getMessage(),
             ]);
 
-            // ترجمة النصوص
-            $colorNameEn = '';
-            $colorName = '';
-            if ($request->filled('colorName')) { 
-                $colorNameEn = TranslationService::translate(
-                    $request->colorName // تم تصحيحها من productName إلى colorName
-                );
-                $colorName = $request->colorName;
+            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة اللون');
+        }
+
+        // تحليل أول صورة بالذكاء الاصطناعي بعد نجاح الحفظ
+        if (!empty($savedImages)) {
+            $this->dispatchVisualAnalysis($result['color']->color_id, $savedImages[0]);
+        }
+
+        return redirect()->back()->with('success', 'تم إضافة اللون بنجاح');
+    }
+
+    /**
+     * حفظ لون جديد مع صوره (تُستخدم من هنا ومن ProductController).
+     * لا تبدأ معاملة بنفسها، المستدعي هو المسؤول عن DB::beginTransaction.
+     *
+     * @return array{color: Color, images: string[]}
+     */
+    public function saveColor(array $images, $productID, ?string $colorName, ?string $colorCode): array
+    {
+        $colorName = trim((string) $colorName);
+
+        $color = Color::create([
+            'color_name' => $colorName,
+            'color_name_en' => $this->translateColor($colorName),
+            'color_code' => $colorCode ? strtoupper($colorCode) : '#000000',
+            'p_id' => $productID,
+        ]);
+
+        $storedImages = [];
+
+        try {
+            foreach ($images as $image) {
+                $imageName = time() . '_' . Str::random(8) . '.' . $image->extension();
+
+                $image->storeAs(self::IMAGE_DIR, $imageName, 'public');
+                $storedImages[] = $imageName;
+
+                ProductImage::create([
+                    'img_url' => $imageName,
+                    'color_id' => $color->color_id,
+                ]);
+            }
+        } catch (\Throwable $e) {
+            // حذف ما رُفع قبل الفشل ثم تمرير الخطأ للمستدعي
+            foreach ($storedImages as $imageName) {
+                self::deleteImageFile($imageName);
             }
 
-            // حفظ اللون
-            $color = Color::create([
-                'color_name' => $colorName,
-                'color_name_en' => $colorNameEn,
-                'color_code' => $request->productColor,
-                'p_id' => $productID
+            throw $e;
+        }
+
+        return [
+            'color' => $color,
+            'images' => $storedImages,
+        ];
+    }
+
+    /**
+     * إرسال أول صورة لـ Gemini لاستخراج الخصائص البصرية (البحث بالصورة).
+     * فشلها لا يؤثر على حفظ اللون.
+     */
+    public function dispatchVisualAnalysis($colorId, string $imageName): void
+    {
+        $imagePath = storage_path('app/public/' . self::IMAGE_DIR . '/' . $imageName);
+
+        if (!file_exists($imagePath)) {
+            return;
+        }
+
+        try {
+            ProcessImageWithGoogleVision::dispatch($colorId, $imagePath);
+        } catch (\Throwable $e) {
+            Log::warning('Visual analysis dispatch failed', [
+                'color_id' => $colorId,
+                'error' => $e->getMessage(),
             ]);
-
-            $firstImagePath = null;
-
-            // رفع الصور
-            if ($request->hasFile('productImages')) {
-                $images = $request->file('productImages');
-
-                foreach ($images as $index => $image) {
-                    // إنشاء اسم فريد للصورة
-                    $imageName = time() . '_' . rand(1, 10000) . '.' . $image->extension();
-
-                    // تخزين الصورة داخل storage/app/public/uploads/products
-                    $image->storeAs('uploads/products', $imageName, 'public');
-                    
-                    // حفظ اسم الصورة في جدول الصور
-                    ProductImage::create([
-                        'img_url' => $imageName,
-                        'color_id' => $color->color_id
-                    ]);
-
-                    // 🌟 الاحتفاظ بمسار أول صورة فقط لإرسالها لـ Google Vision
-                    if ($index === 0) {
-                        $firstImagePath = storage_path('app/public/uploads/products/' . $imageName);
-                    }
-                }
-            }
-
-            // 🌟 إرسال أول صورة لمعالجة Google Vision في الخلفية (أو بشكل غير متزامن)
-            if ($firstImagePath && file_exists($firstImagePath)) {
-                // يمكنك استخدام Laravel Job هنا، أو دالة مساعدة تعمل في الخلفية
-                ProcessImageWithGoogleVision::dispatch($color->color_id, $firstImagePath);
-            }
-
-            return redirect()->back()->with('success', 'تم إضافة اللون بنجاح');
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة اللون: ' . $e->getMessage());
         }
     }
+
+    public static function deleteImageFile(?string $imageName): void
+    {
+        if (empty($imageName)) {
+            return;
+        }
+
+        $path = self::IMAGE_DIR . '/' . $imageName;
+
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
     public function Colors($productID)
     {
         try {
@@ -101,61 +169,53 @@ class ColorsController extends Controller
 
         }
     }
+
     public function edit($colorID)
     {
-
         try {
 
             $editColor = Color::findOrFail($colorID);
 
             $productName = Product::where('p_id', $editColor->p_id)->value('p_name');
+            $colors = ProductController::COLORS;
 
-            return view('Colors.addColor', compact('editColor', 'productName'));
+            return view('Colors.addColor', compact('editColor', 'productName', 'colors'));
 
         } catch (\Exception $e) {
-            // return redirect()->back()->with('error', $e->getMessage());
 
             return redirect()->back()->with('error', 'حدث خطأ أثناء جلب ألوان ');
 
         }
     }
+
     public function update(Request $request, $colorID)
     {
         try {
             $color = Color::findOrFail($colorID);
 
-            // ترجمة الاسم
-            $colorNameEn = '';
-            $colorName = '';
-            if ($request->filled('colorName')) {
-                $colorNameEn = TranslationService::translate(
-                $request->productName
-            );
-                $colorName = $request->colorName;
-            }
+            // ترجمة اسم اللون (كانت تترجم productName بالخطأ)
+            $colorName = trim((string) $request->colorName);
 
             $color->color_name = $colorName;
-            $color->color_name_en = $colorNameEn;
+            $color->color_name_en = $this->translateColor($colorName);
             $color->color_code = $request->productColor;
 
             // إذا رفع المستخدم صور جديدة
             if ($request->hasFile('productImages')) {
 
                 // تحقق من checkbox الاحتفاظ بالصور القديمة
-            if (!$request->has('keep_old_images')) {
-                // حذف جميع الصور القديمة
-                foreach ($color->images as $img) {
-                    if (Storage::disk('public')->exists($img->img_url)) {
-                        Storage::disk('public')->delete($img->img_url);
+                if (!$request->has('keep_old_images')) {
+                    // حذف جميع الصور القديمة (مع مسار المجلد الصحيح)
+                    foreach ($color->images as $img) {
+                        self::deleteImageFile($img->img_url);
+                        $img->delete();
                     }
-                    $img->delete(); // حذف السجل من قاعدة البيانات
                 }
-            }
 
                 // رفع الصور الجديدة
                 foreach ($request->file('productImages') as $image) {
-                    $imageName = time() . '_' . rand(1, 10000) . '.' . $image->extension();
-                    $image->storeAs('uploads/products', $imageName, 'public');
+                    $imageName = time() . '_' . Str::random(8) . '.' . $image->extension();
+                    $image->storeAs(self::IMAGE_DIR, $imageName, 'public');
 
                     ProductImage::create([
                         'img_url' => $imageName,
@@ -165,7 +225,7 @@ class ColorsController extends Controller
             }
             $color->save();
 
-            return redirect('/colors/' . $color->p_id)->with('success', 'تم التعديل بنجاح');//  الرجوع إلى صفحة الألوان الخاصة بالمنتج
+            return redirect('/colors/' . $color->p_id)->with('success', 'تم التعديل بنجاح');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'حدث خطأ أثناء تعديل ألوان ');
@@ -187,6 +247,21 @@ class ColorsController extends Controller
 
             return redirect()->back()->with('error', 'حدث خطأ أثناء الحذف');
 
+        }
+    }
+
+    private function translateColor(string $colorName): string
+    {
+        if ($colorName === '') {
+            return '';
+        }
+
+        try {
+            return TranslationService::translate($colorName) ?: $colorName;
+        } catch (\Throwable $e) {
+            Log::warning('Color translation failed', ['error' => $e->getMessage()]);
+
+            return $colorName;
         }
     }
 }
