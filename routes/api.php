@@ -27,7 +27,6 @@ use App\Http\Controllers\Api\ManualPaymentController;
 use App\Http\Controllers\Api\OrderController;
 use Illuminate\Http\Request;
 
-
 use App\Http\Controllers\Api\AdvertisementController;
 use App\Http\Controllers\Api\ProductCommentController;
 use App\Http\Controllers\Api\CustomerSyncController;
@@ -110,3 +109,5 @@ Route::post('/products/visual-search', [VisualSearchController::class, 'getVisua
 
 // تقديم الصور مع CORS لدعم Flutter Web
 Route::get('/media/{path}', [MediaController::class, 'show'])->where('path', '.*');
+Route::post('/upload-product-image', [ProductController::class, 'uploadProductImage']);
+Route::post('/upload-video', [VideoInteractionController::class, 'uploadVideo']);

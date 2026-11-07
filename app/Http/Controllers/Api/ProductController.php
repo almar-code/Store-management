@@ -159,4 +159,60 @@ public function getAllProductsWithoutConditions(Request $request)
         ], 500);
     }
 }
+
+public function uploadProductImage(Request $request)
+{
+    try {
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:10240',
+            'type' => 'required|in:product,subcategory,advertisement',
+        ]);
+
+        $folders = [
+            'product' => 'products',
+            'subcategory' => 'subcategory',
+            'advertisement' => 'Advertisement',
+        ];
+
+        $folder = $folders[$request->type];
+
+        $image = $request->file('image');
+
+        $imageName = time() . '_' .
+            uniqid() . '.' .
+            $image->getClientOriginalExtension();
+
+        $destinationPath = public_path('storage/uploads/' . $folder);
+
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0755, true);
+        }
+
+        $image->move($destinationPath, $imageName);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم رفع الصورة بنجاح',
+            'image_name' => $imageName,
+            'type' => $request->type,
+            'folder' => $folder,
+        ], 200);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+
+        throw $e;
+
+    } catch (\Throwable $e) {
+
+        \Log::error('Image Upload Error: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'حدث خطأ أثناء رفع الصورة',
+            'error' => config('app.debug') ? $e->getMessage() : null,
+        ], 500);
+    }
+}
+
 }
