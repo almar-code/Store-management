@@ -24,7 +24,7 @@ class ProductStatService
     ];
 
     // مدة منع تكرار المشاهدة لنفس الشخص على نفس المنتج (بالدقائق)
-    private const VIEW_COOLDOWN_MINUTES = 30;
+    private const VIEW_COOLDOWN_MINUTES = 10;
 
     /**
      * إنشاء صف الإحصائيات للمنتج إن لم يكن موجوداً

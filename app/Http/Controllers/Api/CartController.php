@@ -12,7 +12,7 @@ use App\Models\Discount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
+use App\Services\ProductStatService;
 class CartController extends Controller
 {
     /**
@@ -137,6 +137,8 @@ class CartController extends Controller
         $cart = Cart::firstOrCreate([
             'customer_id' => $request->customer_id
         ]);
+        // زيادة عداد الإضافة للسلة (كل ضغطة "أضف للسلة" تُحسب مرة واحدة)
+        ProductStatService::increment((int) $request->product_id, 'cart_adds_count');
 
         // التحقق مما إذا كان نفس المنتج بنفس اللون والمقاس موجوداً مسبقاً داخل السلة
         $existingItem = CartItem::where('cart_id', $cart->cart_id)

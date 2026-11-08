@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Webhook;
 use Throwable;
-
+use App\Services\ProductStatService;
 class StripeWebhookController extends Controller
 {
     public function handle(Request $request)
@@ -150,6 +150,8 @@ class StripeWebhookController extends Controller
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]);
+                // زيادة مبيعات المنتج بالكمية المطلوبة
+                ProductStatService::increment((int) $item['product_id'], 'sales_count', (int) $item['quantity']);
             }
 
             /*

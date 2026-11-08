@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
+use App\Services\ProductStatService;
 
 class ManualPaymentController extends Controller
 {
@@ -245,6 +246,8 @@ class ManualPaymentController extends Controller
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
+                    // زيادة مبيعات المنتج بالكمية المطلوبة
+                ProductStatService::increment((int) $item['product_id'], 'sales_count', (int) $item['quantity']);
                 }
 
                 DB::table('payments')->insert([

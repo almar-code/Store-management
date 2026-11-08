@@ -36,15 +36,19 @@ class ProductCommentController extends Controller
             'sentiment'   => 'nullable|string', 
         ]);
          // الترجمة
-            $commenten = TranslationService::translate(
+            $commentEn = TranslationService::translate(
                 $request->comment_en
+            );
+             $commentAr = TranslationService::translate(
+                $request->comment_en,
+                'ar'
             );
 
         ProductComment::create([
             'customer_id' => $request->customer_id,
             'p_id'        => $request->p_id,
-            'comment_ar'  => $request->comment_ar,
-            'comment_en'  => $request->commenten,
+            'comment_ar'  => $commentAr,
+            'comment_en'  => $request->commentEn,
             'stars'       => $request->stars,
             'sentiment'   => $request->sentiment, 
         ]);

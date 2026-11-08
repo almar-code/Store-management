@@ -6,7 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
-
+use App\Models\Product;
+use App\Observers\ProductObserver;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -20,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
    
     public function boot(): void
 {
+    // إنشاء صف إحصائيات تلقائياً لكل منتج جديد
+Product::observe(ProductObserver::class);
     // إجبار لارافل على تحويل جميع الروابط والنماذج إلى https في بيئة الإنتاج
     if (config('app.env') === 'production') {
         URL::forceScheme('https');
