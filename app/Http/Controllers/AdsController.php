@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
-class adsController extends Controller
+class AdsController extends Controller
 {
     /**
      * عرض صفحة قائمة الإعلانات
