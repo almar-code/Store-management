@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use App\Services\ProductStatService;
 class FavoriteController extends Controller
 {
     /**
@@ -28,6 +28,7 @@ class FavoriteController extends Controller
 
         // فحص النتيجة ومعرفة هل تم الإضافة (attached) أم الحذف (detached)
         if (count($result['attached']) > 0) {
+            ProductStatService::increment((int) $request->product_id, 'favorites_count');
             return response()->json([
                 'status' => true,
                 'is_favorite' => true,

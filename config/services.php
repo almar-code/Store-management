@@ -69,7 +69,9 @@ return [
 ],
 'n8n' => [
     'reports_webhook' => env('N8N_REPORTS_WEBHOOK_URL'),
+    'performance_webhook' => env('N8N_PERFORMANCE_WEBHOOK_URL'),
 ],
+
     
 
 ];

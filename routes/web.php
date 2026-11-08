@@ -166,8 +166,10 @@ Route::prefix('reports')->group(function () {
         ->whereNumber('id')
         ->name('reports.delete');
 });
-Route::get('/product-performance',[ProductPerformanceController::class, 'index'])->name('product-performance');
-
+// أداء المنتجات
+Route::get('/product-performance', [ProductPerformanceController::class, 'index'])->name('product-performance')->middleware('check.permission:مدير المتجر');
+Route::post('/product-performance/refresh', [ProductPerformanceController::class, 'refresh'])->name('product-performance.refresh')->middleware('check.permission:مدير المتجر');
+Route::post('/product-performance/ai-report', [ProductPerformanceController::class, 'aiReport'])->name('product-performance.ai-report')->middleware('check.permission:مدير المتجر');
 // حسابات الدفع
 Route::get('store_payment_accounts', [StorePaymentAccountController::class, 'index'])->middleware('check.permission:مدير المتجر');
 Route::get('addStorePaymentAccount', [StorePaymentAccountController::class, 'create'])->middleware('check.permission:مدير المتجر');

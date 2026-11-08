@@ -74,5 +74,8 @@ public function generalAdvertisements()
         'ads_id'
     )->withTimestamps();
 }
-
+public function stats()
+{
+    return $this->hasOne(ProductStat::class, 'p_id', 'p_id');
+}
 }

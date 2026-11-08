@@ -26,7 +26,7 @@ use App\Http\Controllers\Api\StripeWebhookController;
 use App\Http\Controllers\Api\ManualPaymentController;
 use App\Http\Controllers\Api\OrderController;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Api\ProductStatController;
 use App\Http\Controllers\Api\AdvertisementController;
 use App\Http\Controllers\Api\ProductCommentController;
 use App\Http\Controllers\Api\CustomerSyncController;
@@ -69,7 +69,9 @@ Route::get('/ads/{id}/products', [AdvertisementController::class, 'getGeneralAdP
 Route::get('/products/{p_id}/comments', [ProductCommentController::class, 'getProductComments']);
 Route::post('/product-comments', [ProductCommentController::class, 'store']);
 Route::delete('/product-comments/{comment_id}', [ProductCommentController::class, 'destroy']);
-
+// إحصائيات المنتج: المشاهدات والمشاركات
+Route::post('/products/{p_id}/view', [ProductStatController::class, 'recordView']);
+Route::post('/products/{p_id}/share', [ProductStatController::class, 'recordShare']);
 
 Route::post('/customers/sync-supabase', [CustomerSyncController::class, 'getCustomerIdBySupabase']);
 
