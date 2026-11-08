@@ -1,30 +1,39 @@
 <?php
 
-namespace App\Models;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ProductStat extends Model
+return new class extends Migration
 {
-    // 1. اسم الجدول والمفتاح الأساسي
-    protected $table = 'product_stats';
-    protected $primaryKey = 'stat_id';
-
-    // 2. الحقول المسموح تعبئتها (Mass Assignment)
-    protected $fillable = [
-        'p_id',
-        'views_count',
-        'cart_adds_count',
-        'favorites_count',
-        'shares_count',
-        'sales_count',
-        'positive_comments_count',
-        'negative_comments_count',
-    ];
-
-    // 3. علاقة عكسية مع المنتج
-    public function product()
+    public function up(): void
     {
-        return $this->belongsTo(Product::class, 'p_id', 'p_id');
+        Schema::create('product_stats', function (Blueprint $table) {
+            $table->id('stat_id');
+
+            // علاقة واحد لواحد مع المنتج (unique يمنع وجود صفين لنفس المنتج)
+            $table->unsignedBigInteger('p_id')->unique();
+
+            $table->foreign('p_id')
+                  ->references('p_id')
+                  ->on('products')
+                  ->onDelete('cascade');
+
+            // عدادات الأداء
+            $table->unsignedInteger('views_count')->default(0);
+            $table->unsignedInteger('cart_adds_count')->default(0);
+            $table->unsignedInteger('favorites_count')->default(0);
+            $table->unsignedInteger('shares_count')->default(0);
+            $table->unsignedInteger('sales_count')->default(0);
+            $table->unsignedInteger('positive_comments_count')->default(0);
+            $table->unsignedInteger('negative_comments_count')->default(0);
+
+            $table->timestamps();
+        });
     }
-}
+
+    public function down(): void
+    {
+        Schema::dropIfExists('product_stats');
+    }
+};
