@@ -135,7 +135,6 @@ if (
                     $stored = json_decode($stored, true);
                 }
 
-                // لا نقارن بيانات Google Vision القديمة بتضمينات Gemini.
                 if (
                     !is_array($stored)
                     || ($stored['provider'] ?? null) !== 'gemini'

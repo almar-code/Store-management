@@ -2,16 +2,16 @@
 
 return [
 
-    'paths' => [
-        'api/*',
-        'storage/*',
-        'sanctum/csrf-cookie',
-        '*'
-    ],
+    'paths' => ['*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'], // أو يمكنك وضع الرابط المحلي للمتصفح مثل ['http://localhost:52450'] حسب منفذ فلاتر ويب لديك
+    'allowed_origins' => [
+        'http://localhost:5050',
+        'http://127.0.0.1:5050',
+        'http://localhost:62155',
+        'http://localhost:8080',
+    ],
 
     'allowed_origins_patterns' => [],
 
@@ -21,5 +21,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true, // ضعها true لضمان قبول الكوكيز والجلسات والتوكنز عبر المتصفح
+    'supports_credentials' => true,
+
 ];

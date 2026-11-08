@@ -62,6 +62,13 @@ return [
         'GEMINI_VISION_MODEL',
         'gemini-2.5-flash'
     ),
+    'product_models' => env(
+    'GEMINI_PRODUCT_MODELS',
+    'gemini-2.5-flash,gemini-3.5-flash-lite,gemini-2.5-flash-lite'
+    ),
+],
+'n8n' => [
+    'reports_webhook' => env('N8N_REPORTS_WEBHOOK_URL'),
 ],
     
 

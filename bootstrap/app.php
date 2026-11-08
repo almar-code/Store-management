@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
 
         // 🌟 1. تفعيل الـ CORS بشكل صريح ومستمر لكل الطلبات (بما فيها الصور)
+
         $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
         // استثناء Route بوت Telegram من CSRF
         $middleware->validateCsrfTokens(except: [
@@ -27,3 +28,4 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
+    

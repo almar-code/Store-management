@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ProductComment;
 use Illuminate\Http\Request;
+use App\Services\ProductStatService;
 use App\Services\TranslationService;
 
 class ProductCommentController extends Controller
@@ -47,6 +48,11 @@ class ProductCommentController extends Controller
             'stars'       => $request->stars,
             'sentiment'   => $request->sentiment, 
         ]);
+        ProductStatService::recordComment(
+    (int) $request->p_id,
+    $request->sentiment,
+    (int) $request->stars
+);
 
         $comments = ProductComment::where('p_id', $request->p_id)
             ->with('customer:customer_id,name,profile_image')

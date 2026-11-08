@@ -46,7 +46,8 @@ Route::post('/add-product',[ProductController::class,'store']);// إضافة م�
 Route::get('/edit-product/{id}',[ProductController::class,'edit']);// تحميل نفس الصفحة الاضافة لكن مع بيانات المنتج للتعديل
 Route::post('/update-product/{id}',[ProductController::class,'update']);// تعديل المنتج
 Route::get('/delete-product/{id}',[ProductController::class,'destroy']);// حذف منتج
-
+Route::get('/products/check-name', [ProductController::class, 'checkName'])->middleware('check.permission:مدير المخزن');
+Route::post('/products/analyze-image', [ProductController::class, 'analyzeImage'])->middleware('check.permission:مدير المخزن');
 
 Route::get('orders', [OrdersController::class, 'Orders'])->middleware('check.permission:مدير المبيعات');
 Route::get('orderDetails/{orderID}', [OrdersController::class, 'OrderDetails']);
@@ -74,6 +75,8 @@ Route::get('/delete-user/{id}', [UserController::class, 'destroy']);
 Route::get('addDiscount/{id}', [DiscountController::class, 'AddDiscount']);
 Route::post('/add-discount/{id}', [DiscountController::class, 'store']);
 Route::get('/delete-discount/{id}', [DiscountController::class, 'destroy']);
+Route::get('/edit-discount/{id}', [DiscountController::class, 'edit']);
+Route::post('/update-discount/{id}', [DiscountController::class, 'update']);
 Route::get('addsize/{id}', [SizeController::class, 'Addsize']);
 Route::get('sizeManagement/{id}', [SizeController::class, 'SizeManagement']);
 Route::post('/add-size/{id}', [SizeController::class, 'store']);
@@ -140,17 +143,28 @@ Route::get('/videos', [VideoController::class, 'index'])->name('video.index');
 Route::get('/delete-video/{id}', [VideoController::class, 'destroy'])->name('video.delete');
 // التقارير
 
+// التقارير
 Route::prefix('reports')->group(function () {
-    // الصفحة الرئيسية للتقارير
+    // التقارير المحفوظة
     Route::get('/', [ReportController::class, 'index'])->name('reports.index');
-    
+
     // صفحة التقرير المخصص
     Route::get('/custom', [ReportController::class, 'custom'])->name('reports.custom');
-    
+
     // صفحة التقارير الجاهزة
     Route::get('/ready', [ReportController::class, 'ready'])->name('reports.ready');
-Route::post('/generate', [ReportController::class, 'generate'])->name('report.generate');
 
+    // إنشاء تقرير
+    Route::post('/generate', [ReportController::class, 'generate'])->name('report.generate');
+
+    // حفظ تقرير
+    Route::post('/save', [ReportController::class, 'save'])->name('reports.save');
+    Route::delete('/requests/{id}', [ReportController::class, 'destroyRequest'])->whereNumber('id')->name('reports.requests.delete');
+    Route::delete('/requests', [ReportController::class, 'clearRequests'])->name('reports.requests.clear');
+    // حذف تقرير محفوظ
+    Route::get('/delete/{id}', [ReportController::class, 'destroy'])
+        ->whereNumber('id')
+        ->name('reports.delete');
 });
 Route::get('/product-performance',[ProductPerformanceController::class, 'index'])->name('product-performance');
 
