@@ -17,6 +17,7 @@ use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductPerformanceController;
 use App\Http\Controllers\StorePaymentAccountController;
+use App\Http\Controllers\BackupController;
 
 use Illuminate\Http\Request;
 Route::middleware(['auth'])->group(function () {
@@ -100,12 +101,12 @@ Route::get('/delete-color/{id}',[ColorsController::class,'destroy']);
 // -------------------------------------------------------------------------
 // نظام إدارة الإعلانات (العادية وبرابط)
 // -------------------------------------------------------------------------
-Route::get('/ads', [adsController::class, 'Ads']);                             // عرض قائمة الإعلانات
-Route::get('/add-ads', [adsController::class, 'AddAds']);                       // صفحة إضافة إعلان عادي
-Route::get('/add-ads-link', [adsController::class, 'AddAdsLink']);              // صفحة إضافة إعلان برابط
-Route::post('/add-ads', [adsController::class, 'store']);                       // حفظ الإعلان الجديد (عادي أو برابط)
-Route::get('/update-ads/{id}', [adsController::class, 'update']);               // تبديل حالة الإعلان (نشط / غير نشط)
-Route::get('/delete-ads/{id}', [adsController::class, 'destroy']);              // حذف الإعلان وصورته نهائياً
+Route::get('/ads', [AdsController::class, 'Ads']);                             // عرض قائمة الإعلانات
+Route::get('/add-ads', [AdsController::class, 'AddAds']);                       // صفحة إضافة إعلان عادي
+Route::get('/add-ads-link', [AdsController::class, 'AddAdsLink']);              // صفحة إضافة إعلان برابط
+Route::post('/add-ads', [AdsController::class, 'store']);                       // حفظ الإعلان الجديد (عادي أو برابط)
+Route::get('/update-ads/{id}', [AdsController::class, 'update']);               // تبديل حالة الإعلان (نشط / غير نشط)
+Route::get('/delete-ads/{id}', [AdsController::class, 'destroy']);              // حذف الإعلان وصورته نهائياً
 
 
 // -------------------------------------------------------------------------
@@ -113,12 +114,12 @@ Route::get('/delete-ads/{id}', [adsController::class, 'destroy']);              
 // -------------------------------------------------------------------------
 
 // 1. إعلان خاص بمنتج معين (نوع product)
-Route::get('/create-ad/{id}', [adsController::class, 'createProductAd']);
-Route::post('/create-ad/{id}', [adsController::class, 'storeProductAd']);
+Route::get('/create-ad/{id}', [AdsController::class, 'createProductAd']);
+Route::post('/create-ad/{id}', [AdsController::class, 'storeProductAd']);
 
 // 2. إضافة المنتج إلى عرض عام (عبر الجدول الوسيط advertisement_product)
-Route::get('/assign-general-ad/{id}', [adsController::class, 'assignGeneralAdForm']);
-Route::post('/assign-general-ad/{id}', [adsController::class, 'storeGeneralAdAssignment']);
+Route::get('/assign-general-ad/{id}', [AdsController::class, 'assignGeneralAdForm']);
+Route::post('/assign-general-ad/{id}', [AdsController::class, 'storeGeneralAdAssignment']);
 
 
 // -------------------------------------------------------------------------
@@ -126,10 +127,10 @@ Route::post('/assign-general-ad/{id}', [adsController::class, 'storeGeneralAdAss
 // -------------------------------------------------------------------------
 
 // عرض المنتجات المرتبطة بإعلان عام معين
-Route::get('/ads/{id}/products', [adsController::class, 'showGeneralAdProducts']);
+Route::get('/ads/{id}/products', [AdsController::class, 'showGeneralAdProducts']);
 
 // إزالة منتج معين من العرض العام (الجدول الوسيط)
-Route::get('/ads/{adsId}/products/{productId}/remove', [adsController::class, 'removeProductFromGeneralAd']);
+Route::get('/ads/{adsId}/products/{productId}/remove', [AdsController::class, 'removeProductFromGeneralAd']);
 
 
 Route::get('customers', [CustomerController::class, 'Customers'])->middleware('check.permission:مدير المبيعات');
@@ -175,6 +176,19 @@ Route::get('/edit-store-payment-account/{id}', [StorePaymentAccountController::c
 Route::post('/update-store-payment-account/{id}', [StorePaymentAccountController::class, 'update']);
 Route::get('/update-account/{id}', [StorePaymentAccountController::class, 'updateactive']);
 Route::get('/delete-store-payment-account/{id}', [StorePaymentAccountController::class, 'destroy']);
+
+// النسخ الاحتياطي
+// النسخ الاحتياطي
+Route::get('addbackups', [BackupController::class, 'create'])->middleware('check.permission:مدير المتجر');
+Route::post('/add-backup', [BackupController::class, 'store'])->middleware('check.permission:مدير المتجر');
+Route::get('backups/{type}', [BackupController::class, 'index'])
+    ->whereIn('type', ['daily', 'weekly', 'monthly', 'yearly'])
+    ->middleware('check.permission:مدير المتجر');
+Route::get('backupsettings', [BackupController::class, 'settings'])->middleware('check.permission:مدير المتجر');
+Route::post('/update-backup-settings', [BackupController::class, 'updateSettings'])->middleware('check.permission:مدير المتجر');
+Route::get('/backup-download/{file}', [BackupController::class, 'download'])
+    ->where('file', '[A-Za-z0-9\-_.]+')
+    ->middleware('check.permission:مدير المتجر');
 
 });
 

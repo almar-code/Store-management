@@ -94,6 +94,12 @@ footer.footer {
     cursor: not-allowed; 
     pointer-events: none;
 }
+/* قوائم الجوال الطويلة (مثل النسخ الاحتياطي) — الافتراضي في main.css يكفي 3 عناصر فقط */
+@media (max-width: 1199px) {
+    .navmenu .dropdown > ul.dropdown-tall.dropdown-active {
+        max-height: 300px;
+    }
+}
 </style>
 
 <body class="index-page">
@@ -346,41 +352,85 @@ footer.footer {
                                 الطلبات</div>
                             </a>
                         </li>
+                        <li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">
+                            <a href="#">
+                                <div class="toggle-dropdown divnav">
+                                    <div>
+                                        <span class="bi bi-shield-lock nav-icon"></span>
+                                        <span class="{{ request()->is('addbackups') || request()->is('backups/*') || request()->is('backupsettings') ? 'active' : '' }}">النسخ الاحتياطي</span>
+                                    </div>
+                                    <i class="bi bi-chevron-down"></i>
+                                </div>
+                            </a>
+
+                            <ul class="dropdown-tall">
+                                <li>
+                                    <a href="/addbackups" class="{{ request()->is('addbackups') ? 'active' : '' }}">
+                                        <div><span class="bi bi-cloud-plus sub-icon"></span>إنشاء نسخة احتياطية</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/backups/daily" class="{{ request()->is('backups/daily') ? 'active' : '' }}">
+                                        <div><span class="bi bi-calendar-day sub-icon"></span>النسخ اليومية</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/backups/weekly" class="{{ request()->is('backups/weekly') ? 'active' : '' }}">
+                                        <div><span class="bi bi-calendar-week sub-icon"></span>النسخ الأسبوعية</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/backups/monthly" class="{{ request()->is('backups/monthly') ? 'active' : '' }}">
+                                        <div><span class="bi bi-calendar-month sub-icon"></span>النسخ الشهرية</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/backups/yearly" class="{{ request()->is('backups/yearly') ? 'active' : '' }}">
+                                        <div><span class="bi bi-calendar3 sub-icon"></span>النسخ السنوية</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/backupsettings" class="{{ request()->is('backupsettings') ? 'active' : '' }}">
+                                        <div><span class="bi bi-gear sub-icon"></span>إعدادات النسخ</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="dropdown {{ !$isSalesManager ? 'locked-item' : '' }}">
                             <a href="/customers" class="{{ request()->is('customers') ? 'active' : '' }}">
                                 <div><span class="bi bi-people nav-icon"></span>
                                 العملاء</div>
                             </a>
                         </li>
-<li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">
-    <a href="#">
-        <div class="toggle-dropdown divnav">
-            <div>
-                <span class="bi bi-file-earmark-text nav-icon"></span>
-                <span class="{{ request()->is('reports*') ? 'active' : '' }}">التقارير</span>
-            </div>
-            <i class="bi bi-chevron-down"></i>
-        </div>
-    </a>
-    <ul>
-        <li>
-            <a href="/reports/custom" class="{{ request()->is('reports/custom') ? 'active' : '' }}">
-                <div> <span class="bi bi-pencil-square sub-icon"></span> تقرير مخصص</div>
-            </a>
-        </li>
-        <li>
-            <a href="/reports/ready" class="{{ request()->is('reports/ready') ? 'active' : '' }}">
-                <div> <span class="bi bi-clipboard-check sub-icon"></span> تقارير جاهزة</div>
-            </a>
-        </li>
-        <li>
-            <a href="/reports" class="{{ request()->is('reports') && !request()->is('reports/*') ? 'active' : '' }}">
-                <div> <span class="bi bi-list-ul sub-icon"></span> قائمة التقارير</div>
-            </a>
-        </li>
-    </ul>
-</li>
-
+                        <li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">
+                            <a href="#">
+                                <div class="toggle-dropdown divnav">
+                                    <div>
+                                        <span class="bi bi-file-earmark-text nav-icon"></span>
+                                        <span class="{{ request()->is('reports*') ? 'active' : '' }}">التقارير</span>
+                                    </div>
+                                    <i class="bi bi-chevron-down"></i>
+                                </div>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/reports/custom" class="{{ request()->is('reports/custom') ? 'active' : '' }}">
+                                        <div> <span class="bi bi-pencil-square sub-icon"></span> تقرير مخصص</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/reports/ready" class="{{ request()->is('reports/ready') ? 'active' : '' }}">
+                                        <div> <span class="bi bi-clipboard-check sub-icon"></span> تقارير جاهزة</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/reports" class="{{ request()->is('reports') && !request()->is('reports/*') ? 'active' : '' }}">
+                                        <div> <span class="bi bi-list-ul sub-icon"></span> قائمة التقارير</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
                         <li class="dropdown">
                             <a href="#" onclick="confirmDelete('/logout','خروج  ','هل أنت متأكد من تسجيل الخروج ؟')">
                                 <div><span class="bi bi-box-arrow-right nav-icon"></span>
@@ -473,14 +523,13 @@ footer.footer {
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
-<script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
-<script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-<script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-
+    <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+    <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
     @yield('jsfile')
 
     <script src="{{ asset('assets/js/main.js')}}?v={{ time() }}"></script>
