@@ -1,0 +1,251 @@
+/* صفحات الخصوصية وحذف البيانات */
+:root {
+    --legal-accent: #008870;
+    --legal-accent-soft: rgba(0, 136, 112, 0.08);
+    --legal-bg: #f4f7f6;
+    --legal-card: #ffffff;
+    --legal-text: rgba(0, 0, 0, 0.8);
+    --legal-heading: #000000;
+    --legal-muted: #6c757d;
+    --legal-border: #e6ebea;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body.legal-page {
+    margin: 0;
+    background: var(--legal-bg);
+    color: var(--legal-text);
+    font-family: "Cairo", "Roboto", system-ui, sans-serif;
+    line-height: 1.9;
+    font-size: 16px;
+}
+
+html[dir="ltr"] body.legal-page {
+    font-family: "Roboto", "Cairo", system-ui, sans-serif;
+    line-height: 1.7;
+}
+
+.legal-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 40px;
+}
+
+/* الرأس */
+.legal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.legal-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--legal-heading);
+}
+
+.legal-brand img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.legal-lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid var(--legal-accent);
+    border-radius: 50px;
+    color: var(--legal-accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.legal-lang:hover {
+    background: var(--legal-accent);
+    color: #fff;
+}
+
+/* البطاقة */
+.legal-card {
+    background: var(--legal-card);
+    border: 1px solid var(--legal-border);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.legal-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--legal-border);
+}
+
+.legal-title > i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--legal-accent-soft);
+    color: var(--legal-accent);
+    font-size: 24px;
+}
+
+.legal-title h1 {
+    margin: 0;
+    font-size: 26px;
+    color: var(--legal-heading);
+}
+
+.legal-title p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: var(--legal-muted);
+}
+
+.legal-intro {
+    font-size: 17px;
+    margin: 0 0 8px;
+}
+
+/* الأقسام */
+.legal-card section {
+    margin-top: 24px;
+}
+
+.legal-card h2 {
+    font-size: 19px;
+    color: var(--legal-heading);
+    margin: 0 0 8px;
+    padding-inline-start: 12px;
+    border-inline-start: 4px solid var(--legal-accent);
+}
+
+.legal-card p {
+    margin: 0 0 8px;
+}
+
+.legal-card ul,
+.legal-card ol {
+    margin: 0;
+    padding-inline-start: 22px;
+}
+
+.legal-card li {
+    margin-bottom: 6px;
+}
+
+.legal-card li::marker {
+    color: var(--legal-accent);
+    font-weight: 700;
+}
+
+.legal-card a {
+    color: var(--legal-accent);
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.legal-note {
+    margin-top: 10px !important;
+    padding: 10px 14px;
+    background: var(--legal-accent-soft);
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+/* التواصل */
+.legal-contact {
+    padding: 20px;
+    background: var(--legal-accent-soft);
+    border-radius: 12px;
+}
+
+.legal-contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+/* التذييل */
+.legal-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--legal-muted);
+}
+
+.legal-footer a {
+    color: var(--legal-accent);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.legal-footer span {
+    margin: 0 8px;
+}
+
+.legal-footer p {
+    margin: 8px 0 0;
+}
+
+/* الآيباد */
+@media (max-width: 992px) {
+    .legal-card {
+        padding: 26px;
+    }
+}
+
+/* الجوال */
+@media (max-width: 576px) {
+    body.legal-page {
+        font-size: 15px;
+    }
+
+    .legal-card {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+
+    .legal-title h1 {
+        font-size: 21px;
+    }
+
+    .legal-title > i {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+
+    .legal-card h2 {
+        font-size: 17px;
+    }
+
+    .legal-brand {
+        font-size: 17px;
+    }
+
+    .legal-brand img {
+        width: 36px;
+        height: 36px;
+    }
+}
