@@ -18,6 +18,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductPerformanceController;
 use App\Http\Controllers\StorePaymentAccountController;
 use App\Http\Controllers\BackupController;
+use App\Http\Controllers\LegalController;
 
 use Illuminate\Http\Request;
 Route::middleware(['auth'])->group(function () {
@@ -200,3 +201,8 @@ Route::post('/login-user', [LoginController::class, 'Examine'])->name('login-use
 Route::post('/verify-telegram-user', [LoginController::class, 'VerifyTelegramUser'])
     ->name('verify-telegram-user')
     ->middleware('throttle:5,1');
+
+    // صفحات عامة لفيسبوك والمتاجر
+// صفحات عامة لفيسبوك والمتاجر
+Route::get('/privacy-policy', [LegalController::class, 'privacy'])->name('legal.privacy');
+Route::get('/data-deletion', [LegalController::class, 'dataDeletion'])->name('legal.deletion');
