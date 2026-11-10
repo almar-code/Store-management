@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class LegalController extends Controller
 {
     // بريد التواصل الظاهر في الصفحات
-    private string $contactEmail = 'support@example.com';
+    private string $contactEmail = 'alftyhyly35@gmail.com';
 
     // تحديد اللغة من الرابط
     private function lang(Request $request): string
