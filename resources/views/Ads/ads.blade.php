@@ -64,7 +64,14 @@
                             @endif
                         </td>
                         <td class="text-muted lh-1 fs-md-5">
-                            {{ $adss->type == 'link' ? $adss->AdsLink : '-' }}
+                            @if ($adss->type == 'link')
+                                {{-- عرض بداية الرابط والباقي نقاط --}}
+                                <span title="{{ $adss->AdsLink }}">
+                                   {{ $adss->type == 'link' ? str_repeat('.', 5) . substr(preg_replace('#^(https?://)?(www\.)?#', '', $adss->AdsLink), 0, 5) : '-' }}
+                                </span>
+                            @else
+                                -
+                            @endif
                         </td>
                         <td>
                             <a href="/update-ads/{{ $adss->ads_id }}">
