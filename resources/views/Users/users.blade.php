@@ -65,7 +65,11 @@
                                 <td class="{{ $colorClass }}">{{ $loop->iteration }}</td>
                                 <td class="card-title {{ $colorClass }}">{{ $user->full_name }}</td>
                                 <td class="{{ $colorClass }}">{{ $user->username }}</td>
-                                <td class="{{ $colorClass }}">{{ str_repeat('.', 5) . substr($user->email, 0, 3) }}</td>
+                                <td class="{{ $colorClass }}">
+                                    <span title="{{ $user->email}}">
+                                            {{ str_repeat('.', 5) . substr($user->email, 0, 5) }}
+                                    </span>
+                                </td>
                                 <td class="{{ $colorClass }}">{{ $user->phone }}</td>
                                 <td class="{{ $colorClass }}">{{ $user->address }}</td>
                                 <td>

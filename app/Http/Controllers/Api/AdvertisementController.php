@@ -11,16 +11,18 @@ class AdvertisementController extends Controller
     /**
      * 1. جلب كافة الإعلانات النشطة وغير المنتهية (لتغذية السلايدر في التطبيق)
      */
-   public function getAds()
-{
-    // جلب كافة الإعلانات مباشرة للتأكد من ظهورها في السلايدر
-    $ads = Advertisement::all(); 
+    public function getAds()
+    {
+        // الإعلانات النشطة وغير المنتهية فقط
+        $ads = Advertisement::available()
+            ->latest()
+            ->get();
 
-    return response()->json([
-        'status' => true,
-        'data' => $ads
-    ]);
-}
+        return response()->json([
+            'status' => true,
+            'data' => $ads
+        ]);
+    }
     /**
      * 2. جلب المنتجات المرتبطة بإعلان عام محدد عبر الجدول الوسيط
      */
