@@ -1,105 +1,170 @@
 @extends('Layouts.master')
+
 @section('link')
-
-    <link href="{{ asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
-    <link href="{{ secure_asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
-
+    <link href="{{ asset('assets/css/orders-premium.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/css/orders-premium.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
+
 @section('content')
-    <div class="container my-4  px-2 px-md-2" dir="rtl">
-        <div class="container">
+<div class="container my-4 px-2 px-md-3 op-page">
 
-            <div class="controls-container">
+    {{-- رأس الصفحة --}}
+    <div class="op-head">
+        <div>
+            <h3 class="op-title">قائمة <span>الطلبات</span></h3>
+            <div class="op-sub">تابع الطلبات وحدّث حالتها ليصل الإشعار للعميل</div>
+        </div>
 
-                <div class="section-ar">
-
-                    <div class="section-title" style="margin-bottom: 0px;">
-                        <h3 style="font-size: 20px">قائمة <span class="orange-text">ألطلبات</span></h3>
-                    </div>
-                </div>
-                <div class="search-input-container">
-                    <i class="bi bi-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
-                </div>
-
-                <a href="/orders" class="btn-add-product shadow-sm" style="justify-content: center ;" title="تحديث الصفحة">
-
-                    <i class="bi bi-arrow-clockwise" ></i>
-                </a>
+        <div class="op-actions">
+            <div class="op-search">
+                <i class="bi bi-search"></i>
+                <input type="text" id="orderSearch" placeholder="ابحث برقم الطلب، الاسم، الجوال أو المدينة">
             </div>
+            <a href="/orders" class="op-btn" title="تحديث">
+                <i class="bi bi-arrow-clockwise"></i>
+            </a>
+        </div>
+    </div>
 
-            <div class="table-container">
-               <table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>اسم العميل</th>
-            <th class="show">رقم العميل</th>
-            <th class="show">المدينة</th>
-            <th>إجمالي الطلب</th>
-            <th>حالة الطلب</th>
-            <th class="show">تاريخ الطلب</th>
-            <th>التفاصيل</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-    @foreach ($orders as $order)
-
-        <tr class="card-item">
-            <td>{{ $order->order_id }}</td>
-
-            <td class="card-title">{{ $order->customer->name }}</td>
-
-            <td class="show">
-                {{ $order->customer->phone ?? '-' }}
-            </td>
-
-            <td class="show">
-                {{ $order->address->city ?? '-' }}
-            </td>
-
-            <td>
-                {{ $order->total_price }} ر.س
-            </td>
-
-            <td>
-
-                @if($order->status == 'قيد المعالجة')
-                    <span class="badge bg-warning text-dark">قيد المعالجة</span>
-
-                @elseif($order->status == 'مكتمل')
-                    <span class="badge bg-success">مكتمل</span>
-
-                @elseif($order->status == 'ملغي')
-                    <span class="badge bg-danger" >ملغي</span>
-
-                @else
-                    <span class="badge bg-secondary">{{ $order->status }}</span>
-
-                @endif
-
-            </td>
-
-            <td class="show">
-                {{ $order->created_at->format('Y-m-d') }}
-            </td>
-
-            <td>
-                <a href="/orderDetails/{{ $order->order_id }}" class="text-dark fs-5">
-                    <i class="bi bi-eye" title="عرض تفاصيل الطلب"></i>
-                </a>
-            </td>
-
-        </tr>
-
-    @endforeach
-
-    </tbody>
-</table>
+    {{-- الإحصائيات --}}
+    <div class="op-stats">
+        <div class="op-stat">
+            <div class="icon"><i class="bi bi-bag-check"></i></div>
+            <div>
+                <span class="value">{{ $stats['total'] }}</span>
+                <span class="label">إجمالي الطلبات</span>
+            </div>
+        </div>
+        <div class="op-stat">
+            <div class="icon"><i class="bi bi-hourglass-split"></i></div>
+            <div>
+                <span class="value">{{ $stats['active'] }}</span>
+                <span class="label">طلبات قيد التنفيذ</span>
+            </div>
+        </div>
+        <div class="op-stat">
+            <div class="icon"><i class="bi bi-check2-circle"></i></div>
+            <div>
+                <span class="value">{{ $stats['completed'] }}</span>
+                <span class="label">طلبات مكتملة</span>
+            </div>
+        </div>
+        <div class="op-stat">
+            <div class="icon"><i class="bi bi-cash-stack"></i></div>
+            <div>
+                <span class="value">{{ number_format($stats['revenue'], 2) }}</span>
+                <span class="label">إيرادات المكتمل (ر.س)</span>
             </div>
         </div>
     </div>
-    
+
+    {{-- تبويبات الحالات --}}
+    <div class="op-tabs">
+        <button class="op-tab active" data-filter="all">
+            الكل <span class="count">{{ $stats['total'] }}</span>
+        </button>
+        @foreach(\App\Models\Order::STATUSES as $key => $label)
+            <button class="op-tab" data-filter="{{ $key }}">
+                {{ $label['ar'] }} <span class="count">{{ $statusCounts[$key] ?? 0 }}</span>
+            </button>
+        @endforeach
+    </div>
+
+    {{-- الجدول --}}
+    <div class="op-card op-table-card">
+        <table class="op-table" id="ordersTable">
+            <thead>
+                <tr>
+                    <th>رقم الطلب</th>
+                    <th>العميل</th>
+                    <th>المدينة</th>
+                    <th>القطع</th>
+                    <th>الإجمالي</th>
+                    <th>الدفع</th>
+                    <th>الحالة</th>
+                    <th>التاريخ</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($orders as $order)
+                    @php
+                        $name = $order->customer->name ?? 'عميل';
+                        $search = mb_strtolower($order->order_id . ' ' . $name . ' ' . ($order->customer->phone ?? '') . ' ' . ($order->address->city ?? ''));
+                    @endphp
+                    <tr data-status="{{ $order->status }}" data-search="{{ $search }}">
+                        <td class="op-td-main">
+                            <div class="op-customer">
+                                <div class="op-avatar">{{ mb_substr($name, 0, 1) }}</div>
+                                <div>
+                                    <strong>{{ $name }}</strong>
+                                    <small>{{ $order->customer->phone ?? '-' }}</small>
+                                </div>
+                            </div>
+                            <span class="op-id d-md-none">#{{ $order->order_id }}</span>
+                        </td>
+                        <td data-label="رقم الطلب" class="d-none d-md-table-cell">
+                            <span class="op-id">#{{ $order->order_id }}</span>
+                        </td>
+                        <td data-label="المدينة">{{ $order->address->city ?? '-' }}</td>
+                        <td data-label="القطع">{{ (int) $order->items_qty }}</td>
+                        <td data-label="الإجمالي"><strong>{{ number_format($order->total_price, 2) }} ر.س</strong></td>
+                        <td data-label="الدفع">
+                            <span class="pay-{{ $order->payment_status }}">{{ $order->paymentLabel() }}</span>
+                        </td>
+                        <td data-label="الحالة">
+                            <span class="op-status st-{{ $order->status }}">{{ $order->statusLabel() }}</span>
+                        </td>
+                        <td data-label="التاريخ">{{ $order->created_at->format('Y-m-d') }}</td>
+                        <td data-label="التفاصيل">
+                            <a href="/orderDetails/{{ $order->order_id }}" class="op-view" title="عرض التفاصيل">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <div class="op-empty" id="ordersEmpty" @if($orders->isNotEmpty()) hidden @endif>
+            <i class="bi bi-inbox"></i>
+            لا توجد طلبات مطابقة
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('jsfile')
+<script>
+    // البحث والتصفية حسب الحالة
+    const rows = document.querySelectorAll('#ordersTable tbody tr');
+    const search = document.getElementById('orderSearch');
+    const empty = document.getElementById('ordersEmpty');
+    let activeFilter = 'all';
+
+    function applyFilter() {
+        const q = search.value.trim().toLowerCase();
+        let visible = 0;
+
+        rows.forEach(row => {
+            const show = (activeFilter === 'all' || row.dataset.status === activeFilter)
+                && row.dataset.search.includes(q);
+            row.hidden = !show;
+            if (show) visible++;
+        });
+
+        empty.hidden = visible > 0;
+    }
+
+    search.addEventListener('input', applyFilter);
+
+    document.querySelectorAll('.op-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.op-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            activeFilter = tab.dataset.filter;
+            applyFilter();
+        });
+    });
+</script>
 @endsection

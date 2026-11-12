@@ -312,32 +312,41 @@ footer.footer {
                                 </li>
                             </ul>
                         </li>
-                       <li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">
-                            <a href="#" >
-                                <div class = "toggle-dropdown divnav">
-                                    <div>
-                                        <span class="bi bi-wallet2 nav-icon"></span>
-                                        <span class="{{ request()->is('addStorePaymentAccount') || request()->is('store_payment_accounts') || request()->is('edit-store-payment-account/*') ? 'active' : '' }}">حسابات الدفع</span>
-                                    </div>
-                                    <i class="bi bi-chevron-down "></i>
-                                </div>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="/addStorePaymentAccount" class="{{ request()->is('addStorePaymentAccount') ? 'active' : '' }}">
-                                    <div> <span class="bi bi-plus-circle sub-icon"></span>
-                                        إضافة حساب دفع</div>
-                                    </a>
-                                </li>
+                      <li class="dropdown {{ !$isAdmin && !$isSalesManager ? 'locked-item' : '' }}">
+    <a href="#">
+        <div class="toggle-dropdown divnav">
+            <div>
+                <span class="bi bi-wallet2 nav-icon"></span>
+                <span class="{{ request()->is('addStorePaymentAccount') || request()->is('store_payment_accounts') || request()->is('edit-store-payment-account/*') || request()->is('payments') ? 'active' : '' }}">الدفع</span>
+            </div>
+            <i class="bi bi-chevron-down "></i>
+        </div>
+    </a>
+    <ul>
+        {{-- مراجعة المدفوعات: مدير المبيعات --}}
+        <li class="{{ !$isSalesManager ? 'locked-item' : '' }}">
+            <a href="/payments" class="{{ request()->is('payments') ? 'active' : '' }}">
+            <div> <span class="bi bi-cash-stack sub-icon"></span>
+                مراجعة المدفوعات</div>
+            </a>
+        </li>
 
-                                <li>
-                                    <a href="/store_payment_accounts" class="{{ request()->is('store_payment_accounts') ? 'active' : '' }}">
-                                    <div> <span class="bi bi-wallet sub-icon"></span>
-                                        قائمة حسابات الدفع</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+        {{-- حسابات الدفع: مدير المتجر --}}
+        <li class="{{ !$isAdmin ? 'locked-item' : '' }}">
+            <a href="/addStorePaymentAccount" class="{{ request()->is('addStorePaymentAccount') ? 'active' : '' }}">
+            <div> <span class="bi bi-plus-circle sub-icon"></span>
+                إضافة حساب دفع</div>
+            </a>
+        </li>
+
+        <li class="{{ !$isAdmin ? 'locked-item' : '' }}">
+            <a href="/store_payment_accounts" class="{{ request()->is('store_payment_accounts') ? 'active' : '' }}">
+            <div> <span class="bi bi-wallet sub-icon"></span>
+                قائمة حسابات الدفع</div>
+            </a>
+        </li>
+    </ul>
+</li>
 
 
                         <li class="dropdown {{ !$isSalesManager ? 'locked-item' : '' }}">
@@ -395,12 +404,16 @@ footer.footer {
 
                 </nav>
 
-                <!-- <div class="header-social-links">
+                {{-- <div class="header-social-links">
                                                     <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
                                                     <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                                                     <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                                                     <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                                                  </div> -->
+                                                  </div>  --}}
+                                                                  {{-- جرس الإشعارات --}}
+                @if (!empty(\App\Services\AdminNotificationService::allowedTypes($userPrivileges ?? [])))
+                    @include('Layouts.partials.notifications-bell')
+                @endif
 
             </div>
         </header>

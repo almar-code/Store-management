@@ -1,75 +1,77 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Customer;
-use App\Models\CustomerAddress;
-use App\Models\Payment;
+use App\Services\OrderStatusNotifier;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class OrdersController extends Controller
 {
-     public function Orders()
-{
-    try {
+    // قائمة الطلبات
+    public function Orders()
+    {
+        $orders = Order::with(['customer', 'address', 'payment.method'])
+            ->withSum('orderItems as items_qty', 'quantity')
+            ->latest()
+            ->get();
 
-        $orders = Order::with([
-            'customer',
-            'address',
-            'orderItems.product',
-            'payment.method'
-        ])
-        ->latest()
-        ->get();
+        // أرقام البطاقات العلوية
+        $stats = [
+            'total'     => $orders->count(),
+            'active'    => $orders->whereIn('status', ['pending', 'processing', 'ready', 'shipped'])->count(),
+            'completed' => $orders->where('status', 'completed')->count(),
+            'revenue'   => $orders->where('status', 'completed')->sum('total_price'),
+        ];
 
-        return view('Orders.orders', compact('orders'));
+        // عدد الطلبات لكل حالة
+        $statusCounts = $orders->countBy('status');
 
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error','حدث خطأ أثناء جلب الطلبات');
-
+        return view('Orders.orders', compact('orders', 'stats', 'statusCounts'));
     }
-}
-    public function OrderDetails($orderID)
-{
-    try {
 
+    // تفاصيل الطلب
+    public function OrderDetails($orderID)
+    {
         $order = Order::with([
             'customer',
             'address',
             'orderItems.product',
-            'payment.method'
-        ])->findOrFail($orderID);
+            'orderItems.color',
+            'orderItems.size',
+            'payment.method',
+        ])->find($orderID);
 
-        return view('Orders.OrderDetails', compact('order'));
+        if (!$order) {
+            return redirect('/orders')->with('error', 'لم يتم العثور على الطلب');
+        }
 
-    } catch (\Exception $e) {
-
-        return redirect()->back()->with('error','لم يتم العثور على الطلب');
-
+        return view('Orders.orderDetails', compact('order'));
     }
-}
-public function updateStatus(Request $request, $id)
-{
-    try {
 
-        $order = Order::findOrFail($id);
+    // تغيير حالة الطلب واشعار العميل
+    public function updateStatus(Request $request, $id, OrderStatusNotifier $notifier)
+    {
+        $request->validate([
+            'status' => ['required', Rule::in(array_keys(Order::STATUSES))],
+        ]);
 
-        $order->status = $request->status;
+        $order = Order::with('customer')->findOrFail($id);
 
-        $order->save();
+        // نفس الحالة: لا تحديث ولا إشعار
+        if ($order->status === $request->status) {
+            return response()->json(['success' => true, 'status' => $order->status]);
+        }
+
+        $order->update(['status' => $request->status]);
+
+        $notifier->notify($order);
 
         return response()->json([
             'success' => true,
-            'status' => $order->status
+            'status'  => $order->status,
+            'label'   => $order->statusLabel(),
         ]);
-
-    } catch (\Exception $e) {
-
-        return response()->json([
-            'success' => false
-        ]);
-
     }
-}
 }

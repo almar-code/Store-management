@@ -213,10 +213,13 @@ class ColorsController extends Controller
                 }
 
                 // رفع الصور الجديدة
+                               // رفع الصور الجديدة
                 foreach ($request->file('productImages') as $image) {
                     $imageName = time() . '_' . Str::random(8) . '.' . $image->extension();
                     $image->storeAs(self::IMAGE_DIR, $imageName, 'public');
 
+                    // أول صورة جديدة لإعادة التحليل
+                    $firstNewImage ??= $imageName;
                     ProductImage::create([
                         'img_url' => $imageName,
                         'color_id' => $color->color_id
@@ -224,6 +227,10 @@ class ColorsController extends Controller
                 }
             }
             $color->save();
+             // إعادة التحليل إذا تغيرت الصورة الأولى للون
+            if (!empty($firstNewImage) && !$request->has('keep_old_images')) {
+                $this->dispatchVisualAnalysis($color->color_id, $firstNewImage);
+            }
 
             return redirect('/colors/' . $color->p_id)->with('success', 'تم التعديل بنجاح');
 

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class CartItem extends Model
 {
     protected $primaryKey = 'cart_item_id';
+    // تحديث وقت السلة عند أي تعديل
+    protected $touches = ['cart'];
 
     protected $fillable = [
         'cart_id',

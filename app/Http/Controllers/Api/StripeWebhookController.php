@@ -10,6 +10,7 @@ use Stripe\Exception\SignatureVerificationException;
 use Stripe\Webhook;
 use Throwable;
 use App\Services\ProductStatService;
+use App\Services\AdminNotificationService;
 class StripeWebhookController extends Controller
 {
     public function handle(Request $request)
@@ -218,6 +219,9 @@ class StripeWebhookController extends Controller
                 'status' => 'completed',
                 'order_id' => $orderId,
             ]);
+            
+            // إشعار الإدارة بعد نجاح حفظ الطلب
+            DB::afterCommit(fn () => AdminNotificationService::newOrder((int) $orderId));
         });
     }
 }

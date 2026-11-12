@@ -149,6 +149,7 @@ class CartController extends Controller
 
         if ($existingItem) {
             $existingItem->increment('quantity', $request->quantity);
+            $cart->touch();
 
             return response()->json([
                 'status' => true,

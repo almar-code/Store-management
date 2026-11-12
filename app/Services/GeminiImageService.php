@@ -50,7 +50,8 @@ class GeminiImageService
             'gemini-embedding-2'
         );
 
-        $response = Http::timeout(90)
+            $response = Http::timeout(30)
+            ->connectTimeout(10)
             ->withHeaders([
                 'x-goog-api-key' => $this->apiKey(),
             ])
@@ -124,43 +125,22 @@ class GeminiImageService
 .
 PROMPT;
 
-        $response = Http::timeout(90)
-            ->withHeaders([
-                'x-goog-api-key' => $this->apiKey(),
-            ])
-            ->post(
-                "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent",
-                [
-                    'contents' => [[
-                        'parts' => [
-                            ['text' => $prompt],
-                            [
-                                'inline_data' => $image,
-                            ],
-                        ],
-                    ]],
-                    'generationConfig' => [
-                        'responseMimeType' => 'application/json',
-                    ],
-                ]
-            );
+               $payload = [
+            'contents' => [[
+                'parts' => [
+                    ['text' => $prompt],
+                    ['inline_data' => $image],
+                ],
+            ]],
+            'generationConfig' => [
+                'responseMimeType' => 'application/json',
+            ],
+        ];
 
-        if ($response->failed()) {
-    $message = $response->json('error.message');
+        // تجربة النماذج الاحتياطية عند ضغط الخوادم
+        $text = $this->generateWithFallback($payload);
 
-    throw new RuntimeException(
-        'Gemini HTTP ' . $response->status() .
-        ': ' . ($message ?: 'Unknown API error')
-    );
-}
-
-        $text = $response->json(
-            'candidates.0.content.parts.0.text'
-        );
-
-        $description = is_string($text)
-            ? json_decode($text, true)
-            : null;
+        $description = json_decode($text, true);
 
         if (!is_array($description)) {
             throw new RuntimeException(

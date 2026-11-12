@@ -32,6 +32,7 @@ use App\Http\Controllers\Api\ProductCommentController;
 use App\Http\Controllers\Api\CustomerSyncController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\VisualSearchController;
+use App\Http\Controllers\Api\CustomerNotificationController;
 
 
 Route::get('/sections', [SectionController::class, 'index']);
@@ -98,8 +99,6 @@ Route::post('/checkout/start', [CheckoutController::class, 'start']);
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle']);
 Route::get('/store-payment-accounts', [ManualPaymentController::class, 'accounts']);
 Route::post('/manual-payment/checkout', [ManualPaymentController::class, 'checkout']);
-// يجب وضع هذا المسار خلف middleware تسجيل دخول المسؤول والصلاحيات.
-Route::post('/admin/payments/{paymentId}/verify',[ManualPaymentController::class, 'verify']);
 // جلب جميع طلبات عميل محدد
 Route::get('/orders/{customerId}', [OrderController::class, 'getUserOrders']);
 
@@ -113,3 +112,9 @@ Route::post('/products/visual-search', [VisualSearchController::class, 'getVisua
 Route::get('/media/{path}', [MediaController::class, 'show'])->where('path', '.*');
 Route::post('/upload-product-image', [ProductController::class, 'uploadProductImage']);
 Route::post('/upload-video', [VideoInteractionController::class, 'uploadVideo']);
+
+// إشعارات العميل
+Route::get('/notifications', [CustomerNotificationController::class, 'index']);
+Route::post('/notifications/read-all', [CustomerNotificationController::class, 'markAllRead']);
+Route::post('/notifications/{id}/read', [CustomerNotificationController::class, 'markRead']);
+Route::delete('/notifications/{id}', [CustomerNotificationController::class, 'destroy']);

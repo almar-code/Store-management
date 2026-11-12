@@ -17,6 +17,34 @@ class Order extends Model
     'status',
     'payment_status',
 ];
+    // حالات الطلب: المفتاح يحفظ في القاعدة والنص للعرض
+    public const STATUSES = [
+        'pending'    => ['ar' => 'قيد الانتظار', 'en' => 'Pending'],
+        'processing' => ['ar' => 'قيد المعالجة', 'en' => 'Processing'],
+        'ready'      => ['ar' => 'جاهز', 'en' => 'Ready'],
+        'shipped'    => ['ar' => 'تم الشحن', 'en' => 'Shipped'],
+        'completed'  => ['ar' => 'مكتمل', 'en' => 'Completed'],
+        'cancelled'  => ['ar' => 'ملغي', 'en' => 'Cancelled'],
+        'refunded'   => ['ar' => 'مسترجع', 'en' => 'Refunded'],
+    ];
+
+    // اسم الحالة بالعربي او الانجليزي
+    public function statusLabel(string $lang = 'ar'): string
+    {
+        return self::STATUSES[$this->status][$lang] ?? $this->status;
+    }
+        // حالات الدفع
+    public const PAYMENT_STATUSES = [
+        'pending'  => 'غير مدفوع',
+        'paid'     => 'مدفوع',
+        'failed'   => 'فشل الدفع',
+        'refunded' => 'مسترد',
+    ];
+
+    public function paymentLabel(): string
+    {
+        return self::PAYMENT_STATUSES[$this->payment_status] ?? ($this->payment_status ?? '-');
+    }
    public function customer()
 {
     return $this->belongsTo(Customer::class,'customer_id');

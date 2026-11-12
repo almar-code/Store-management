@@ -16,8 +16,11 @@ class ProcessImageWithGoogleVision implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries = 2;
+       public int $tries = 3;
     public int $timeout = 120;
+
+    // انتظار قبل إعادة المحاولة بالثواني
+    public array $backoff = [60, 180];
 
     protected int $colorId;
     protected string $imagePath;

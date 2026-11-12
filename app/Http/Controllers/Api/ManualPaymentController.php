@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 use App\Services\ProductStatService;
-
+use App\Services\AdminNotificationService;
 class ManualPaymentController extends Controller
 {
     /**
@@ -302,7 +302,8 @@ class ManualPaymentController extends Controller
                     'payment_type' => $type,
                 ];
             });
-
+            // إشعار الإدارة بالطلب الجديد
+            AdminNotificationService::newOrder((int) $result['order_id']);
             return response()->json([
                 'success' => true,
                 'message' => 'تم إنشاء الطلب، وحالة الدفع بانتظار التحقق.',

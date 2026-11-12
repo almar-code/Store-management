@@ -1,253 +1,250 @@
 @extends('Layouts.master')
 
 @section('link')
-
-   <link href="{{ asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
-   <link href="{{ secure_asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
-    
+    <link href="{{ asset('assets/css/orders-premium.css') }}?v={{ time() }}" rel="stylesheet">
+    <link href="{{ secure_asset('assets/css/orders-premium.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    <div class="container my-4 px-2 px-md-2" dir="rtl">
-        <div class="container">
+@php
+    $steps = ['pending', 'processing', 'ready', 'shipped', 'completed'];
+    $stepIcons = ['bi-receipt', 'bi-gear', 'bi-box-seam', 'bi-truck', 'bi-check2'];
+    $currentStep = array_search($order->status, $steps);
+    $isStopped = in_array($order->status, ['cancelled', 'refunded']);
+    $subtotal = $order->orderItems->sum(fn ($i) => $i->price * $i->quantity);
+    $phone = $order->customer->phone ?? null;
+@endphp
 
-            <div class="text-start">
-                <a href="{{ url()->previous() }}">
-                    <i class="bi bi-arrow-left fs-4 text-dark"></i>
-                </a>
+<div class="container my-4 px-2 px-md-3 op-page">
+
+    {{-- رأس الصفحة --}}
+    <div class="op-head">
+        <div class="d-flex align-items-center gap-3">
+            <a href="/orders" class="op-back" title="رجوع"><i class="bi bi-arrow-right"></i></a>
+            <div>
+                <h3 class="op-title">تفاصيل <span>الطلب #{{ $order->order_id }}</span></h3>
+                <div class="op-sub">{{ $order->created_at->format('Y-m-d • h:i A') }}</div>
             </div>
+        </div>
 
-            <div class="controls-container">
+        <div class="op-actions">
+            <span id="orderStatus" class="op-status st-{{ $order->status }}">{{ $order->statusLabel() }}</span>
 
-                <div class="section-ar" style="width: 80%">
-                    <div class="section-title" style="margin-bottom: 0px;">
-                        <h3 style="font-size: 20px">
-                            تفاصيل <span class="orange-text">الطلبية</span>
-                        </h3>
-                    </div>
-                </div>
-
-                <div style="display:flex">
-
-                    <label class="status-badge">حالة الطلب :</label>
-
-                    <div class="order-status">
-
-                        <span class="status-badge" id="orderStatus">
-                            {{ $order->status }}
-                        </span>
-
-                        <div class="status-dropdown">
-                            <button onmouseenter="toggleStatus(this)">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-
-                            <div class="status-menu">
-
-                                <a href="#" class="change-status" data-status="قيد المعالجة">قيد المعالجة</a>
-
-                                <a href="#" class="change-status" data-status="تم الشحن">تم الشحن</a>
-
-                                <a href="#" class="change-status" data-status="مكتمل">مكتمل</a>
-
-                                <a href="#" class="change-status" data-status="ملغي">ملغي</a>
-
-                            </div>
-
-                        </div>
-                    </div>
+            {{-- تغيير الحالة --}}
+            <div class="op-status-select" id="statusSelect">
+                <button type="button" class="op-btn primary" id="statusToggle">
+                    <i class="bi bi-arrow-repeat"></i> تغيير الحالة
+                </button>
+                <div class="op-status-menu">
+                    @foreach(\App\Models\Order::STATUSES as $key => $label)
+                        <button type="button" data-status="{{ $key }}" data-label="{{ $label['ar'] }}"
+                                class="{{ $order->status === $key ? 'active' : '' }}">
+                            <span class="op-dot dot-{{ $key }}"></span>{{ $label['ar'] }}
+                        </button>
+                    @endforeach
                 </div>
             </div>
 
-
-            <div class="order-box mt-3">
-
-                <div class="order-grid">
-
-                    <div class="order-item">
-                        <label>رقم الطلب</label>
-                        <span>#{{ $order->order_id }}</span>
-                    </div>
-
-                    <div class="order-item">
-                        <label>تاريخ الطلب</label>
-                        <span>{{ $order->created_at->format('Y-m-d') }}</span>
-                    </div>
-
-                    <div class="order-item">
-                        <label>اسم العميل</label>
-                        <span>{{ $order->customer->name ?? '-' }}</span>
-                    </div>
-
-                    <div class="order-item">
-                        <label>رقم الجوال</label>
-                        <span>{{ $order->customer->phone ?? '-' }}</span>
-                    </div>
-
-                    <div class="order-item">
-                        <label>العنوان</label>
-                        <span>
-                            {{ $order->address->city ?? '-' }}
-                        </span>
-                    </div>
-
-                    <div class="order-item">
-                        <label>وسيلة الدفع</label>
-                        <span>
-                            {{ $order->payment->method->method_name ?? 'غير محدد' }}/
-                            {{ $order->payment->status ?? 'غير محدد' }}
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>رقم الصنف</th>
-                            <th>اسم الصنف</th>
-                            <th>الكمية</th>
-                            <th>السعر</th>
-                            <th>الإجمالي</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        @foreach ($order->orderItems as $item)
-                            <tr>
-
-                                <td>{{ $item->order_item_id }}</td>
-
-                                <td>{{ $item->product->p_name }}</td>
-
-                                <td>{{ $item->quantity }}</td>
-
-                                <td>{{ $item->price }} ر.س</td>
-
-                                <td>
-                                    <span class="badge text-dark">
-                                        {{ $item->price * $item->quantity }} ر.س
-                                    </span>
-                                </td>
-
-                            </tr>
-                        @endforeach
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-
-            <div class="order-totals mt-4">
-
-                <div>
-                    <label>إجمالي الكمية</label>
-
-                    <span>
-                        {{ $order->orderItems->sum('quantity') }}
-                    </span>
-
-                </div>
-
-
-                <div>
-                    <label>إجمالي السعر</label>
-
-                    <span class="total-price">
-
-                        {{ $order->orderItems->sum(function ($item) {
-                            return $item->price * $item->quantity;
-                        }) }}
-
-                        ر.س
-
-                    </span>
-
-                </div>
-
-            </div>
-
+            <a href="/api/orders/{{ $order->order_id }}/invoice" target="_blank" class="op-btn" title="الفاتورة">
+                <i class="bi bi-printer"></i>
+            </a>
         </div>
     </div>
+
+    {{-- مراحل الطلب --}}
+    <div class="op-card mb-3">
+        <div class="op-card-body">
+            <div class="op-steps" id="statusSteps" @if($isStopped) hidden @endif>
+                @foreach($steps as $i => $step)
+                    <div class="op-step {{ $currentStep !== false && $i < $currentStep ? 'done' : '' }} {{ $currentStep === $i ? 'current' : '' }}">
+                        <div class="dot"><i class="bi {{ $stepIcons[$i] }}"></i></div>
+                        {{ \App\Models\Order::STATUSES[$step]['ar'] }}
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="op-stopped" id="statusStopped" @if(!$isStopped) hidden @endif>
+                <i class="bi bi-x-octagon"></i>
+                <span>هذا الطلب <span id="stoppedLabel">{{ $order->statusLabel() }}</span> ولن يكمل مراحل التوصيل</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="op-layout">
+
+        {{-- عناصر الطلب --}}
+        <div class="op-card">
+            <div class="op-card-head">
+                <span><i class="bi bi-bag"></i>عناصر الطلب</span>
+                <span class="op-sub m-0">{{ $order->orderItems->sum('quantity') }} قطعة</span>
+            </div>
+            <div class="op-card-body">
+                @foreach($order->orderItems as $item)
+                    <div class="op-item">
+                        <img src="{{ asset('storage/uploads/products/' . ($item->product->p_image ?? '')) }}"
+                             alt="" onerror="this.style.visibility='hidden'">
+
+                        <div class="op-item-info">
+                            <div class="op-item-name">{{ $item->product->p_name ?? 'منتج محذوف' }}</div>
+                            <div class="op-chips">
+                                @if($item->color)
+                                    <span class="op-chip">
+                                        <span class="swatch" style="background: {{ $item->color->color_code }}"></span>
+                                        {{ $item->color->color_name }}
+                                    </span>
+                                @endif
+                                @if($item->size)
+                                    <span class="op-chip"><i class="bi bi-rulers"></i> {{ $item->size->size_name }}</span>
+                                @endif
+                                <span class="op-chip">الكمية: {{ $item->quantity }}</span>
+                            </div>
+                        </div>
+
+                        <div class="op-item-price">
+                            <strong>{{ number_format($item->price * $item->quantity, 2) }} ر.س</strong>
+                            <small>{{ $item->quantity }} × {{ number_format($item->price, 2) }}</small>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- الشريط الجانبي --}}
+        <div>
+            {{-- العميل --}}
+            <div class="op-card">
+                <div class="op-card-head"><span><i class="bi bi-person"></i>العميل</span></div>
+                <div class="op-card-body">
+                    <div class="op-customer mb-2">
+                        <div class="op-avatar">{{ mb_substr($order->customer->name ?? 'ع', 0, 1) }}</div>
+                        <div>
+                            <strong>{{ $order->customer->name ?? '-' }}</strong>
+                            <small>{{ $order->customer->email ?? '-' }}</small>
+                        </div>
+                    </div>
+                    <div class="op-info">
+                        <span>الجوال</span>
+                        <span>
+                            @if($phone)
+                                <a class="op-wa" href="https://wa.me/{{ preg_replace('/\D/', '', $phone) }}" target="_blank">
+                                    <i class="bi bi-whatsapp"></i> {{ $phone }}
+                                </a>
+                            @else - @endif
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {{-- العنوان --}}
+            <div class="op-card">
+                <div class="op-card-head"><span><i class="bi bi-geo-alt"></i>عنوان التوصيل</span></div>
+                <div class="op-card-body">
+                    @if($order->address)
+                        <div class="op-info"><span>العنوان</span><span>{{ $order->address->title ?? '-' }}</span></div>
+                        <div class="op-info"><span>الدولة</span><span>{{ $order->address->country ?? '-' }}</span></div>
+                        <div class="op-info"><span>المدينة</span><span>{{ $order->address->city ?? '-' }}</span></div>
+                        <div class="op-info"><span>الشارع</span><span>{{ $order->address->street ?? '-' }}</span></div>
+                        <div class="op-info"><span>المبنى</span><span>{{ $order->address->building ?? '-' }}</span></div>
+                        <div class="op-info"><span>الرمز البريدي</span><span>{{ $order->address->postal_code ?? '-' }}</span></div>
+                    @else
+                        <div class="op-sub">لا يوجد عنوان لهذا الطلب</div>
+                    @endif
+                </div>
+            </div>
+
+            {{-- الدفع والملخص --}}
+            <div class="op-card">
+                <div class="op-card-head"><span><i class="bi bi-credit-card"></i>الدفع والملخص</span></div>
+                <div class="op-card-body">
+                    <div class="op-info"><span>وسيلة الدفع</span><span>{{ $order->payment->method->method_name ?? 'غير محدد' }}</span></div>
+                    <div class="op-info">
+                        <span>حالة الدفع</span>
+                        <span class="pay-{{ $order->payment_status }}">{{ $order->paymentLabel() }}</span>
+                    </div>
+                    @if($order->payment?->transaction_id)
+                        <div class="op-info"><span>رقم العملية</span><span>{{ $order->payment->transaction_id }}</span></div>
+                    @endif
+                    <div class="op-info"><span>مجموع المنتجات</span><span>{{ number_format($subtotal, 2) }} ر.س</span></div>
+                    <div class="op-info op-total"><span>الإجمالي</span><span>{{ number_format($order->total_price, 2) }} ر.س</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="op-toast" id="opToast"></div>
 @endsection
 
-
 @section('jsfile')
-{{-- تغير حالة الطلب  --}}
-    <script>
-        function toggleStatus(button) {
+<script>
+    const STEPS = @json($steps);
+    const select = document.getElementById('statusSelect');
+    const toggle = document.getElementById('statusToggle');
 
-            const dropdown = button.parentElement;
+    // فتح واغلاق القائمة
+    toggle.addEventListener('click', e => {
+        e.stopPropagation();
+        select.classList.toggle('open');
+    });
+    document.addEventListener('click', () => select.classList.remove('open'));
 
-            dropdown.classList.toggle('active');
+    // رسالة سريعة
+    function showToast(text, isError = false) {
+        const toast = document.getElementById('opToast');
+        toast.textContent = text;
+        toast.classList.toggle('error', isError);
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    }
 
-        }
+    // تحديث الواجهة بعد تغيير الحالة
+    function renderStatus(status, label) {
+        const badge = document.getElementById('orderStatus');
+        badge.className = 'op-status st-' + status;
+        badge.textContent = label;
 
-        document.addEventListener('click', function(e) {
+        select.querySelectorAll('[data-status]').forEach(b =>
+            b.classList.toggle('active', b.dataset.status === status));
 
-            if (!e.target.closest('.status-dropdown')) {
+        const stopped = ['cancelled', 'refunded'].includes(status);
+        document.getElementById('statusSteps').hidden = stopped;
+        document.getElementById('statusStopped').hidden = !stopped;
+        document.getElementById('stoppedLabel').textContent = label;
 
-                document.querySelectorAll('.status-dropdown').forEach(el => {
-
-                    el.classList.remove('active');
-
-                });
-
-            }
-
+        const current = STEPS.indexOf(status);
+        document.querySelectorAll('.op-step').forEach((step, i) => {
+            step.classList.toggle('done', i < current);
+            step.classList.toggle('current', i === current);
         });
+    }
 
-        document.querySelectorAll('.change-status').forEach(function(item) {
+    // ارسال الحالة الجديدة
+    select.querySelectorAll('[data-status]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const { status, label } = btn.dataset;
+            select.classList.remove('open');
+            if (btn.classList.contains('active')) return;
 
-            item.addEventListener('click', function(e) {
+            toggle.disabled = true;
 
-                e.preventDefault();
-
-                let status = this.dataset.status;
-
-                let dropdown = this.closest('.status-dropdown'); // القائمة
-
-                fetch("/order/update-status/{{ $order->order_id }}", {
-
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                        },
-
-                        body: JSON.stringify({
-                            status: status
-                        })
-
-                    })
-
-                    .then(response => response.json())
-
-                    .then(data => {
-
-                        if (data.success) {
-
-                            // تحديث النص
-                            document.getElementById('orderStatus').innerText = status;
-
-                            // اغلاق القائمة
-                            dropdown.classList.remove('active');
-
-                        }
-
-                    });
-
-            });
-
+            fetch("{{ route('order.updateStatus', $order->order_id) }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) throw new Error();
+                renderStatus(status, label);
+                showToast('تم تحديث الحالة وإشعار العميل');
+            })
+            .catch(() => showToast('تعذر تحديث الحالة', true))
+            .finally(() => toggle.disabled = false);
         });
-    </script>
+    });
+</script>
 @endsection

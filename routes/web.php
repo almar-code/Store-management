@@ -17,7 +17,8 @@ use App\Http\Controllers\VideoController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductPerformanceController;
 use App\Http\Controllers\StorePaymentAccountController;
-
+use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\AdminNotificationController;
 use Illuminate\Http\Request;
 Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
@@ -178,6 +179,13 @@ Route::post('/update-store-payment-account/{id}', [StorePaymentAccountController
 Route::get('/update-account/{id}', [StorePaymentAccountController::class, 'updateactive']);
 Route::get('/delete-store-payment-account/{id}', [StorePaymentAccountController::class, 'destroy']);
 
+// مراجعة المدفوعات
+Route::get('payments', [PaymentsController::class, 'index'])->middleware('check.permission:مدير المبيعات');
+Route::post('/payments/{id}/verify', [PaymentsController::class, 'verify'])->middleware('check.permission:مدير المبيعات');
+// إشعارات لوحة الإدارة
+Route::get('/notifications/feed', [AdminNotificationController::class, 'feed']);
+Route::get('/notifications/{id}/open', [AdminNotificationController::class, 'open']);
+Route::post('/notifications/read-all', [AdminNotificationController::class, 'readAll']);
 });
 
 // أضف ->name('login') في نهاية السطر
