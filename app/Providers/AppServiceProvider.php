@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use App\Models\Product;
 use App\Observers\ProductObserver;
+
+
+use App\Models\BackupSetting;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
+use Spatie\Backup\Events\BackupHasFailed;
+use Spatie\Backup\Events\BackupWasSuccessful;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -58,5 +66,21 @@ Product::observe(ProductObserver::class);
             'isSalesManager' => $isSalesManager
         ]);
     });
+            // تسجيل حالة آخر نسخة احتياطية
+        Event::listen(BackupWasSuccessful::class, function () {
+            BackupSetting::current()->update([
+                'last_backup_at' => now(),
+                'last_backup_status' => 'success',
+                'last_backup_message' => null,
+            ]);
+        });
+
+        Event::listen(BackupHasFailed::class, function (BackupHasFailed $event) {
+            BackupSetting::current()->update([
+                'last_backup_at' => now(),
+                'last_backup_status' => 'failed',
+                'last_backup_message' => Str::limit($event->exception->getMessage(), 500),
+            ]);
+        });
 }
 }

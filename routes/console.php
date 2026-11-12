@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
+use App\Models\BackupSetting;
+
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
@@ -20,3 +22,14 @@ Schedule::command('visual:index-missing')
     ->timezone('Asia/Aden')
     ->dailyAt('11:00')
     ->withoutOverlapping();
+
+// النسخ الاحتياطي التلقائي حسب إعدادات لوحة التحكم
+$backupSettings = rescue(fn () => BackupSetting::current(), null, false);
+
+if ($backupSettings?->enabled) {
+    Schedule::command('store:backup')
+        ->dailyAt($backupSettings->run_time)
+        ->withoutOverlapping();
+
+    Schedule::command('backup:monitor')->dailyAt('09:00');
+}
