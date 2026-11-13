@@ -20,6 +20,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'verify-telegram-user',
         ]);
+                // صفحة متابعة الاسترجاع تعمل أثناء وضع الصيانة
+        $middleware->preventRequestsDuringMaintenance(except: [
+            'backup-restores/*',
+        ]);
 
         $middleware->alias([
             'check.permission' => \App\Http\Middleware\CheckPermission::class,
