@@ -21,6 +21,7 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\LegalController;
+use App\Http\Controllers\BackupRestoreController;
 
 use Illuminate\Http\Request;
 Route::middleware(['auth'])->group(function () {
@@ -200,6 +201,18 @@ Route::get('backupsettings', [BackupController::class, 'settings'])->middleware(
 Route::post('/update-backup-settings', [BackupController::class, 'updateSettings'])->middleware('check.permission:مدير المتجر');
 Route::get('/backup-download/{file}', [BackupController::class, 'download'])
     ->where('file', '[A-Za-z0-9\-_.]+')
+    ->middleware('check.permission:مدير المتجر');
+
+    // استرجاع النسخ
+Route::get('/restore-backup/{file}', [BackupRestoreController::class, 'confirm'])
+    ->where('file', '[A-Za-z0-9\-_.]+')
+    ->middleware('check.permission:مدير المتجر');
+Route::post('/restore-backup/{file}', [BackupRestoreController::class, 'store'])
+    ->where('file', '[A-Za-z0-9\-_.]+')
+    ->middleware('check.permission:مدير المتجر');
+Route::get('backup-restores', [BackupRestoreController::class, 'index'])->middleware('check.permission:مدير المتجر');
+Route::get('backup-restores/{restore}', [BackupRestoreController::class, 'show'])
+    ->whereNumber('restore')
     ->middleware('check.permission:مدير المتجر');
 
 });

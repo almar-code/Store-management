@@ -82,5 +82,11 @@ Product::observe(ProductObserver::class);
                 'last_backup_message' => Str::limit($event->exception->getMessage(), 500),
             ]);
         });
+                // ويندوز: تمرير متغيرات النظام لـ mysqldump و mysql عند التشغيل من المتصفح
+        if (PHP_OS_FAMILY === 'Windows' && ! app()->runningInConsole()) {
+            foreach (getenv() as $key => $value) {
+                $_SERVER[$key] ??= $value;
+            }
+        }
 }
 }
