@@ -357,7 +357,7 @@ footer.footer {
                                 <div class="toggle-dropdown divnav">
                                     <div>
                                         <span class="bi bi-shield-lock nav-icon"></span>
-                                        <span class="{{ request()->is('addbackups') || request()->is('backups/*') || request()->is('backupsettings') ? 'active' : '' }}">النسخ الاحتياطي</span>
+                                        <span class="{{ request()->is('addbackups') || request()->is('backups/*') || request()->is('backupsettings') || request()->is('backup-restores*') || request()->is('restore-backup/*') ? 'active' : '' }}">النسخ الاحتياطي</span>
                                     </div>
                                     <i class="bi bi-chevron-down"></i>
                                 </div>
@@ -371,22 +371,12 @@ footer.footer {
                                 </li>
                                 <li>
                                     <a href="/backups/daily" class="{{ request()->is('backups/daily') ? 'active' : '' }}">
-                                        <div><span class="bi bi-calendar-day sub-icon"></span>النسخ اليومية</div>
+                                        <div><span class="bi bi-calendar-day sub-icon"></span>النسخ الاحتياطيه</div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/backups/weekly" class="{{ request()->is('backups/weekly') ? 'active' : '' }}">
-                                        <div><span class="bi bi-calendar-week sub-icon"></span>النسخ الأسبوعية</div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/backups/monthly" class="{{ request()->is('backups/monthly') ? 'active' : '' }}">
-                                        <div><span class="bi bi-calendar-month sub-icon"></span>النسخ الشهرية</div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/backups/yearly" class="{{ request()->is('backups/yearly') ? 'active' : '' }}">
-                                        <div><span class="bi bi-calendar3 sub-icon"></span>النسخ السنوية</div>
+                                    <a href="/backup-restores" class="{{ request()->is('backup-restores*') ? 'active' : '' }}">
+                                        <div><span class="bi bi-clock-history sub-icon"></span>سجل الاسترجاع</div>
                                     </a>
                                 </li>
                                 <li>

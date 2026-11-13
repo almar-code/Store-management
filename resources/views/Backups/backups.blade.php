@@ -230,7 +230,9 @@
                                     <i class="bi bi-file-earmark-lock"></i>
                                     {{ $backup['date']->format('Y-m-d') }}
                                 </span>
-                                @if ($backup['manual'])
+                                @if (str_starts_with($backup['file'], 'pre-restore-'))
+                                    <span class="badge ms-1" style="background:#e8eef6; color:#1a4372;">قبل الاسترجاع</span>
+                                @elseif ($backup['manual'])
                                     <span class="badge ms-1" style="background:#fff3e0; color:#e8a33d;">يدوية</span>
                                 @else
                                     <span class="badge ms-1" style="background:#e6f5f2; color:#008870;">تلقائية</span>
@@ -254,6 +256,13 @@
                                                 href="{{ url('/backup-download/' . $backup['file']) }}">
                                                 <span class="ms-2">تحميل النسخة</span>
                                                 <i class="bi bi-download text-success"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
+                                                href="{{ url('/restore-backup/' . $backup['file']) }}">
+                                                <span class="ms-2">استرجاع النسخة</span>
+                                                <i class="bi bi-arrow-counterclockwise text-danger"></i>
                                             </a>
                                         </li>
                                     </ul>
