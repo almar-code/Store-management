@@ -106,10 +106,12 @@ Route::get('/delete-color/{id}',[ColorsController::class,'destroy']);
 // نظام إدارة الإعلانات (العادية وبرابط)
 // -------------------------------------------------------------------------
 Route::get('/ads', [AdsController::class, 'Ads']);                             // عرض قائمة الإعلانات
-Route::get('/add-ads', [AdsController::class, 'AddAds']);                       // صفحة إضافة إعلان عادي
+Route::get('/add-ads', [AdsController::class, 'AddAds']);                       // صفحة إضافة إعلان خاص
 Route::get('/add-ads-link', [AdsController::class, 'AddAdsLink']);              // صفحة إضافة إعلان برابط
-Route::post('/add-ads', [AdsController::class, 'store']);                       // حفظ الإعلان الجديد (عادي أو برابط)
+Route::get('/add-ads-general', [AdsController::class, 'AddAdsGeneral']);        // صفحة إضافة إعلان عام
+Route::post('/add-ads', [AdsController::class, 'store']);                       // حفظ الإعلان الجديد (خاص أو عام أو برابط)
 Route::get('/update-ads/{id}', [AdsController::class, 'update']);               // تبديل حالة الإعلان (نشط / غير نشط)
+Route::post('/update-ads/{id}', [AdsController::class, 'update']);              // تفعيل إعلان منتهي بمدة جديدة
 Route::get('/delete-ads/{id}', [AdsController::class, 'destroy']);              // حذف الإعلان وصورته نهائياً
 
 

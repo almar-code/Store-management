@@ -3,6 +3,11 @@
     <link href="{{ secure_asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
     <link href="{{ asset('assets/css/order.css') }}?v={{ time() }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
+    <style>
+        .renew-ad-box { border-radius: 16px; }
+        .renew-ad-submit { background: var(--accent-color, #008870); color: #fff; }
+        .renew-ad-submit:hover { background: #006f5b; color: #fff; }
+    </style>
 @endsection
 
 @section('content')
@@ -74,7 +79,12 @@
                             @endif
                         </td>
                         <td>
-                            <a href="/update-ads/{{ $adss->ads_id }}">
+                            @php $isExpired = $adss->expires_at && $adss->expires_at->lt(\Carbon\Carbon::today()); @endphp
+                            {{-- الإعلان المنتهي يطلب مدة جديدة قبل التفعيل --}}
+                            <a href="{{ !$adss->is_active && $isExpired ? '#' : '/update-ads/' . $adss->ads_id }}"
+                               @if(!$adss->is_active && $isExpired)
+                               class="renew-ad" data-id="{{ $adss->ads_id }}" data-name="{{ $adss->AdsName }}"
+                               @endif>
                                 <div style="
                                     margin-top: 5px;
                                     width: 16px;
@@ -82,7 +92,7 @@
                                     border-radius: 50%;
                                     background-color: {{ $adss->is_active ? '#008870' : '#ff0000' }};
                                     display: inline-block;
-                                " title="{{ $adss->is_active ? 'الاعلان نشط' : 'الاعلان غير نشط' }}"></div>
+                                " title="{{ $adss->is_active ? 'الاعلان نشط' : ($isExpired ? 'الاعلان منتهي - اضغط لتجديد المدة' : 'الاعلان غير نشط') }}"></div>
                             </a>
                         </td>
                         <td class="lh-1 fs-md-5">
@@ -123,4 +133,50 @@
         </div>
     </div>
 </div>
+
+{{-- نافذة تجديد مدة الإعلان المنتهي --}}
+<div class="modal fade" id="renewAdModal" tabindex="-1" aria-hidden="true" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content renew-ad-box" id="renewAdForm" method="post">
+            @csrf
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title">تجديد مدة الإعلان</h5>
+                <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted mb-3">
+                    انتهت مدة الإعلان <strong id="renewAdName"></strong>، حدد مدة جديدة تبدأ من اليوم لتفعيله.
+                </p>
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="renewDuration" name="offerDuration" min="1" placeholder="المدة" required>
+                    <label for="renewDuration">المدة بالأيام</label>
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0 d-flex flex-column flex-sm-row gap-2">
+                <button type="button" class="btn btn-light w-100 w-sm-auto flex-sm-fill" data-bs-dismiss="modal">إلغاء</button>
+                <button type="submit" class="btn renew-ad-submit w-100 w-sm-auto flex-sm-fill">تفعيل الإعلان</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
+
+@section('jsfile')
+<script>
+    // فتح نافذة التجديد بمسار الإعلان المختار
+    document.querySelectorAll('.renew-ad').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            document.getElementById('renewAdForm').action = '/update-ads/' + link.dataset.id;
+            document.getElementById('renewAdName').textContent = link.dataset.name;
+            document.getElementById('renewDuration').value = '';
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('renewAdModal')).show();
+        });
+    });
+
+    // منع الإرسال المزدوج للتجديد
+    document.getElementById('renewAdForm').addEventListener('submit', e => {
+        e.target.querySelector('button[type="submit"]').disabled = true;
+    });
+</script>
 @endsection

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
 use App\Models\Product;
+use App\Services\AdNotifier;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -25,12 +27,22 @@ class AdsController extends Controller
     }
 
     /**
-     * عرض نموذج إضافة إعلان عادي
+     * عرض نموذج إضافة إعلان خاص
      */
     public function AddAds()
     {
-        $isLinkAd = false;
-        return view('Ads.addads', compact('isLinkAd'));
+        $adType = 'image';
+        return view('Ads.addads', compact('adType'));
+    }
+
+    /**
+     * عرض نموذج إضافة إعلان عام مع منتجاته
+     */
+    public function AddAdsGeneral()
+    {
+        $adType = 'general';
+        $products = Product::select('p_id', 'p_name', 'p_image')->orderBy('p_name')->get();
+        return view('Ads.addads', compact('adType', 'products'));
     }
 
     /**
@@ -38,68 +50,102 @@ class AdsController extends Controller
      */
     public function AddAdsLink()
     {
-        $isLinkAd = true;
-        return view('Ads.addads', compact('isLinkAd'));
+        $adType = 'link';
+        return view('Ads.addads', compact('adType'));
     }
 
     /**
-     * حفظ الإعلان الجديد (سواء عادي أو برابط)
+     * حفظ الإعلان الجديد (خاص أو عام أو برابط)
      */
-    public function store(Request $request)
-{
-    $request->validate([
-        'AdsName'       => 'required|string|max:255',
-        'AdsImage'      => 'required|image|mimes:jpg,jpeg,png,webp,mp4|max:20480',
-        'offerDuration' => 'required|numeric',
-        'type'          => 'required|string|in:image,general,link', // التحقق من نوع الإعلان
-        'AdsLink'       => 'nullable|url',
-        'is_active'     => 'required|boolean',
-    ]);
-
-    try {
-        $imageName = null;
-
-        if ($request->hasFile('AdsImage')) {
-            $imageName = time() . '_' . $request->file('AdsImage')->getClientOriginalName();
-            $request->file('AdsImage')->move(public_path('storage/uploads/Advertisement'), $imageName);
-        }
-
-        $offerDuration = (int) $request->offerDuration;
-        $startDate = Carbon::today();
-        $endDate = $startDate->copy()->addDays($offerDuration);
-
-        Advertisement::create([
-            'AdsName'      => $request->AdsName,
-            'AdsImage'     => $imageName,
-            'type'         => $request->type, // تخزين النوع المختار (image أو general)
-            'AdsLink'      => $request->AdsLink,
-            'is_active'    => $request->is_active,
-            'expires_at'   => $endDate,
+    public function store(Request $request, AdNotifier $notifier)
+    {
+        $request->validate([
+            'AdsName'       => 'required|string|max:255',
+            'AdsImage'      => 'required|image|mimes:jpg,jpeg,png,webp,mp4|max:20480',
+            'offerDuration' => 'required|numeric|min:1',
+            'type'          => 'required|string|in:image,general,link',
+            'AdsLink'       => 'nullable|url',
+            'is_active'     => 'required|boolean',
+            // منتجات الإعلان العام
+            'product_ids'   => 'required_if:type,general|array|min:1',
+            'product_ids.*' => 'integer|exists:products,p_id',
+        ], [
+            'product_ids.required_if' => 'يرجى اختيار منتج واحد على الأقل للإعلان العام',
+            'product_ids.min'         => 'يرجى اختيار منتج واحد على الأقل للإعلان العام',
+            'product_ids.*.exists'    => 'أحد المنتجات المختارة غير موجود',
         ]);
 
-        return redirect('/ads')->with('success', 'تم إضافة الإعلان بنجاح');
+        try {
+            $imageName = time() . '_' . $request->file('AdsImage')->getClientOriginalName();
+            $request->file('AdsImage')->move(public_path('storage/uploads/Advertisement'), $imageName);
 
-    } catch (\Throwable $th) {
-        // اطبع الخطأ الفعلي بدلاً من الرسالة العامة لمعرفة المشكلة
-        dd($th->getMessage());
-        return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة الإعلان');
+            $endDate = Carbon::today()->addDays((int) $request->offerDuration);
+
+            DB::transaction(function () use ($request, $imageName, $endDate, $notifier) {
+                $ad = Advertisement::create([
+                    'AdsName'    => $request->AdsName,
+                    'AdsImage'   => $imageName,
+                    'type'       => $request->type,
+                    'AdsLink'    => $request->type === 'link' ? $request->AdsLink : null,
+                    'is_active'  => $request->is_active,
+                    'expires_at' => $endDate,
+                ]);
+
+                // ربط المنتجات وإرسال الإشعار للإعلان العام فقط
+                if ($ad->type === 'general') {
+                    $ad->products()->attach(array_unique($request->product_ids));
+                    $notifier->notifyIfNeeded($ad);
+                }
+            });
+
+            return redirect('/ads')->with('success', 'تم إضافة الإعلان بنجاح');
+
+        } catch (\Throwable $th) {
+            report($th);
+            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة الإعلان')->withInput();
+        }
     }
-}
 
     /**
      * تبديل حالة الإعلان (نشط / غير نشط)
      */
-    public function update($id)
+    public function update(Request $request, AdNotifier $notifier, $id)
     {
         try {
             $ads = Advertisement::findOrFail($id);
-            $ads->is_active = !$ads->is_active;
-            $ads->update();
 
-            $msg = $ads->is_active ? 'تم تفعيل حالة الإعلان' : 'تم إلغاء تفعيل حالة الإعلان';
-            return redirect()->back()->with('success', $msg);
+            // طلب التجديد لا يعطل إعلانا مفعلا (ضغط مزدوج أو صفحة قديمة)
+            if ($ads->is_active && $request->isMethod('post')) {
+                return redirect()->back()->with('success', 'الإعلان مفعل بالفعل');
+            }
+
+            // تعطيل مباشر
+            if ($ads->is_active) {
+                $ads->update(['is_active' => false]);
+                return redirect()->back()->with('success', 'تم إلغاء تفعيل حالة الإعلان');
+            }
+
+            // الإعلان المنتهي يحتاج مدة جديدة تبدأ من اليوم
+            if ($ads->expires_at && $ads->expires_at->lt(Carbon::today())) {
+                $duration = (int) $request->input('offerDuration');
+
+                if ($duration < 1) {
+                    return redirect()->back()->with('error', 'يرجى تحديد مدة جديدة لتفعيل الإعلان المنتهي');
+                }
+
+                $ads->expires_at = Carbon::today()->addDays($duration);
+            }
+
+            $ads->is_active = true;
+            $ads->save();
+
+            // أول تفعيل للإعلان العام يرسل الإشعار
+            $notifier->notifyIfNeeded($ads);
+
+            return redirect()->back()->with('success', 'تم تفعيل حالة الإعلان');
 
         } catch (\Throwable $th) {
+            report($th);
             return redirect()->back()->with('error', 'حدث خطأ أثناء التعديل');
         }
     }
