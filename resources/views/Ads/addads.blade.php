@@ -120,7 +120,7 @@
                     @endif
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="AdsName" name="AdsName" placeholder="Advertisement Title" required>
+                        <input type="text" class="form-control" id="AdsName" name="AdsName" placeholder="Advertisement Title" value="{{ old('AdsName') }}" required>
                         <label for="AdsName">اسم الاعلان</label>
                         @error('AdsName')
                             <div class="form-error">
@@ -142,7 +142,7 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="offerDuration" name="offerDuration" placeholder="Advertisement Title"  min="1" required>
+                        <input type="number" class="form-control" id="offerDuration" name="offerDuration" placeholder="Advertisement Title" value="{{ old('offerDuration') }}" min="1" required>
                         <label for="offerDuration">مدة العرض (بالأيام)</label>
                         @error('offerDuration')
                             <div class="form-error">
