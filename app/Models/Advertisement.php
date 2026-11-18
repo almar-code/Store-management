@@ -18,6 +18,7 @@ class Advertisement extends Model
         'expires_at',
         'type',
         'product_id',
+        'notified_at',
     ];
 
     protected function casts(): array
@@ -25,6 +26,7 @@ class Advertisement extends Model
         return [
             'is_active' => 'boolean',
             'expires_at' => 'date',
+            'notified_at' => 'datetime',
         ];
     }
 

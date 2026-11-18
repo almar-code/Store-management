@@ -223,12 +223,12 @@ footer.footer {
                             </ul>
                         </li>
 
-                        <li class="dropdown {{ !$isStoreManager ? 'locked-item' : '' }}">
+                         <li class="dropdown {{ !$isStoreManager ? 'locked-item' : '' }}">
                             <a href="#">
                                 <div class="toggle-dropdown divnav">
                                     <div>
                                         <span class="bi bi-box-seam nav-icon"></span>
-                                        <span class="{{ request()->is('add-ads-link') || request()->is('add-ads') || request()->is('ads') ? 'active' : '' }}">الإعلانات</span>
+                                        <span class="{{ request()->is('add-ads-link') || request()->is('add-ads') || request()->is('add-ads-general') || request()->is('ads') ? 'active' : '' }}">الإعلانات</span>
                                     </div>
                                     <i class="bi bi-chevron-down"></i>
                                 </div>
@@ -236,13 +236,18 @@ footer.footer {
                             
                             <ul>
                                 <li>
-                                    <a href="/add-ads-link">
-                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان برابط</div>
+                                    <a href="/add-ads">
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان خاص</div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/add-ads">
-                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان</div>
+                                    <a href="/add-ads-general">
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان عام</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/add-ads-link">
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان برابط</div>
                                     </a>
                                 </li>
                                 <li>
