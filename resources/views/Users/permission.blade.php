@@ -7,105 +7,98 @@
     <link href="{{ asset('assets/css/login.css') }}?v={{ time() }}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="container my-4 px-2 px-md-2" dir="rtl">
+<div class="container my-4 px-2 px-md-2 at-page" dir="rtl">
     <div class="container">
-
         <div class="controls-container">
             <div class="section-ar">
                 <div class="section-title" style="margin-bottom: 0px;">
-                    <h3 style="font-size: 20px">قائمة <span class="orange-text">الصلاحيات</span></h3>
+                    <h3 style="font-size: 20px">
+                        قائمة <span class="orange-text">الصلاحيات</span>
+                        <span class="at-count">{{ $permissions->count() }}</span>
+                    </h3>
                 </div>
-
-            </div >
-            <div class="search-input-container">
-                <i class="bi bi-search search-icon"></i>
-                   <input type="text" class="search-input" placeholder="Search" id="sectionSearch">
             </div>
 
-            <a href="/permission" class="btn-add-product shadow-sm" style="justify-content: center;" title="تحديث الصفحة">
-                <i class="bi bi-arrow-clockwise" ></i>
+            <div class="search-input-container">
+                <i class="bi bi-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="ابحث عن مستخدم أو صلاحية..." id="sectionSearch">
+            </div>
 
+            <a href="/permission" class="at-btn" title="تحديث الصفحة">
+                <i class="bi bi-arrow-clockwise"></i>
             </a>
 
-            <i class="bi bi-question-circle text-turquoise fs-4" 
-            onclick="startTour()" 
-            style="cursor: pointer; margin-right: 10px;" 
-            title="مساعدة - Help">
-            </i>
+            <i class="bi bi-question-circle text-turquoise fs-4"
+               onclick="startTour()"
+               style="cursor: pointer; margin-right: 10px;"
+               title="مساعدة - Help"></i>
         </div>
 
-        <div class="table-container">
-            <table class="table" data-intro="جدول صلاحيات المستخدمين : هنا يمكنك مراجعة وتدقيق الصلاحيات الممنوحة لكل موظف في النظام ." data-step="1">
+        <div class="table-container table-responsive">
+            <table class="table align-middle at-table" data-intro="جدول صلاحيات المستخدمين : هنا يمكنك مراجعة وتدقيق الصلاحيات الممنوحة لكل موظف في النظام ." data-step="1">
                 <thead>
                     <tr>
-                        <th>متسلسل</th>
+                        <th>#</th>
                         <th>الاسم</th>
-
-                        <th data-intro="هذا العمود يوضح المسمى الوظيفي أو الصلاحيه التي يمتلكه المستخدم." data-step="2" >الصلاحية</th>
-                        <th data-intro="حالة الصلاحية: (🟢 نشط) يمتلك صلاحيه دخول (🔴 غير نشط) الصلاحية مجمدة مؤقتاً." data-step="3">النشاط</th>
-                        <th data-intro="العمليات : عند الضغط على الثلاث نقاط يمكنك تعديل صلاحيه المستخدم او يمكنك حذف الصلاحيه وابقاء المستخدم بدون صلاحيه ." data-step="4">عمليات</th>
+                        <th data-intro="هذا العمود يوضح المسمى الوظيفي أو الصلاحيه التي يمتلكه المستخدم." data-step="2">الصلاحية</th>
+                        <th data-intro="حالة الصلاحية: (نشط) يمتلك صلاحيه دخول، (غير نشط) الصلاحية مجمدة مؤقتاً." data-step="3">الحالة</th>
+                        <th class="text-center" data-intro="العمليات : عند الضغط على الثلاث نقاط يمكنك تعديل صلاحيه المستخدم او يمكنك حذف الصلاحيه وابقاء المستخدم بدون صلاحيه ." data-step="4">العمليات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($permissions as $permission)
+                    @forelse ($permissions as $permission)
                     <tr class="card-item">
-                        <td>{{ $loop->iteration }}</td>
-                        <td class="card-title">{{ $permission->user->full_name }}</td>
-                        <td class="card-text">{{ $permission->permission->permission_name }}</td>
-
-                        <!-- النشاط -->
-                       <td>
-    <div style="
-    margin-top: 5px;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background-color: {{ $permission->is_active ? '#008870' : '#ff0000' }};
-        display: inline-block;
-    " title="{{ $permission->is_active ? 'المستخدم نشط' : 'المستخدم غير نشط' }}"></div>
-</td>
-
-
-                        <!-- العمليات -->
-                         <td>
-    @if($permission->user->role !== 'admin')
-        <div class="dropdown">
-            <button class="btn text-dark p-0 border-0 shadow-none" type="button"
-                data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                <i class="bi bi-three-dots-vertical fs-4"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-start shadow border-light">
-                <li>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-end"
-                        href="/edit-permission/{{ $permission->user_id }}/{{ $permission->permission_id }}">
-                        <span class="ms-2">تعديل</span>
-                        <i class="bi bi-pencil-square text-turquoise"></i>
-                    </a>
-                </li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between py-2 text-danger font-weight-bold text-end"
-                        href="#"
-                        onclick="confirmDelete('/delete-permission/{{ $permission->user_id }}/{{ $permission->permission_id }}','حذف صلاحية','هل أنت متأكد من حذف هذه الصلاحية؟')">
-                        <span class="ms-2">حذف الصلاحية</span>
-                        <i class="bi bi-trash"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    @else
-        <span class="badge bg-secondary">غير قابل للتعديل</span>
-    @endif
-</td>
-
+                        <td><span class="at-num">{{ $loop->iteration }}</span></td>
+                        <td class="card-title fw-bold">{{ $permission->user->full_name }}</td>
+                        <td>
+                            <span class="at-pill navy card-text">{{ $permission->permission->permission_name }}</span>
+                        </td>
+                        <td>
+                            <span class="at-pill {{ $permission->is_active ? 'green' : 'red' }}">
+                                <span class="at-dot"></span>{{ $permission->is_active ? 'نشط' : 'غير نشط' }}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            @if($permission->user->role !== 'admin')
+                                <div class="dropdown">
+                                    <button class="at-actions-btn" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" title="العمليات">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-start shadow border-light at-menu">
+                                        <li>
+                                            <a class="dropdown-item text-end" href="/edit-permission/{{ $permission->user_id }}/{{ $permission->permission_id }}">
+                                                <i class="bi bi-pencil-square text-turquoise"></i>
+                                                <span>تعديل</span>
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item text-danger text-end" href="#"
+                                               onclick="confirmDelete('/delete-permission/{{ $permission->user_id }}/{{ $permission->permission_id }}','حذف صلاحية','هل أنت متأكد من حذف هذه الصلاحية؟')">
+                                                <i class="bi bi-trash3"></i>
+                                                <span>حذف الصلاحية</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @else
+                                <span class="at-pill gray" title="صلاحية المدير لا يمكن تعديلها">
+                                    <i class="bi bi-lock"></i> غير قابل للتعديل
+                                </span>
+                            @endif
+                        </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="5" class="at-empty">
+                            <i class="bi bi-shield-lock"></i>
+                            لا توجد صلاحيات حالياً
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
 @endsection

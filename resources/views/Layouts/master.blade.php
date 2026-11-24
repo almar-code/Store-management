@@ -97,7 +97,7 @@ footer.footer {
 /* قوائم الجوال الطويلة (مثل النسخ الاحتياطي) — الافتراضي في main.css يكفي 3 عناصر فقط */
 @media (max-width: 1199px) {
     .navmenu .dropdown > ul.dropdown-tall.dropdown-active {
-        max-height: 300px;
+        max-height: 200px;
     }
 }
 </style>
@@ -223,30 +223,35 @@ footer.footer {
                             </ul>
                         </li>
 
-                        <li class="dropdown {{ !$isStoreManager ? 'locked-item' : '' }}">
+                        <li class="dropdown {{ !$isAdmin ? 'locked-item' : '' }}">
                             <a href="#">
                                 <div class="toggle-dropdown divnav">
                                     <div>
-                                        <span class="bi bi-box-seam nav-icon"></span>
-                                        <span class="{{ request()->is('add-ads-link') || request()->is('add-ads') || request()->is('ads') ? 'active' : '' }}">الإعلانات</span>
+                                        <span class="bi bi-shield-lock nav-icon"></span>
+                                        <span class="{{ request()->is('addbackups') || request()->is('backups/*') || request()->is('backupsettings') || request()->is('backup-restores*') || request()->is('restore-backup/*') ? 'active' : '' }}"> الاعلانات</span>
                                     </div>
                                     <i class="bi bi-chevron-down"></i>
                                 </div>
                             </a>
-                            
-                            <ul>
+
+                            <ul class="dropdown-tall">
+                                <li>
+                                    <a href="/add-ads">
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان خاص</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/add-ads-general">
+                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان عام</div>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="/add-ads-link">
                                         <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان برابط</div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/add-ads">
-                                        <div><span class="bi bi-plus-circle sub-icon"></span>إضافة إعلان</div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/ads">
+                                    <a href="/ads" class="{{ request()->is('ads') ? 'active' : '' }}">
                                         <div><span class="bi bi-list-ul sub-icon"></span>قائمة الإعلانات</div>
                                     </a>
                                 </li>
@@ -366,7 +371,7 @@ footer.footer {
                                 <div class="toggle-dropdown divnav">
                                     <div>
                                         <span class="bi bi-shield-lock nav-icon"></span>
-                                        <span class="{{ request()->is('addbackups') || request()->is('backups/*') || request()->is('backupsettings') ? 'active' : '' }}">النسخ الاحتياطي</span>
+                                        <span class="{{ request()->is('addbackups') || request()->is('backups/*') || request()->is('backupsettings') || request()->is('backup-restores*') || request()->is('restore-backup/*') ? 'active' : '' }}">النسخ الاحتياطي</span>
                                     </div>
                                     <i class="bi bi-chevron-down"></i>
                                 </div>
@@ -380,22 +385,12 @@ footer.footer {
                                 </li>
                                 <li>
                                     <a href="/backups/daily" class="{{ request()->is('backups/daily') ? 'active' : '' }}">
-                                        <div><span class="bi bi-calendar-day sub-icon"></span>النسخ اليومية</div>
+                                        <div><span class="bi bi-calendar-day sub-icon"></span>النسخ الاحتياطيه</div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/backups/weekly" class="{{ request()->is('backups/weekly') ? 'active' : '' }}">
-                                        <div><span class="bi bi-calendar-week sub-icon"></span>النسخ الأسبوعية</div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/backups/monthly" class="{{ request()->is('backups/monthly') ? 'active' : '' }}">
-                                        <div><span class="bi bi-calendar-month sub-icon"></span>النسخ الشهرية</div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/backups/yearly" class="{{ request()->is('backups/yearly') ? 'active' : '' }}">
-                                        <div><span class="bi bi-calendar3 sub-icon"></span>النسخ السنوية</div>
+                                    <a href="/backup-restores" class="{{ request()->is('backup-restores*') ? 'active' : '' }}">
+                                        <div><span class="bi bi-clock-history sub-icon"></span>سجل الاسترجاع</div>
                                     </a>
                                 </li>
                                 <li>

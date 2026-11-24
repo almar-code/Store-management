@@ -35,6 +35,8 @@ class AdvertisementController extends Controller
             return response()->json([
                 'status' => true,
                 'ad_name' => $ad->AdsName,
+                // بيانات الإعلان لصفحة العرض في التطبيق
+                'ad' => $ad->only(['ads_id', 'AdsName', 'AdsImage', 'type', 'expires_at']),
                 'data' => $ad->products // المنتجات المرتبطة بالإعلان العام
             ], 200);
 

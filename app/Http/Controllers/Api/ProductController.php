@@ -37,10 +37,10 @@ class ProductController extends Controller
     'sizes:size_id,size_name,p_id', // جلب المقاسات (حدد الأعمدة التي تريدها للحفاظ على الأداء)
     'colors.images',               // 🌟 جلب الصور المتداخلة التابعة لكل لون بالتحديد (Nested Relation)
     'discount',
-    'generalAdvertisements' => function ($query) {
-        // تحديد الأعمدة المطلوبة فقط لتحسين الأداء (رقم الإعلان، الاسم، والمدة أو تاريخ الانتهاء)
-        // تأكد من أسماء الأعمدة في جدول الإعلانات لديك (مثلاً ads_id, ads_title, duration أو end_date)
-        $query->select('advertisement.ads_id', 'advertisement.AdsName', 'advertisement.expires_at');
+   'generalAdvertisements' => function ($query) {
+        // الإعلانات النشطة وغير المنتهية فقط
+        $query->available()
+              ->select('advertisement.ads_id', 'advertisement.AdsName', 'advertisement.expires_at');
     },
 ]);
 $query->addSelect([
@@ -64,10 +64,13 @@ if ($customerId) {
         
         $query->whereDate('created_at', $date); 
     }
-        if ($adsId != null) {
+       if ($adsId != null) {
         $query->whereHas('generalAdvertisements', function ($subQuery) use ($adsId) {
-            $subQuery->where('advertisement_product.ads_id', $adsId);
-        });
+        // الإعلان المطلوب بشرط يكون نشط
+        $subQuery->where('advertisement_product.ads_id', $adsId)
+                 ->available();
+    });
+        
     }
 
 
