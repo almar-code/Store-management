@@ -26,8 +26,8 @@ class CommentController extends Controller
         return [
             'id' => $comment->id,
             'commentText' =>$comment->comment_text,
-            'customerName' =>$comment->customer->name ?? '',
-            'customerImage' =>$comment->customer->profile_image,
+            'customerName'  => $comment->customer?->name ?? '',
+            'customerImage' => $comment->customer?->profile_image,
             'videoId' =>$comment->video_id,
             'createdAt' =>$comment->created_at->toDateTimeString(),
         ];
@@ -59,8 +59,8 @@ class CommentController extends Controller
 
     'id' => $comment->id,
     'commentText' =>$comment->comment_text,
-    'customerName' =>$comment->customer->name,
-    'customerImage' =>$comment->customer->profile_image,
+    'customerName'  => $comment->customer?->name ?? '',
+    'customerImage' => $comment->customer?->profile_image,
     'videoId' =>$comment->video_id,
     'createdAt' =>$comment->created_at->toDateTimeString(),
 ], 201);
