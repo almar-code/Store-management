@@ -67,18 +67,28 @@ class VideoInteractionController extends Controller
         ], 200);
     }
 
-    // 3. الضغط على زر الحفظ
-    public function toggleSave($id)
+        // حفظ او الغاء حفظ
+    public function toggleSave(Request $request, $id)
     {
         $stat = VideoStat::firstOrCreate(['video_id' => $id]);
-        $stat->increment('saves_count');
 
-        return response()->json([
-            'status' => true,
-            'saves_count' => $stat->saves_count
-        ], 200);
+        if ($request->input('action', 'save') === 'save') {
+            $stat->increment('saves_count');
+        } elseif ($stat->saves_count > 0) {
+            $stat->decrement('saves_count');
+        }
+
+        return response()->json(['status' => true, 'saves_count' => $stat->saves_count]);
     }
 
+    // احتساب مشاهدة
+    public function addView($id)
+    {
+        $stat = VideoStat::firstOrCreate(['video_id' => $id]);
+        $stat->increment('views_count');
+
+        return response()->json(['status' => true, 'views_count' => $stat->views_count]);
+    }
     public function uploadVideo(Request $request)
     {
         $request->validate([

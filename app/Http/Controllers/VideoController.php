@@ -5,71 +5,75 @@ use App\Models\Video;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Models\VideoStat;
 class VideoController extends Controller
 {
-    public function getVideosApi()
-{
-    try {
+        // جلب الريلز على دفعات
+    // GET /api/get-all-videos?page=1&per_page=6&seed=123
+    public function getVideosApi(Request $request)
+    {
+        try {
+            $perPage = min((int) $request->input('per_page', 6), 20);
+            $seed = (int) $request->input('seed', 1);
 
-        // مهم جداً
-        $videos = Video::with(['product', 'stats'])
-            ->withCount('comments')
-            ->inRandomOrder()
-            ->get();
+            // نفس الترتيب العشوائي في كل الدفعات
+            $videos = Video::with(['product', 'stats'])
+                ->withCount('comments')
+                ->inRandomOrder($seed)
+                ->paginate($perPage);
 
-        $data = $videos->map(function ($video) {
-
-            return [
-
-                'video_id' => $video->video_id,
-
-                'video_url' =>
-                    rtrim(config('app.url'), '/') .
-                    '/storage/uploads/videos/' .
-                    $video->video_path,
-
-                'product_id' => $video->product_id,
-
-                'product_name' =>
-                    $video->product
-                        ? $video->product->p_name
-                        : 'فيديو عام',
-
-                'likes_count' =>
-                    $video->stats
-                        ? $video->stats->likes_count
-                        : 0,
-
-                'saves_count' =>
-                    $video->stats
-                        ? $video->stats->saves_count
-                        : 0,
-
-                'shares_count' =>
-                    $video->stats
-                        ? $video->stats->shares_count
-                        : 0,
-
-                // الجديد
-                'comments_count' => $video->comments_count,
-            ];
-        });
-
-        return response()->json([
-            'status' => true,
-            'data' => $data
-        ], 200);
-
-    } catch (\Throwable $th) {
-
-        return response()->json([
-            'status' => false,
-            'message' => 'حدث خطأ أثناء جلب الفيديوهات',
-            'error' => $th->getMessage()
-        ], 500);
+            return response()->json([
+                'status' => true,
+                'data' => $videos->getCollection()->map(fn ($v) => $this->formatVideo($v)),
+                'meta' => [
+                    'current_page' => $videos->currentPage(),
+                    'last_page'    => $videos->lastPage(),
+                    'total'        => $videos->total(),
+                    'total_views'  => (int) VideoStat::sum('views_count'),
+                    'total_likes'  => (int) VideoStat::sum('likes_count'),
+                ],
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => 'حدث خطأ أثناء جلب الفيديوهات',
+            ], 500);
+        }
     }
-}
-    public function AddVideoToProduct($productID)
+
+    // جلب ريل واحد
+    public function getVideoApi($id)
+    {
+        $video = Video::with(['product', 'stats'])->withCount('comments')->find($id);
+
+        if (!$video) {
+            return response()->json(['status' => false], 404);
+        }
+
+        return response()->json(['status' => true, 'data' => $this->formatVideo($video)]);
+    }
+
+    // شكل بيانات الريل
+    private function formatVideo(Video $video): array
+    {
+        $product = $video->product;
+        $stats = $video->stats;
+
+        return [
+            'video_id'        => $video->video_id,
+            'video_path'      => $video->video_path,
+            'product_image'   => $product?->p_image,
+            'product_id'      => $video->product_id,
+            'product_name'    => $product?->p_name,
+            'product_name_en' => $product?->p_name_en,
+            'product_price'   => $product?->p_price,
+            'likes_count'     => $stats->likes_count ?? 0,
+            'saves_count'     => $stats->saves_count ?? 0,
+            'shares_count'    => $stats->shares_count ?? 0,
+            'views_count'     => $stats->views_count ?? 0,
+            'comments_count'  => $video->comments_count,
+        ];
+    }    public function AddVideoToProduct($productID)
     {
         try {
             $productName = Product::findOrFail($productID)->p_name;

@@ -38,6 +38,8 @@ use App\Http\Controllers\Api\CustomerNotificationController;
 Route::get('/sections', [SectionController::class, 'index']);
 Route::get('/categories', [CategorieController::class, 'index']);
 Route::get('/get-all-videos', [VideoController::class, 'getVideosApi']);
+Route::get('/videos/{id}', [VideoController::class, 'getVideoApi'])->whereNumber('id');
+Route::post('/videos/{id}/view', [VideoInteractionController::class, 'addView'])->middleware('throttle:60,1');
 Route::post('/videos/{id}/like', [VideoInteractionController::class, 'toggleLike']);
 Route::post('/videos/{id}/share', [VideoInteractionController::class, 'incrementShare']);
 Route::post('/videos/{id}/save', [VideoInteractionController::class, 'toggleSave']);
@@ -53,7 +55,7 @@ Route::get('/cart', [CartController::class, 'index']);          // لعرض مح
 Route::post('/cart/add', [CartController::class, 'store']);       // لإضافة منتج جديد للسلة
 Route::put('/cart/update/{id}', [CartController::class, 'update']); // لتعديل الكمية بداخل السلة
 Route::delete('/cart/delete/{id}', [CartController::class, 'destroy']); // لحذف صنف من السلة
-
+Route::delete('/cart/clear', [CartController::class, 'clear']); // لحذف كل اصناف السلة
 
 Route::post('/webhooks/supabase/profile', [
     SupabaseWebhookController::class,

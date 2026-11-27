@@ -11,6 +11,7 @@ return [
         'http://127.0.0.1:5050',
         'http://localhost:62155',
         'http://localhost:8080',
+        'https://almar-code.github.io',
     ],
 
     'allowed_origins_patterns' => [],

@@ -64,6 +64,22 @@ if ($customerId) {
         
         $query->whereDate('created_at', $date); 
     }
+
+    // منتجات من تاريخ معين حتى اليوم مثل اسبوع كامل والاحدث اولا
+    $dateFrom = $request->query('date_from');
+    if ($dateFrom) {
+        $query->whereDate('products.created_at', '>=', $dateFrom)
+              ->orderByDesc('products.created_at');
+    }
+
+    // الخصومات المضافة حديثا والسارية فقط
+    $discountFrom = $request->query('discount_from');
+    if ($discountFrom) {
+        $query->whereHas('discount', function ($subQuery) use ($discountFrom) {
+            $subQuery->where('end_date', '>=', now())
+                     ->whereDate('created_at', '>=', $discountFrom);
+        });
+    }
        if ($adsId != null) {
         $query->whereHas('generalAdvertisements', function ($subQuery) use ($adsId) {
         // الإعلان المطلوب بشرط يكون نشط

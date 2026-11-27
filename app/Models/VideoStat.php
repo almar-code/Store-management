@@ -17,7 +17,8 @@ class VideoStat extends Model
         'video_id',
         'likes_count',
         'saves_count',
-        'shares_count'
+        'shares_count',
+        'views_count',
     ];
 
     // 3. علاقة عكسية مع جدول الفيديوهات (اختياري ولكن مفيد)
