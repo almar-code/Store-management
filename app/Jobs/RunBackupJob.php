@@ -19,7 +19,11 @@ class RunBackupJob
     {
         // يمنع تشغيل نسختين بنفس الوقت لو المدير ضغط الزر مرتين
         Cache::lock('store-backup-running', 600)->get(function () {
-            Artisan::call('store:backup', ['--manual' => true]);
-        });
+                // صفحة صيانة محفوظة مسبقاً لا تحتاج القاعدة
+                Artisan::call('down', [
+                    '--retry' => 30,
+                    '--refresh' => 15,
+                    '--render' => 'errors::503',
+                ]);        });
     }
 }

@@ -10,11 +10,13 @@ class BackupSetting extends Model
         'enabled', 'run_time',
         'keep_daily_days', 'keep_weekly_weeks', 'keep_monthly_months', 'keep_yearly_years',
         'last_backup_at', 'last_backup_status', 'last_backup_message',
+        'manual_requested_at',
     ];
 
     protected $casts = [
         'enabled' => 'boolean',
         'last_backup_at' => 'datetime',
+        'manual_requested_at' => 'datetime',
     ];
 
     public static function current(): self

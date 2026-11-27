@@ -26,10 +26,15 @@ Schedule::command('visual:index-missing')
 // النسخ الاحتياطي التلقائي حسب إعدادات لوحة التحكم
 $backupSettings = rescue(fn () => BackupSetting::current(), null, false);
 
+// تنفيذ طلبات النسخ اليدوي والاسترجاع كل دقيقة
+Schedule::command('store:backup-requests')
+    ->everyMinute()
+    ->withoutOverlapping(60)
+    ->evenInMaintenanceMode();
 if ($backupSettings?->enabled) {
     Schedule::command('store:backup')
         ->dailyAt($backupSettings->run_time)
         ->withoutOverlapping();
-
+    
     Schedule::command('backup:monitor')->dailyAt('09:00');
 }

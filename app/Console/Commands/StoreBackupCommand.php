@@ -24,7 +24,9 @@ class StoreBackupCommand extends Command
             'backup.cleanup.default_strategy.keep_yearly_backups_for_years'   => $settings->keep_yearly_years,
         ]);
 
-        $options = ['--only-db' => true];
+        // $options = ['--only-db' => true];
+        // قاعدة البيانات مع الصور
+        $options = [];
 
         if ($this->option('manual')) {
             $options['--filename'] = 'manual-' . now()->format('Y-m-d-H-i-s') . '.zip';

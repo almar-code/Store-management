@@ -15,8 +15,9 @@ return [
                  * The list of directories and files that will be included in the backup.
                  */
                 // [تعديل 1] نسخ قاعدة البيانات فقط — ملفات المشروع محفوظة في GitHub
+                 // صور المتجر مع قاعدة البيانات
                 'include' => [
-                    //
+                    storage_path('app/public/uploads'),
                 ],
 
                 /*
@@ -24,9 +25,11 @@ return [
                  *
                  * Directories used by the backup process will automatically be excluded.
                  */
+                 // الفيديوهات مستثناة لكبر حجمها
                 'exclude' => [
                     base_path('vendor'),
                     base_path('node_modules'),
+                    storage_path('app/public/uploads/videos'),
                 ],
 
                 /*
@@ -44,7 +47,8 @@ return [
                  * Set to `null` to include complete absolute path
                  * Example: base_path()
                  */
-                'relative_path' => null,
+                 // توحيد الفواصل حتى يعمل على ويندوز ولينكس
+                'relative_path' => str_replace('/', DIRECTORY_SEPARATOR, storage_path('app/public')),
             ],
 
             /*

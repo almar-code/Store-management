@@ -287,7 +287,13 @@
 
                         <p>احفظ نسخة كاملة ومشفّرة من بيانات المتجر الآن: المنتجات، الطلبات، العملاء وكل الإعدادات.</p>
 
-                        @if ($settings->last_backup_status === 'success')
+                        {{-- طلب يدوي ينتظر التنفيذ --}}
+                        @if ($settings->manual_requested_at)
+                            <div class="backup-pill none">
+                                <span class="dot"></span>
+                                نسخة يدوية بالانتظار، تبدأ خلال دقيقة
+                            </div>
+                        @elseif ($settings->last_backup_status === 'success')
                             <div class="backup-pill success">
                                 <span class="dot"></span>
                                 آخر نسخة نجحت — {{ $settings->last_backup_at?->format('Y-m-d h:i A') }}
@@ -304,7 +310,6 @@
                             </div>
                         @endif
                     </div>
-
                     {{-- الإحصائيات --}}
                     <div class="backup-stats">
                         <div class="backup-stat">

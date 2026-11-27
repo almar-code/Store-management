@@ -219,6 +219,18 @@ Route::get('backup-restores/{restore}', [BackupRestoreController::class, 'show']
 
 });
 
+// حالة الاسترجاع، تعمل أثناء استيراد الجداول
+Route::get('backup-restores/{restore}/progress', [BackupRestoreController::class, 'progress'])
+    ->whereNumber('restore')
+    ->middleware('signed')
+    // بدون جلسة حتى لا يقرأ جدول المستخدمين أثناء الاستيراد
+    ->withoutMiddleware([
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+    ])
+    ->name('restore.progress');
+
 // أضف ->name('login') في نهاية السطر
 Route::get('/login', [LoginController::class, 'Login'])->name('login');
 Route::post('/login-user', [LoginController::class, 'Examine'])->name('login-user');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\RunBackupJob;
+
 use App\Models\BackupSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -78,10 +78,11 @@ class BackupController extends Controller
     // زر "إنشاء نسخة الآن" — يعمل بعد إرسال الصفحة فلا ينتظر المدير
     public function store()
     {
-        RunBackupJob::dispatchAfterResponse();
+                // تسجيل الطلب فقط، والتنفيذ في الخلفية
+        BackupSetting::current()->update(['manual_requested_at' => now()]);
 
-        return redirect('addbackups')->with('success', 'بدأ إنشاء النسخة الاحتياطية، ستظهر خلال دقيقة');
-    }
+        return redirect('addbackups')->with('success', 'تم طلب النسخة، ستبدأ خلال دقيقة تقريباً');
+        }
 
     // ===== صفحات عرض النسخ (يومية / أسبوعية / شهرية / سنوية) =====
     public function index(string $type)
