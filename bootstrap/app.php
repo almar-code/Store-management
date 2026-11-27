@@ -22,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
                 // صفحة متابعة الاسترجاع تعمل أثناء وضع الصيانة
         $middleware->preventRequestsDuringMaintenance(except: [
-            'backup-restores/*',
+            'backup-restores/*/progress',
         ]);
 
         $middleware->alias([
