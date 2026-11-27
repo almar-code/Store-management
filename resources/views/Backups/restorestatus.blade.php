@@ -1,11 +1,6 @@
 @extends('Layouts.master')
 
 @section('link')
-    {{-- تحديث تلقائي أثناء التنفيذ --}}
-    @if ($restore->isActive())
-        <meta http-equiv="refresh" content="3">
-    @endif
-
     <style>
         .rs-result { text-align: center; padding: 6px 0 20px; }
 
@@ -153,12 +148,12 @@
 
                     {{-- النتيجة --}}
                     <div class="rs-result">
-                        <div class="badge-icon {{ $restore->isActive() ? 'spin' : '' }}"
+                        <div id="rs-badge" class="badge-icon {{ $restore->isActive() ? 'spin' : '' }}"
                             style="background: {{ $info['bg'] }}; color: {{ $info['color'] }};">
-                            <i class="bi {{ $info['icon'] }}"></i>
+                            <i id="rs-icon" class="bi {{ $info['icon'] }}"></i>
                         </div>
-                        <h4 style="color: {{ $info['color'] }}">{{ $info['label'] }}</h4>
-                        <p>{{ $restore->message }}</p>
+                        <h4 id="rs-label" style="color: {{ $info['color'] }}">{{ $info['label'] }}</h4>
+                        <p id="rs-message">{{ $restore->message }}</p>
                     </div>
 
                     {{-- المراحل --}}
@@ -172,7 +167,7 @@
                                     $state = $restore->status === 'failed' ? 'error' : 'current';
                                 }
                             @endphp
-                            <div class="rs-step {{ $state }}">
+                            <div class="rs-step {{ $state }}" data-step="{{ $num }}">
                                 <div class="icon"><i class="bi {{ $step['icon'] }}"></i></div>
                                 <span>{{ $step['label'] }}</span>
                             </div>
@@ -182,9 +177,9 @@
                     {{-- التفاصيل --}}
                     <div class="rs-details">
                         <div class="row-item"><span>النسخة المسترجعة</span><b>{{ $restore->backup_file }}</b></div>
-                        <div class="row-item"><span>نسخة الأمان</span><b>{{ $restore->safety_file ?? '—' }}</b></div>
+                        <div class="row-item"><span>نسخة الأمان</span><b id="rs-safety">{{ $restore->safety_file ?? '—' }}</b></div>
                         <div class="row-item"><span>بواسطة</span><b>{{ $restore->userName() }}</b></div>
-                        <div class="row-item"><span>البداية</span><b>{{ $restore->started_at?->format('Y-m-d h:i:s A') ?? '—' }}</b></div>
+                        <div class="row-item"><span>البداية</span><b id="rs-started">{{ $restore->started_at?->format('Y-m-d h:i:s A') ?? '—' }}</b></div>
                         <div class="row-item"><span>النهاية</span><b>{{ $restore->finished_at?->format('Y-m-d h:i:s A') ?? '—' }}</b></div>
                     </div>
 
@@ -207,4 +202,56 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('jsfile')
+    @if ($restore->isActive())
+        <script>
+            (function () {
+                const url = @json($progressUrl);
+
+                // تحديث المراحل حسب الحالة
+                function paint(d) {
+                    const badge = document.getElementById('rs-badge');
+                    badge.style.background = d.info.bg;
+                    badge.style.color = d.info.color;
+                    badge.classList.toggle('spin', d.active);
+                    document.getElementById('rs-icon').className = 'bi ' + d.info.icon;
+
+                    const label = document.getElementById('rs-label');
+                    label.textContent = d.info.label;
+                    label.style.color = d.info.color;
+
+                    document.getElementById('rs-message').textContent = d.message;
+                    document.getElementById('rs-safety').textContent = d.safety_file;
+                    document.getElementById('rs-started').textContent = d.started_at;
+
+                    document.querySelectorAll('.rs-step').forEach(function (el) {
+                        const num = Number(el.dataset.step);
+                        el.classList.remove('done', 'current', 'error');
+                        if (d.status === 'success' || d.status === 'undone' || num < d.step) {
+                            el.classList.add('done');
+                        } else if (num === d.step) {
+                            el.classList.add(d.status === 'failed' ? 'error' : 'current');
+                        }
+                    });
+                }
+
+                function poll() {
+                    fetch(url, { headers: { 'Accept': 'application/json' } })
+                        .then(function (r) { return r.ok ? r.json() : null; })
+                        .then(function (d) {
+                            if (!d) return setTimeout(poll, 3000);
+                            paint(d);
+                            // عند الانتهاء نعيد تحميل الصفحة لعرض الأزرار
+                            if (!d.active) return setTimeout(function () { location.reload(); }, 1500);
+                            setTimeout(poll, 3000);
+                        })
+                        .catch(function () { setTimeout(poll, 3000); });
+                }
+
+                setTimeout(poll, 3000);
+            })();
+        </script>
+    @endif
 @endsection

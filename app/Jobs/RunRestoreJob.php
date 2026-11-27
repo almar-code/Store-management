@@ -66,7 +66,12 @@ class RunRestoreJob
             $migrations = $service->protectedMigrations();
 
             if (! $wasDown) {
-                Artisan::call('down', ['--retry' => 30]);
+                // صفحة صيانة محفوظة مسبقاً لا تحتاج القاعدة
+                Artisan::call('down', [
+                    '--retry' => 30,
+                    '--refresh' => 15,
+                    '--render' => 'errors::503',
+                ]);
             }
 
             $imported = true;
@@ -78,11 +83,14 @@ class RunRestoreJob
             $restore->update(['step' => 4, 'message' => 'جاري تحديث هيكل الجداول']);
             $warning = $service->migrate();
 
+            // إرجاع صور المنتجات المحذوفة
+            $files = $service->restoreFiles();
+
             // 5 تم
             $restore->update([
                 'status' => 'success',
                 'step' => 5,
-                'message' => $warning ?? 'تم استرجاع النسخة بنجاح',
+                'message' => $warning ?? ('تم استرجاع النسخة بنجاح' . ($files ? "، وإرجاع {$files} صورة" : '')),
                 'finished_at' => now(),
             ]);
 

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\RunRestoreJob;
 use App\Models\BackupRestore;
 use App\Services\BackupRestoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 
 class BackupRestoreController extends Controller
 {
@@ -21,15 +21,18 @@ class BackupRestoreController extends Controller
         abort_unless($found, 404);
 
         $date = $found['date']->copy()->timezone(config('app.timezone'));
-        $impact = $this->service->impact($found['date']);
+
+        // مقارنة دقيقة، وعند تعذرها نرجع للحساب بالتاريخ
+        $compare = $this->service->compare($file);
+        $impact = $compare ? [] : $this->service->impact($found['date']);
         $undo = $request->filled('undo') ? BackupRestore::find($request->integer('undo')) : null;
         $running = BackupRestore::whereIn('status', ['pending', 'running'])->exists();
         $onCloud = $found['disk'] !== config('backup.backup.destination.disks')[0];
 
-        return view('Backups.restorebackup', compact('file', 'date', 'impact', 'undo', 'running', 'onCloud'));
+        return view('Backups.restorebackup', compact('file', 'date', 'impact', 'compare', 'undo', 'running', 'onCloud'));
     }
 
-    // ===== بدء الاسترجاع بعد التحقق =====
+    // ===== تسجيل طلب الاسترجاع بعد التحقق =====
     public function store(Request $request, string $file)
     {
         $request->validate([
@@ -56,15 +59,14 @@ class BackupRestoreController extends Controller
             return back()->with('error', 'توجد عملية استرجاع جارية، انتظر حتى تنتهي');
         }
 
+        // التنفيذ يتم من المجدول خلال دقيقة
         $restore = BackupRestore::create([
             'user_id' => auth()->id(),
             'backup_file' => $file,
             'undo_of' => $request->input('undo_of'),
             'status' => 'pending',
-            'message' => 'بانتظار البدء',
+            'message' => 'بانتظار البدء، تبدأ خلال دقيقة تقريباً',
         ]);
-
-        RunRestoreJob::dispatchAfterResponse($restore->id);
 
         return redirect('backup-restores/' . $restore->id);
     }
@@ -77,7 +79,24 @@ class BackupRestoreController extends Controller
             && $restore->safety_file
             && in_array($restore->safety_file, $this->service->localFiles());
 
-        return view('Backups.restorestatus', compact('restore', 'canUndo'));
+        // رابط موقّع لمتابعة الحالة بدون صلاحيات
+        $progressUrl = URL::temporarySignedRoute('restore.progress', now()->addHours(2), ['restore' => $restore->id]);
+
+        return view('Backups.restorestatus', compact('restore', 'canUndo', 'progressUrl'));
+    }
+
+    // ===== حالة العملية بصيغة JSON =====
+    public function progress(BackupRestore $restore)
+    {
+        return response()->json([
+            'active' => $restore->isActive(),
+            'status' => $restore->status,
+            'step' => (int) $restore->step,
+            'message' => $restore->message,
+            'info' => $restore->statusInfo(),
+            'safety_file' => $restore->safety_file ?? '—',
+            'started_at' => $restore->started_at?->format('Y-m-d h:i:s A') ?? '—',
+        ]);
     }
 
     // ===== سجل عمليات الاسترجاع =====

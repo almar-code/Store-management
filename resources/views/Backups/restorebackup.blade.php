@@ -118,6 +118,29 @@
         .rs-impact .value { display: block; font-size: 20px; font-weight: 800; color: #d63031; }
         .rs-impact .item.zero .value { color: #008870; }
         .rs-impact .label { font-size: 12.5px; color: #6c757d; }
+                /* بيانات ستعود */
+        .rs-section-label.back i { color: #008870; }
+        .rs-impact .item.back { background: #eef8f5; border-color: #cfe6e1; }
+        .rs-impact .item.back .value { color: #008870; }
+        .rs-impact .item.back.zero { background: #f8fbfa; border-color: #e3f0ed; }
+        .rs-impact .item.back.zero .value { color: #adb5bd; }
+
+        /* تنبيه تحديث الجداول */
+        .rs-schema {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            background: #e8eef6;
+            border: 1px solid #c9d6e8;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 14px;
+            color: #1a4372;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .rs-schema i { font-size: 18px; margin-top: 2px; }
 
         /* ===== طبقات الحماية ===== */
         .rs-shields {
@@ -212,9 +235,43 @@
                             <small>{{ $file }}</small>
                         </div>
                     </div>
+                    {{-- مقارنة النسخة بالبيانات الحالية --}}
+                    @if ($compare)
+                        <div class="rs-section-label back">
+                            <i class="bi bi-arrow-return-left"></i> بيانات حُذفت بعد هذه النسخة وستعود
+                        </div>
+                        <div class="rs-impact">
+                            @foreach ($compare['rows'] as $item)
+                                <div class="item back {{ $item['returned'] ? '' : 'zero' }}">
+                                    <span class="value">{{ $item['returned'] }}</span>
+                                    <span class="label">{{ $item['label'] }}</span>
+                                </div>
+                            @endforeach
+                        </div>
 
-                    {{-- البيانات اللي راح تضيع --}}
-                    @if (count($impact))
+                        <div class="rs-section-label">
+                            <i class="bi bi-exclamation-triangle"></i> بيانات أُضيفت بعد هذه النسخة وستُحذف
+                        </div>
+                        <div class="rs-impact">
+                            @foreach ($compare['rows'] as $item)
+                                <div class="item {{ $item['removed'] ? '' : 'zero' }}">
+                                    <span class="value">{{ $item['removed'] }}</span>
+                                    <span class="label">{{ $item['label'] }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        {{-- النسخة أقدم من آخر تحديث للنظام --}}
+                        @if ($compare['newer'])
+                            <div class="rs-schema">
+                                <i class="bi bi-info-circle"></i>
+                                <div>
+                                    هذه النسخة أقدم من آخر تحديث للنظام ({{ $compare['newer'] }} تحديث على الجداول).
+                                    ستُحدَّث الجداول تلقائياً بعد الاسترجاع ولن تتأثر البيانات.
+                                </div>
+                            </div>
+                        @endif
+                    @elseif (count($impact))
                         <div class="rs-section-label">
                             <i class="bi bi-exclamation-triangle"></i> بيانات أُضيفت بعد هذه النسخة وستُحذف
                         </div>
@@ -227,6 +284,8 @@
                             @endforeach
                         </div>
                     @endif
+
+                    {{-- طبقات الحماية --}}
 
                     {{-- طبقات الحماية --}}
                     <div class="rs-shields">

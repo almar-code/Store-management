@@ -16,6 +16,7 @@ use Spatie\Backup\BackupDestination\BackupDestination;
 use Symfony\Component\Process\Process;
 use Throwable;
 use ZipArchive;
+use Illuminate\Support\Facades\Cache;
 
 class BackupRestoreService
 {
@@ -24,8 +25,16 @@ class BackupRestoreService
 
     // جداول لازم تكون موجودة في النسخة
     private const REQUIRED_TABLES = ['migrations', 'users', 'products'];
+        // جداول المقارنة، المفتاح الأساسي أول عمود
+    public const COMPARE_TABLES = [
+        'orders' => ['key' => 'order_id', 'label' => 'طلب'],
+        'customers' => ['key' => 'customer_id', 'label' => 'عميل'],
+        'products' => ['key' => 'p_id', 'label' => 'منتج'],
+    ];
 
     private ?string $workDir = null;
+
+    private ?string $zipPath = null;
 
     // البحث عن النسخة في السيرفر ثم في السحابة
     public function find(string $file): ?array
@@ -99,6 +108,7 @@ class BackupRestoreService
         fclose($in);
         fclose($out);
 
+        $this->zipPath = $zipPath;
         return $this->filter($this->extract($zipPath));
     }
 
@@ -234,10 +244,70 @@ class BackupRestoreService
 
         return $file;
     }
+     // إرجاع الصور الناقصة فقط بدون حذف أو استبدال
+        // إرجاع الصور الناقصة فقط بدون حذف أو استبدال
+    public function restoreFiles(): int
+    {
+        if (! $this->zipPath) {
+            return 0;
+        }
+
+        $zip = new ZipArchive();
+
+        if ($zip->open($this->zipPath) !== true) {
+            return 0;
+        }
+
+        if ($password = config('backup.backup.password')) {
+            $zip->setPassword($password);
+        }
+
+        $root = storage_path('app/public');
+        $count = 0;
+
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $entry = $zip->getNameIndex($i);
+            $name = ltrim(str_replace('\\', '/', $entry), '/');
+
+            // المسار قد يكون كاملاً حسب نظام التشغيل
+            if (($pos = strpos($name, 'app/public/uploads/')) !== false) {
+                $name = substr($name, $pos + strlen('app/public/'));
+            }
+
+            // ملفات الصور فقط، مع منع المسارات الخارجة
+            if (! str_starts_with($name, 'uploads/') || str_ends_with($name, '/') || str_contains($name, '..')) {
+                continue;
+            }
+
+                       $target = $root . '/' . $name;
+
+            // الصورة الموجودة لا نلمسها
+            if (file_exists($target)) {
+                continue;
+            }
+
+            // قراءة الصورة مباشرة من النسخة بغض النظر عن شكل اسمها
+            $content = $zip->getFromIndex($i);
+
+            if ($content === false) {
+                continue;
+            }
+
+            File::ensureDirectoryExists(dirname($target));
+            file_put_contents($target, $content);
+            $count++;
+        }
+
+        $zip->close();
+
+        return $count;
+    }
 
     // استيراد ملف SQL في قاعدة البيانات
     public function import(string $sqlPath): void
     {
+        // القاعدة تصبح مطابقة للنسخة تماماً
+        $this->dropTables();
         $c = config('database.connections.' . config('database.default'));
         $bin = rtrim((string) ($c['dump']['dump_binary_path'] ?? ''), '/\\');
         $mysql = $bin === '' ? 'mysql' : $bin . '/mysql';
@@ -274,12 +344,175 @@ class BackupRestoreService
             throw new RuntimeException('فشل استيراد النسخة: ' . Str::limit(trim($process->getErrorOutput()), 400));
         }
     }
+        // حذف كل الجداول ما عدا المحمية
+    public function dropTables(): void
+    {
+        $keep = array_flip(self::KEEP_TABLES);
+
+        Schema::disableForeignKeyConstraints();
+
+        try {
+            foreach (Schema::getTables(DB::connection()->getDatabaseName()) as $table) {
+                if (! isset($keep[$table['name']])) {
+                    Schema::drop($table['name']);
+                }
+            }
+        } finally {
+            Schema::enableForeignKeyConstraints();
+        }
+    }
+
+        // مقارنة النسخة بالبيانات الحالية
+    public function compare(string $file): ?array
+    {
+        try {
+            $snap = $this->snapshot($file);
+        } catch (Throwable) {
+            return null;
+        } finally {
+            $this->cleanup();
+        }
+
+        $rows = [];
+
+        foreach (self::COMPARE_TABLES as $table => $meta) {
+            if (! Schema::hasTable($table)) {
+                continue;
+            }
+
+            $current = DB::table($table)->pluck($meta['key'])->map(fn ($v) => (string) $v)->all();
+            $backup = $snap['ids'][$table] ?? [];
+
+            $rows[] = [
+                'label' => $meta['label'],
+                'removed' => count(array_diff($current, $backup)),
+                'returned' => count(array_diff($backup, $current)),
+            ];
+        }
+
+        // تحديثات على الجداول بعد تاريخ النسخة
+        $newer = $snap['migrations'] ? array_diff(
+            DB::table('migrations')->pluck('migration')->all(),
+            $snap['migrations'],
+            $this->protectedMigrations()
+        ) : [];
+
+        return ['rows' => $rows, 'newer' => count($newer)];
+    }
+
+    // محتوى النسخة، يُقرأ مرة ويُحفظ في الكاش
+    private function snapshot(string $file): array
+    {
+        return Cache::rememberForever('restore-snapshot:' . $file, function () use ($file) {
+            $found = $this->find($file);
+
+            if (! $found) {
+                throw new RuntimeException('النسخة غير موجودة');
+            }
+
+            $zipPath = $this->workDir() . '/' . Str::random(8) . '.zip';
+            $in = Storage::disk($found['disk'])->readStream($found['path']);
+            $out = fopen($zipPath, 'wb');
+            stream_copy_to_stream($in, $out);
+            fclose($in);
+            fclose($out);
+
+            $ids = array_fill_keys(array_keys(self::COMPARE_TABLES), []);
+            $migrations = [];
+            $handle = fopen($this->extract($zipPath), 'rb');
+
+            while (($line = fgets($handle)) !== false) {
+                if (! str_starts_with($line, 'INSERT INTO `')) {
+                    continue;
+                }
+
+                $table = substr($line, 13, strpos($line, '`', 13) - 13);
+
+                if (isset($ids[$table])) {
+                    foreach ($this->columnValues($line, 0) as $id) {
+                        $ids[$table][] = $id;
+                    }
+                } elseif ($table === 'migrations') {
+                    foreach ($this->columnValues($line, 1) as $name) {
+                        $migrations[] = $name;
+                    }
+                }
+            }
+
+            fclose($handle);
+
+            return ['ids' => $ids, 'migrations' => $migrations];
+        });
+    }
+
+    // قراءة قيم عمود واحد من سطر INSERT
+    private function columnValues(string $line, int $index): array
+    {
+        $values = [];
+        $len = strlen($line);
+        $i = strpos($line, ' VALUES ');
+
+        if ($i === false) {
+            return $values;
+        }
+
+        $depth = 0;
+        $col = 0;
+        $buf = '';
+        $inStr = false;
+
+        for ($i += 8; $i < $len; $i++) {
+            $ch = $line[$i];
+
+            // داخل نص: نتجاهل الفواصل والأقواس
+            if ($inStr) {
+                if ($ch === '\\') {
+                    $i++;
+                    if ($col === $index) {
+                        $buf .= $line[$i] ?? '';
+                    }
+                } elseif ($ch === "'") {
+                    $inStr = false;
+                } elseif ($col === $index) {
+                    $buf .= $ch;
+                }
+                continue;
+            }
+
+            if ($ch === "'") {
+                $inStr = true;
+            } elseif ($depth === 0 && $ch === '(') {
+                $depth = 1;
+                $col = 0;
+                $buf = '';
+            } elseif ($depth === 1 && ($ch === ',' || $ch === ')')) {
+                if ($col === $index) {
+                    $values[] = $buf;
+                }
+                $col++;
+                $buf = '';
+                if ($ch === ')') {
+                    $depth = 0;
+                }
+            } elseif ($depth === 1 && $col === $index) {
+                $buf .= $ch;
+            }
+        }
+
+        return $values;
+    }
+
 
     // سجلات migrations الخاصة بالجداول المحمية
     public function protectedMigrations(): array
     {
+                // أي migration ينشئ أو يعدل جدولاً محمياً
         return DB::table('migrations')
-            ->where('migration', 'like', '%create_backup_%')
+            ->where(function ($q) {
+                foreach (self::KEEP_TABLES as $table) {
+                    $q->orWhere('migration', 'like', "%{$table}%");
+                }
+            })
             ->pluck('migration')
             ->all();
     }
@@ -340,6 +573,7 @@ class BackupRestoreService
         if ($this->workDir) {
             File::deleteDirectory($this->workDir);
             $this->workDir = null;
+            $this->zipPath = null;
         }
     }
 
